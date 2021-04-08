@@ -14,7 +14,7 @@ public class Payment {
 	private String type;
 	private String status;
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "paymentId" , referencedColumnName="card_Id")
+	@JoinColumn(name = "cardId" , referencedColumnName="cardId")
 	private Card card;
 
 	public Payment(long paymentId, String type, String status, Card card) {

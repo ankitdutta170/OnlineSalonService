@@ -2,6 +2,7 @@ package com.cg.trg.boot.salon.bean;
 
 import java.time.LocalDate;
 
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,7 +21,7 @@ public class SalonService {
 	private int discount;
 	private String duration;
 	@OneToOne
-	@JoinColumn(name="Appointment", referencedColumnName="appointmentId")
+	@JoinColumn(name="appointmentId", referencedColumnName="appointmentId")
 	private Appointment appointment;
 	public SalonService() {
 		super();

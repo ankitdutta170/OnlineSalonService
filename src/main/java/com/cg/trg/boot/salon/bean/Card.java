@@ -3,8 +3,13 @@ package com.cg.trg.boot.salon.bean;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 public class Card {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="card_Id")
 	private long cardId;
 	private String cardName;
