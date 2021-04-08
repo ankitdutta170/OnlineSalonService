@@ -2,14 +2,26 @@ package com.cg.trg.boot.salon.bean;
 
 import java.util.Set;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+@Entity
+@Table(name = "Address")
 public class Address {
-
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private String addressId;
 	private String doorNo;
 	private String street;
 	private String area;
 	private String city;
 	private String state;
 	private int pincode;
+	@ManyToMany(mappedBy = "addresses")
 	private Set<Customer>customers;
 	public Address(String doorNo, String street, String area, String city, String state, int pincode,
 			Set<Customer> customers) {
