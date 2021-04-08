@@ -10,7 +10,7 @@ import javax.persistence.Id;
 public class Card {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="card_Id")
+	@Column(name="card_id")
 	private long cardId;
 	private String cardName;
 	private String cardNumber;
