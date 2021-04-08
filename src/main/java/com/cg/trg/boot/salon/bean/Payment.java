@@ -9,7 +9,7 @@ import org.springframework.data.annotation.Id;
 public class Payment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "paymentId")
+	@Column(name = "payment_id")
 	private long paymentId;
 	private String type;
 	private String status;
