@@ -24,7 +24,7 @@ public class Address {
 	private String state;
 	private int pincode;
 	@ManyToOne
-	@JoinColumn(name="customer_id",nullable=false)
+	@JoinColumn(name="user_id")
 	private Customer customer;
 	
 	

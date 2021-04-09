@@ -27,7 +27,7 @@ public class Appointment {
 	private String visitType;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="salonService_id",referencedColumnName = "serviceId")
+	@JoinColumn(name="salon_service_id")
 	private SalonService preferredService;
 	
 	
@@ -35,15 +35,15 @@ public class Appointment {
 	
 	private LocalTime preferredTime;
 	@ManyToOne
-	@JoinColumn(name="customerId", nullable=false)
+	@JoinColumn(name="user_id")
 	private Customer customer;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="addressId", referencedColumnName = "addressId")
+	@JoinColumn(name="address_id")
 	private Address address;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="billId", referencedColumnName = "billId")
+	@JoinColumn(name="bill_id")
 	private Billing billing;
 	
 	public Appointment() {

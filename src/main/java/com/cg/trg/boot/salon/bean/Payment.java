@@ -2,7 +2,8 @@ package com.cg.trg.boot.salon.bean;
 
 import javax.persistence.*;
 
-import org.springframework.data.annotation.Id;
+
+
 
 @Entity
 @Table(name = "Payment")
@@ -14,7 +15,7 @@ public class Payment {
 	private String type;
 	private String status;
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "cardId" , referencedColumnName="cardId")
+	@JoinColumn(name = "card_id")
 	private Card card;
 	
 	@OneToOne(mappedBy = "payment")

@@ -1,5 +1,8 @@
 package com.cg.trg.boot.salon.bean;
 
+import java.io.Serializable;
+
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,9 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+
+@Entity(name = "Users")
 @Inheritance(strategy = InheritanceType.JOINED)
-@Entity
-@Table(name = "User")
+
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

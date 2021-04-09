@@ -3,11 +3,15 @@ package com.cg.trg.boot.salon.bean;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "Card")
 public class Card {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,7 +21,7 @@ public class Card {
 	private String cardNumber;
     private LocalDate cardExpiry;
     private int cvv;
-    @OneToOne(mappedBy = "payment")
+    @OneToOne(mappedBy = "card")
     private Payment payment;
 	
 	

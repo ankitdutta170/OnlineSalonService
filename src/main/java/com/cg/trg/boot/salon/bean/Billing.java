@@ -20,13 +20,13 @@ public class Billing {
 	private double amount;
 	private LocalDate billingDate;
 	@ManyToOne
-	@JoinColumn(name="customerId", referencedColumnName = "userId")
+	@JoinColumn(name="user_id")
 	private Customer customer;
 	
 	@OneToOne(mappedBy = "billing")
 	private Appointment appointment;
 	@OneToOne
-	@JoinColumn(name="paymentId",referencedColumnName = "paymentId")
+	@JoinColumn(name="payment_id")
 	private Payment payment;
 	
 	public Billing() {
