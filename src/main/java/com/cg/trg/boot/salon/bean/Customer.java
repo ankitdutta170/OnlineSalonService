@@ -1,6 +1,7 @@
 package com.cg.trg.boot.salon.bean;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -13,45 +14,55 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-@Table(name = "Customer")
+@Entity
 public class Customer extends User {
-	
 
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	//private String userId;
 	private String name;
 	private String email;
 	private String contactNo;
 	private  LocalDate dob;
-	@OneToMany
-	@JoinTable(
-			name = "customer_address",
-			joinColumns = @JoinColumn(name = "user_id"),
-			inverseJoinColumns = @JoinColumn(name = "address_id")
-			)
+	@OneToMany(mappedBy = "customer")
 	private Set<Address> addresses;
+	@OneToMany(mappedBy = "customer")
+	private List<Appointment> appointment;
+	@OneToMany(mappedBy = "customer")
+	private List<Billing> bills;
 	
 	
-	public Customer(String userId, String password, String role) {
-		super(userId, password, role);
+	
+	
+	
+
+	public Customer(String userId, String password, String role, boolean isLoggedIn) {
+		super(userId, password, role, isLoggedIn);
 		// TODO Auto-generated constructor stub
 	}
-	
-	
 
 
-	public Customer(String userId, String password, String role, String userId2, String name, String email,
-			String contactNo, LocalDate dob, Set<Address> addresses) {
-		super(userId, password, role);
-		userId = userId2;
+
+	public Customer(String userId, String password, String role, boolean isLoggedIn, String name, String email,
+			String contactNo, LocalDate dob, Set<Address> addresses, List<Appointment> appointment,
+			List<Billing> bills) {
+		super(userId, password, role, isLoggedIn);
 		this.name = name;
 		this.email = email;
 		this.contactNo = contactNo;
 		this.dob = dob;
 		this.addresses = addresses;
+		this.appointment = appointment;
+		this.bills = bills;
 	}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -99,13 +110,40 @@ public class Customer extends User {
 	public void setAddresses(Set<Address> addresses) {
 		this.addresses = addresses;
 	}
+	
+
+	public List<Appointment> getAppointment() {
+		return appointment;
+	}
+
+
+
+	public void setAppointment(List<Appointment> appointment) {
+		this.appointment = appointment;
+	}
+
+
+
+	public List<Billing> getBills() {
+		return bills;
+	}
+
+
+
+	public void setBills(List<Billing> bills) {
+		this.bills = bills;
+	}
+
 
 
 	@Override
 	public String toString() {
-		return "Customer [name=" + name + ", email=" + email + ", contactNo=" + contactNo
-				+ ", dob=" + dob + ", address=" + addresses+ "]";
+		return "Customer [name=" + name + ", email=" + email + ", contactNo=" + contactNo + ", dob=" + dob
+				+ ", addresses=" + addresses + ", appointment=" + appointment + ", bills=" + bills + "]";
 	}
+
+
+
 	
 	
 

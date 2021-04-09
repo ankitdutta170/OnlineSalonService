@@ -16,13 +16,20 @@ public class Payment {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "cardId" , referencedColumnName="cardId")
 	private Card card;
+	
+	@OneToOne(mappedBy = "payment")
+	private Billing billing;
+	
 
-	public Payment(long paymentId, String type, String status, Card card) {
+	
+
+	public Payment(long paymentId, String type, String status, Card card, Billing billing) {
 		super();
 		this.paymentId = paymentId;
 		this.type = type;
 		this.status = status;
 		this.card = card;
+		this.billing = billing;
 	}
 
 	public long getPaymentId() {
@@ -56,10 +63,22 @@ public class Payment {
 	public void setCard(Card card) {
 		this.card = card;
 	}
+	
+	
+	public Billing getBilling() {
+		return billing;
+	}
+
+	public void setBilling(Billing billing) {
+		this.billing = billing;
+	}
 
 	@Override
 	public String toString() {
-		return "Payment [paymentId=" + paymentId + ", type=" + type + ", status=" + status + ", card=" + card + "]";
+		return "Payment [paymentId=" + paymentId + ", type=" + type + ", status=" + status + ", card=" + card
+				+ ", billing=" + billing + "]";
 	}
+
+	
 
 }

@@ -43,15 +43,15 @@ public class Appointment {
 	private Address address;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="paymentId", referencedColumnName = "paymentId")
-	private Payment payment;
+	@JoinColumn(name="billId", referencedColumnName = "billId")
+	private Billing billing;
 	
 	public Appointment() {
 		
 	}
 
 	public Appointment(long appointmentId, String location, String visitType, SalonService preferredService,
-			LocalDate preferredDate, LocalTime preferredTime, Customer customer, Address address, Payment payment) {
+			LocalDate preferredDate, LocalTime preferredTime, Customer customer, Address address) {
 		super();
 		this.appointmentId = appointmentId;
 		this.location = location;
@@ -61,7 +61,7 @@ public class Appointment {
 		this.preferredTime = preferredTime;
 		this.customer = customer;
 		this.address = address;
-		this.payment = payment;
+		
 	}
 
 	public long getAppointmentId() {
@@ -128,19 +128,11 @@ public class Appointment {
 		this.address = address;
 	}
 
-	public Payment getPayment() {
-		return payment;
-	}
-
-	public void setPayment(Payment payment) {
-		this.payment = payment;
-	}
-
 	@Override
 	public String toString() {
 		return "Appointment [appointmentId=" + appointmentId + ", location=" + location + ", visitType=" + visitType
 				+ ", preferredService=" + preferredService + ", preferredDate=" + preferredDate + ", preferredTime="
-				+ preferredTime + ", customer=" + customer + ", address=" + address + ", payment=" + payment + "]";
+				+ preferredTime + ", customer=" + customer + ", address=" + address + " ]";
 	}
 	
 

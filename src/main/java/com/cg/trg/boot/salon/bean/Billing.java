@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,17 +23,34 @@ public class Billing {
 	@JoinColumn(name="customerId", referencedColumnName = "userId")
 	private Customer customer;
 	
+	@OneToOne(mappedBy = "billing")
+	private Appointment appointment;
+	@OneToOne
+	@JoinColumn(name="paymentId",referencedColumnName = "paymentId")
+	private Payment payment;
+	
 	public Billing() {
 		
 	}
 
-	public Billing(long billId, double amount, LocalDate billingDate, Customer customer) {
+	
+	
+
+
+	public Billing(long billId, double amount, LocalDate billingDate, Customer customer, Appointment appointment,
+			Payment payment) {
 		super();
 		this.billId = billId;
 		this.amount = amount;
 		this.billingDate = billingDate;
 		this.customer = customer;
+		this.appointment = appointment;
+		this.payment = payment;
 	}
+
+
+
+
 
 	public long getBillId() {
 		return billId;
@@ -65,12 +83,37 @@ public class Billing {
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
+	
+	
+
+	public Appointment getAppointment() {
+		return appointment;
+	}
+
+
+	public void setAppointment(Appointment appointment) {
+		this.appointment = appointment;
+	}
+
+
+	public Payment getPayment() {
+		return payment;
+	}
+
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
+	}
+	
 
 	@Override
 	public String toString() {
-		return "Bill [billId=" + billId + ", amount=" + amount + ", billingDate=" + billingDate + ", customer="
-				+ customer + "]";
+		return "Billing [billId=" + billId + ", amount=" + amount + ", billingDate=" + billingDate + ", customer="
+				+ customer + ", appointment=" + appointment + ", payment=" + payment + "]";
 	}
+
+
+	
 	
 	
 

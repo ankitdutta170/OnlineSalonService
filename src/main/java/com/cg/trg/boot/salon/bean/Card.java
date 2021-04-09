@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 public class Card {
 	@Id
@@ -16,16 +17,20 @@ public class Card {
 	private String cardNumber;
     private LocalDate cardExpiry;
     private int cvv;
+    @OneToOne(mappedBy = "payment")
+    private Payment payment;
 	
-	public Card(long cardId, String cardName, String cardNumber, LocalDate cardExpiry, int cvv) {
+	
+	public Card(long cardId, String cardName, String cardNumber, LocalDate cardExpiry, int cvv, Payment payment) {
 		super();
 		this.cardId = cardId;
 		this.cardName = cardName;
 		this.cardNumber = cardNumber;
 		this.cardExpiry = cardExpiry;
 		this.cvv = cvv;
+		this.payment = payment;
 	}
-	
+
 	public long getCardId() {
 		return cardId;
 	}
@@ -58,12 +63,22 @@ public class Card {
 	public void setCvv(int cvv) {
 		this.cvv = cvv;
 	}
+	
+	public Payment getPayment() {
+		return payment;
+	}
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
+	}
 
 	@Override
 	public String toString() {
 		return "Card [cardId=" + cardId + ", cardName=" + cardName + ", cardNumber=" + cardNumber + ", cardExpiry="
-				+ cardExpiry + ", cvv=" + cvv + "]";
+				+ cardExpiry + ", cvv=" + cvv + ", payment=" + payment + "]";
 	}
+
+	
 	
     
 }

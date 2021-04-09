@@ -6,7 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 @Entity
 @Table(name = "Address")
@@ -21,20 +23,23 @@ public class Address {
 	private String city;
 	private String state;
 	private int pincode;
-	@ManyToMany(mappedBy = "addresses")
-	private Set<Customer>customers;
+	@ManyToOne
+	@JoinColumn(name="customer_id",nullable=false)
+	private Customer customer;
 	
 	
-	public Address(String doorNo, String street, String area, String city, String state, int pincode,
-			Set<Customer> customers) {
+	
+	public Address(String addressId, String doorNo, String street, String area, String city, String state, int pincode,
+			Customer customer) {
 		super();
+		this.addressId = addressId;
 		this.doorNo = doorNo;
 		this.street = street;
 		this.area = area;
 		this.city = city;
 		this.state = state;
 		this.pincode = pincode;
-		this.customers = customers;
+		this.customer = customer;
 	}
 	public String getDoorNo() {
 		return doorNo;
@@ -72,17 +77,26 @@ public class Address {
 	public void setPincode(int pincode) {
 		this.pincode = pincode;
 	}
-	public Set<Customer> getCustomers() {
-		return customers;
+	public String getAddressId() {
+		return addressId;
 	}
-	public void setCustomers(Set<Customer> customers) {
-		this.customers = customers;
+	public void setAddressId(String addressId) {
+		this.addressId = addressId;
+	}
+	public Customer getCustomer() {
+		return customer;
+	}
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 	@Override
 	public String toString() {
-		return "Address [doorNo=" + doorNo + ", street=" + street + ", area=" + area + ", city=" + city + ", state="
-				+ state + ", pincode=" + pincode + ", customers=" + customers + "]";
+		return "Address [addressId=" + addressId + ", doorNo=" + doorNo + ", street=" + street + ", area=" + area
+				+ ", city=" + city + ", state=" + state + ", pincode=" + pincode + ", customer=" + customer + "]";
 	}
+	
+	
+	
 	
 	
 }
