@@ -13,7 +13,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 @Entity
 @Table(name = "Customer")
-public class Customer {
+public class Customer extends User {
+	
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private String userId;
@@ -29,20 +32,27 @@ public class Customer {
 			)
 	private Set<Address> addresses;
 	
-	public Customer() {
-		
-	}
-
 	
-	public Customer(String userId, String name, String email, String contactNo, LocalDate dob, Set<Address> addresses) {
-		super();
-		this.userId = userId;
+	public Customer(String userId, String password, String role) {
+		super(userId, password, role);
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+
+
+	public Customer(String userId, String password, String role, String userId2, String name, String email,
+			String contactNo, LocalDate dob, Set<Address> addresses) {
+		super(userId, password, role);
+		userId = userId2;
 		this.name = name;
 		this.email = email;
 		this.contactNo = contactNo;
 		this.dob = dob;
 		this.addresses = addresses;
 	}
+
+
 
 
 	public String getUserId() {
