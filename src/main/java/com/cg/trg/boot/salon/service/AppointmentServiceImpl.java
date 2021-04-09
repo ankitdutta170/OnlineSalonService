@@ -62,7 +62,9 @@ public class AppointmentServiceImpl implements IAppointmentService {
 
 	@Override
 	public List<Appointment> getOpenAppointments() {
-		return null;
+		List<Appointment> appointments = repository.findAll();
+		return appointments;
+		
 	}
 
 }
