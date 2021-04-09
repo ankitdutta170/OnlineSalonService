@@ -8,18 +8,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
-import com.cg.trg.boot.salon.service.BillingServiceImp;
+
+import com.cg.trg.boot.salon.service.BillingServiceImpl;
 
 @RestController
 @RequestMapping("bill")
 public class BillingController { 
 	@Autowired
-	BillingServiceImp service1;
+	BillingServiceImpl service1;
 	
-	    @GetMapping(value = "{eid}", produces = { org.springframework.http.MediaType.APPLICATION_JSON_VALUE,
-	            org.springframework.http.MediaType.APPLICATION_XML_VALUE })
-	    public ResponseEntity<?> getEmployee(@PathVariable("eid") int BillId) {
-	        Employee e = service1.getEmployee(BillId);
 	    }
 
-}
+
