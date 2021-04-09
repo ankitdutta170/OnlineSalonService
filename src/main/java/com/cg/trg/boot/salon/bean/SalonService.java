@@ -20,8 +20,7 @@ public class SalonService {
 	private double price;
 	private int discount;
 	private String duration;
-	@OneToOne
-	@JoinColumn(name="appointmentId", referencedColumnName="appointmentId")
+	@OneToOne(mappedBy = "preferredService")
 	private Appointment appointment;
 	public SalonService() {
 		super();
