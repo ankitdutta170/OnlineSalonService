@@ -1,10 +1,11 @@
 package com.cg.trg.boot.salon.dao;
-
 import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.cg.trg.boot.salon.bean.SalonService;
 
-public interface ISalonRepository {
+public interface ISalonRepository extends JpaRepository<SalonService, Long>{
 	public SalonService addService(SalonService salonService);
 	public SalonService removeService(long id);
 	public SalonService updateService(long id, SalonService salonService);
@@ -15,3 +16,6 @@ public interface ISalonRepository {
 	
 	
 }
+
+
+
