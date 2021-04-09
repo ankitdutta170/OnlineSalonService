@@ -4,8 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
 import javax.persistence.Table;
-
+@Inheritance
 @Entity
 @Table(name = "User")
 public class User {
@@ -14,6 +15,7 @@ public class User {
 	private String userId;
 	private String password;
 	private String role;
+	private boolean isLoggedIn;
 	public User(String userId, String password, String role) {
 		super();
 		this.userId = userId;
