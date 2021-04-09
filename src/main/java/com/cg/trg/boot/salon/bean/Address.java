@@ -23,6 +23,8 @@ public class Address {
 	private int pincode;
 	@ManyToMany(mappedBy = "addresses")
 	private Set<Customer>customers;
+	
+	
 	public Address(String doorNo, String street, String area, String city, String state, int pincode,
 			Set<Customer> customers) {
 		super();
