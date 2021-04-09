@@ -10,8 +10,8 @@ public interface ISalonService {
 	public SalonService updateService(long id, SalonService salonService);
 	public SalonService getService(long id);
 	public List<SalonService> getAllServices();
-	public List<SalonService> getServiceByPrice();
-	public List<SalonService> getServiceByDuration();
+	
+	
 	
 	
 }

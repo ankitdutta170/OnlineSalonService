@@ -58,20 +58,10 @@ public class ISalonServiceImpl implements ISalonService {
 		
 	}
 
-	@Override
-	public List<SalonService> getServiceByPrice() {
-		List<SalonService> salonService = repository.getServiceByPrice();
-		return salonService;
-		
-	}
-
-	@Override
-	public List<SalonService> getServiceByDuration() {
-		List<SalonService> salonService = repository.getServiceByDuration();
-		return salonService;
-		
 	
-	}
 
+	
+
+	
 	
 }
