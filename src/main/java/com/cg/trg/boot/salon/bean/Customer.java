@@ -10,8 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-@Entity
+
 @Table(name = "Customer")
 public class Customer extends User {
 	
@@ -19,12 +20,12 @@ public class Customer extends User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private String userId;
+	//private String userId;
 	private String name;
 	private String email;
 	private String contactNo;
 	private  LocalDate dob;
-	@ManyToMany
+	@OneToMany
 	@JoinTable(
 			name = "customer_address",
 			joinColumns = @JoinColumn(name = "user_id"),
@@ -55,13 +56,6 @@ public class Customer extends User {
 
 
 
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
 
 	public String getName() {
 		return name;
@@ -109,7 +103,7 @@ public class Customer extends User {
 
 	@Override
 	public String toString() {
-		return "Customer [userId=" + userId + ", name=" + name + ", email=" + email + ", contactNo=" + contactNo
+		return "Customer [name=" + name + ", email=" + email + ", contactNo=" + contactNo
 				+ ", dob=" + dob + ", address=" + addresses+ "]";
 	}
 	
