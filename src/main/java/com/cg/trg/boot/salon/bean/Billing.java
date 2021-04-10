@@ -34,6 +34,9 @@ public class Billing {
 	}
 
 	
+	
+
+
 	public Billing(long billId, double amount, LocalDate billingDate, Customer customer, Appointment appointment,
 			Payment payment) {
 		super();
@@ -44,6 +47,8 @@ public class Billing {
 		this.appointment = appointment;
 		this.payment = payment;
 	}
+
+
 
 
 
