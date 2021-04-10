@@ -6,13 +6,11 @@ import org.springframework.stereotype.Service;
 
 import com.cg.trg.boot.salon.bean.Payment;
 import com.cg.trg.boot.salon.dao.IPaymentRepository;
-import com.google.common.base.Optional;
-
 
 @Service
 public class PaymentServiceImpl implements IPaymentService{
-	 @Autowired
-	    private IPaymentRepository repository;
+	 	@Autowired
+	    IPaymentRepository repository;
 	 
 		@Override
 		public Payment addPayment(Payment payment) {
@@ -58,7 +56,7 @@ public class PaymentServiceImpl implements IPaymentService{
 
 		@Override
 		public List<Payment> getAllPaymentDetails() {
-			// TODO Auto-generated method stub
+			
 			List<Payment> pay = repository.findAll();
 			return pay;
 		}
