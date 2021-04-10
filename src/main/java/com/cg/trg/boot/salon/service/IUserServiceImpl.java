@@ -5,10 +5,11 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.cg.trg.boot.salon.bean.User;
 import com.cg.trg.boot.salon.dao.IUserRepository;
-
+@Service
 public class IUserServiceImpl implements IUserService {
 
 	@Autowired

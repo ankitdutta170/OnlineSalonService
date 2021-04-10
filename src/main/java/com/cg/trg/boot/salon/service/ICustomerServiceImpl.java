@@ -10,13 +10,14 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 
 import com.cg.trg.boot.salon.bean.Appointment;
 import com.cg.trg.boot.salon.bean.Customer;
 import com.cg.trg.boot.salon.dao.ICustomerRepository;
 import com.cg.trg.boot.salon.exceptions.DuplicateAppointmentException;
 import com.cg.trg.boot.salon.exceptions.DuplicateCustomerException;
-
+@Service
 public class ICustomerServiceImpl implements ICustomerService{
     @Autowired
     ICustomerRepository repository;
