@@ -17,22 +17,22 @@ import javax.persistence.Table;
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private String userId;
+	private long userId;
 	private String password;
 	private String role;
 	private boolean isLoggedIn;
 	
-	public User(String userId, String password, String role, boolean isLoggedIn) {
+	public User(long userId, String password, String role, boolean isLoggedIn) {
 		super();
 		this.userId = userId;
 		this.password = password;
 		this.role = role;
 		this.isLoggedIn = isLoggedIn;
 	}
-	public String getUserId() {
+	public long getUserId() {
 		return userId;
 	}
-	public void setUserId(String userId) {
+	public void setUserId(long userId) {
 		this.userId = userId;
 	}
 	public String getPassword() {
