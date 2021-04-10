@@ -1,3 +1,4 @@
 
 *.log
 .metadata/.plugins/org.eclipse.buildship.ui/dialog_settings.xml
+saloonService/OnlineSalonService/
