@@ -13,10 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.trg.boot.salon.bean.User;
-import com.cg.trg.boot.salon.exceptions.PasswordChangeException;
-import com.cg.trg.boot.salon.exceptions.PasswordMisMatchException;
-import com.cg.trg.boot.salon.exceptions.SignOutException;
-import com.cg.trg.boot.salon.exceptions.UserIdNotFoundException;
 import com.cg.trg.boot.salon.service.IUserServiceImpl;
 
 import io.swagger.models.Response;
@@ -35,11 +31,11 @@ public class UserController {
 		if(service.signIn(user) != null)
 		{
 			return "Sign In Successful.";
-			
+			throw new UserIdNotFoundException("Request", "The User with this Id is not present");
 		}
 		else {
 			return "Sign In Unsuccessful";
-			
+			throw new PasswordMisMatchException("Request", "Invalid Password");
 		}
 		
         
@@ -55,7 +51,7 @@ public class UserController {
 		}
 		else {
 			return "Sign Out Unsuccessful";
-			
+			throw new SignOutException("The User is still Signed In");
 		}
 	}
 
@@ -66,7 +62,7 @@ public class UserController {
 				return "Password successfully changed.";
 			else
 				return "Unable to change password";
-			
+			throw new PasswordChangeException("Password could not be changed");
 	    
 	 }
 }
