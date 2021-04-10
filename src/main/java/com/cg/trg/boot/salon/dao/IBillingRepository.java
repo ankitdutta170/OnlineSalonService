@@ -8,10 +8,10 @@ import org.springframework.stereotype.Repository;
 import com.cg.trg.boot.salon.bean.Billing;
 @Repository
 public interface IBillingRepository extends JpaRepository<Billing, Long>{
-	public Billing addOrder(Billing bill);
-	public Billing removeOrder(long id);
-	public Billing  updateOrder(long id, Billing bill);
-	public Billing  getOrderDetails(long id);
-	public List<Billing> getAllOrders(); 
+	/*
+	 * public Billing addOrder(Billing bill); public Billing removeOrder(long id);
+	 * public Billing updateOrder(long id, Billing bill); public Billing
+	 * getOrderDetails(long id); public List<Billing> getAllOrders();
+	 */
 	
 }

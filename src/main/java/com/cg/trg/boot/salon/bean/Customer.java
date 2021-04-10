@@ -33,14 +33,14 @@ public class Customer extends User {
 	
 	
 
-	public Customer(String userId, String password, String role, boolean isLoggedIn) {
+	public Customer(long userId, String password, String role, boolean isLoggedIn) {
 		super(userId, password, role, isLoggedIn);
 		// TODO Auto-generated constructor stub
 	}
 
 
 
-	public Customer(String userId, String password, String role, boolean isLoggedIn, String name, String email,
+	public Customer(long userId, String password, String role, boolean isLoggedIn, String name, String email,
 			String contactNo, LocalDate dob, Set<Address> addresses, List<Appointment> appointment,
 			List<Billing> bills) {
 		super(userId, password, role, isLoggedIn);

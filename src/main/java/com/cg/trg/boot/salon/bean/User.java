@@ -20,7 +20,7 @@ public class User {
 	private long userId;
 	private String password;
 	private String role;
-	public boolean isLoggedIn;
+	private boolean isLoggedIn;
 	
 	public User(long userId, String password, String role, boolean isLoggedIn) {
 		super();

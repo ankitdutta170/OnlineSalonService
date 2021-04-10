@@ -3,11 +3,14 @@ package com.cg.trg.boot.salon.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityExistsException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.trg.boot.salon.bean.Appointment;
 import com.cg.trg.boot.salon.dao.IAppointmentRepository;
+import com.cg.trg.boot.salon.exceptions.DuplicateAppointmentException;
 
 @Service
 public class AppointmentServiceImpl implements IAppointmentService {
@@ -16,8 +19,14 @@ public class AppointmentServiceImpl implements IAppointmentService {
 	IAppointmentRepository repository;
 	@Override
 	public Appointment addAppointment(Appointment appointment) {
-		repository.save(appointment);
-		return appointment;
+		try {
+			Appointment savedAppointment = repository.save(appointment);
+			return savedAppointment;
+			
+		}
+		catch(EntityExistsException ex) {
+			throw new DuplicateAppointmentException("You are trying to save duplicate appointment");
+		}
 	}
 
 	@Override
@@ -66,5 +75,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
 		return appointments;
 		
 	}
+	
+	
 
 }
