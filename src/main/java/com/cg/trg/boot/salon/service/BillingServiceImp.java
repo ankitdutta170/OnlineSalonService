@@ -14,7 +14,7 @@ import com.cg.trg.boot.salon.bean.Appointment;
 import com.cg.trg.boot.salon.bean.Billing;
 import com.cg.trg.boot.salon.dao.IBillingRepository;
 @Service
-public class BillingServiceImpl implements IBillingService {
+public class BillingServiceImp implements IBillingService {
 	@Autowired
 	IBillingRepository repository;
 
@@ -70,6 +70,5 @@ public class BillingServiceImpl implements IBillingService {
 		return bill;
 		
 	}
-
 	
 }
