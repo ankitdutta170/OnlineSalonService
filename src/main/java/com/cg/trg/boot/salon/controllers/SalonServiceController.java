@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import com.cg.trg.boot.salon.bean.SalonService;
-import com.cg.trg.boot.salon.exceptions.AppointmentNotFoundException;
-import com.cg.trg.boot.salon.exceptions.EmptyDataException;
 import com.cg.trg.boot.salon.exceptions.NoDataException;
 import com.cg.trg.boot.salon.exceptions.SalonServiceNotFoundException;
 import com.cg.trg.boot.salon.service.ISalonServiceImpl;
@@ -44,7 +42,7 @@ public class SalonServiceController {
 	public ResponseEntity<?> getSalonService(@PathVariable("aid")long id){
 		SalonService service1 = service.getService(id);
 		if(service1 == null) {
-			throw new AppointmentNotFoundException("Request", "Salon Service with appointment id:"+id+"not found");
+			throw new SalonServiceNotFoundException("Request", "Salon Service with appointment id:"+id+"not found");
 		}
 		return new ResponseEntity<SalonService>(service1, HttpStatus.OK);
 	}
@@ -52,7 +50,7 @@ public class SalonServiceController {
 	public List<SalonService> getAllServices(){
 		List<SalonService>services = service.getAllServices();
 		if(services.size() == 0) {
-			throw new EmptyDataException("No Service saved in database");
+			throw new NoDataException("No Service saved in database");
 		}
 		return services;
 		
