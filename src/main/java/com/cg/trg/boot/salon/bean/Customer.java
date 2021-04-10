@@ -28,10 +28,7 @@ public class Customer extends User {
 	@OneToMany(mappedBy = "customer")
 	private List<Billing> bills;
 	
-	
-	
-	
-	
+		
 
 	public Customer(String userId, String password, String role, boolean isLoggedIn) {
 		super(userId, password, role, isLoggedIn);
@@ -52,20 +49,6 @@ public class Customer extends User {
 		this.appointment = appointment;
 		this.bills = bills;
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 	public String getName() {
