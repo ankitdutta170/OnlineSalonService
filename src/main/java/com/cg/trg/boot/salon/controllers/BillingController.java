@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import com.cg.trg.boot.salon.bean.Billing;
-import com.cg.trg.boot.salon.exceptions.AppointmentNotFoundException;
+import com.cg.trg.boot.salon.exceptions.BillNotFoundException;
 import com.cg.trg.boot.salon.exceptions.EmptyDataException;
 import com.cg.trg.boot.salon.service.BillingServiceImpl;
 
@@ -56,7 +56,7 @@ public class BillingController {
 	public ResponseEntity<?> getBill(@PathVariable("aid")long id){
 		Billing bill = service1.getBillDetails(id);
 		if(bill == null) {
-			throw new AppointmentNotFoundException("Request", "Bill with Bill id:"+id+"not found");
+			throw new BillNotFoundException("Request", "Bill with Bill id:"+id+"not found");
 		}
 		return new ResponseEntity<Billing>(bill, HttpStatus.OK);
 	}
