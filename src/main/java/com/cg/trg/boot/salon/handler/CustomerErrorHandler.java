@@ -1,8 +1,5 @@
 package com.cg.trg.boot.salon.handler;
 
-<<<<<<< HEAD
-public class CustomerErrorHandler {
-=======
 import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -48,8 +45,6 @@ public class CustomerErrorHandler {
 		errorBody.put("details", ex.getMessage());
 		
 		return new ResponseEntity<>(errorBody, HttpStatus.NOT_FOUND);
-	}
 		
->>>>>>> 4262d988b10f74743c6fdf3665fd28426279874e
-
+	}
 }
