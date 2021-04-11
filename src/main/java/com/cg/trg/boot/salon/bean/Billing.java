@@ -77,10 +77,7 @@ public class Billing {
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
-	
-	
-
-	
+		
 
 	public Payment getPayment() {
 		return payment;
