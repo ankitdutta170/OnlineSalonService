@@ -2,7 +2,7 @@ package com.cg.trg.boot.salon.service;
 
 import java.util.List;
 
-
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.cg.trg.boot.salon.bean.Billing;
 
