@@ -27,7 +27,9 @@ public class Address {
 	@JoinColumn(name="user_id")
 	private Customer customer;
 	
-	
+	public Address() {
+		
+	}
 	
 	public Address(String addressId, String doorNo, String street, String area, String city, String state, int pincode,
 			Customer customer) {

@@ -22,9 +22,11 @@ public class Card {
     private LocalDate cardExpiry;
     private int cvv;
     
+	public Card() {
+		
+	}
 	
-	
-	public Card(long cardId, String cardName, String cardNumber, LocalDate cardExpiry, int cvv, Payment payment) {
+	public Card(long cardId, String cardName, String cardNumber, LocalDate cardExpiry, int cvv) {
 		super();
 		this.cardId = cardId;
 		this.cardName = cardName;

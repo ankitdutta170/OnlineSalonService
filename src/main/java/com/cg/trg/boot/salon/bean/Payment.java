@@ -20,7 +20,9 @@ public class Payment {
 	
 	
 	
-
+	public Payment() {
+		
+	}
 	
 
 	public Payment(long paymentId, String type, String status, Card card) {

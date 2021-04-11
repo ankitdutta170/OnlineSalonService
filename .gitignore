@@ -35,3 +35,10 @@ out/
 
 ### VS Code ###
 .vscode/
+.gradle/checksums/checksums.lock
+.gradle/checksums/checksums.lock
+bin/main/com/cg/trg/boot/salon/bean/Address.class
+bin/main/com/cg/trg/boot/salon/bean/Appointment.class
+bin/main/com/cg/trg/boot/salon/bean/Card.class
+bin/main/com/cg/trg/boot/salon/bean/Payment.class
+bin/test/com/cg/trg/boot/OnlineSalonServiceApplicationTests.class

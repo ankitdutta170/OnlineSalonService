@@ -51,7 +51,7 @@ public class Appointment {
 	}
 
 	public Appointment(long appointmentId, String location, String visitType, SalonService preferredService,
-			LocalDate preferredDate, LocalTime preferredTime, Customer customer, Address address) {
+			LocalDate preferredDate, LocalTime preferredTime, Customer customer, Address address, Billing billing) {
 		super();
 		this.appointmentId = appointmentId;
 		this.location = location;
@@ -61,7 +61,7 @@ public class Appointment {
 		this.preferredTime = preferredTime;
 		this.customer = customer;
 		this.address = address;
-		
+		this.billing = billing;
 	}
 
 	public long getAppointmentId() {
