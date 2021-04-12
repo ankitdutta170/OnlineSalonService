@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.cg.trg.boot.salon.bean.Appointment;
 import com.cg.trg.boot.salon.bean.Payment;
-import com.cg.trg.boot.salon.exceptions.AppointmentNotFoundException;
 import com.cg.trg.boot.salon.exceptions.EmptyDataException;
 import com.cg.trg.boot.salon.exceptions.PaymentNotFound;
 import com.cg.trg.boot.salon.service.PaymentServiceImpl;
