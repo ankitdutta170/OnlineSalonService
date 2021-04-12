@@ -12,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import com.cg.trg.boot.salon.bean.Address;
-
 import com.cg.trg.boot.salon.bean.Billing;
 import com.cg.trg.boot.salon.bean.Card;
 import com.cg.trg.boot.salon.bean.Customer;
@@ -45,5 +43,6 @@ class BillingServiceTest {
 		bill.setPayment(payment);
 	
 	}
+	
 
 }
