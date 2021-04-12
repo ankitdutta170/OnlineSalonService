@@ -3,19 +3,11 @@ package com.cg.trg.boot.salon.service;
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.EntityExistsException;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.cg.trg.boot.salon.bean.Appointment;
 import com.cg.trg.boot.salon.bean.Billing;
 import com.cg.trg.boot.salon.dao.IBillingRepository;
-import com.cg.trg.boot.salon.exceptions.DuplicateAppointmentException;
 @Service
 public class BillingServiceImpl implements IBillingService {
 	@Autowired

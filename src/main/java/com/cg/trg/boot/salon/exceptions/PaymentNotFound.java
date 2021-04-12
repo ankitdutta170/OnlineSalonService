@@ -1,6 +1,7 @@
 package com.cg.trg.boot.salon.exceptions;
 
 public class PaymentNotFound extends RuntimeException{
+	private static final long serialVersionUID = 1L;
 	private String operation;
 	private String message;
 	public PaymentNotFound(String opertaion) {
