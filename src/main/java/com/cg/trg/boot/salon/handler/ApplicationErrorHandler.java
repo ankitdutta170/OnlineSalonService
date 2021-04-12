@@ -25,7 +25,7 @@ public class ApplicationErrorHandler {
 	public ResponseEntity<?> handleDuplicateAppointmentData(DuplicateAppointmentException ex) {
 		Map<String, Object> errorBody = new LinkedHashMap<>();
 
-		errorBody.put("error", "creation failed");
+		errorBody.put("error", "Duplicate data");
 		errorBody.put("timestamp", LocalDate.now());
 		errorBody.put("details", ex.getMessage());
 		
@@ -36,7 +36,7 @@ public class ApplicationErrorHandler {
 	@ExceptionHandler(EmptyDataException.class)
 	public ResponseEntity<?> handleEmptyData(EmptyDataException ex) {
 		Map<String, Object> errorBody = new LinkedHashMap<>();
-		errorBody.put("error", "creation failed");
+		errorBody.put("error", "No Data Found");
 		errorBody.put("timestamp", LocalDate.now());
 		errorBody.put("details", ex.getMessage());
 		
@@ -46,7 +46,7 @@ public class ApplicationErrorHandler {
 	@ExceptionHandler(AppointmentNotFoundException.class)
 	public ResponseEntity<?> handleMissingAppointment(AppointmentNotFoundException ex) {
 		Map<String, Object> errorBody = new LinkedHashMap<>();
-		errorBody.put("error", "creation failed");
+		errorBody.put("error", "Appointment Not Found");
 		errorBody.put("timestamp", LocalDate.now());
 		errorBody.put("details", ex.getMessage());
 		
