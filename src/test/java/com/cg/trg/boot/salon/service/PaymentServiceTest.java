@@ -5,9 +5,12 @@ import static org.mockito.Mockito.when;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -31,15 +34,24 @@ class PaymentServiceTest {
     private static final Long paymentId = 1110L;
 
 
-	@Test
-	@DisplayName("Test for Payment Retrival")
-	public Optional<Payment> getPaymentDetails() {
+//	@Test
+//	@DisplayName("Test for Payment Retrival")
+//	public Optional<Payment> getPaymentDetails() {
+//		
+//		Payment payment=new Payment();
+//		payment.setPaymentId(1110);
+//		payment.setType("card");
+//		when(paymentRepository.findById(paymentId)).thenReturn(getPaymentDetails());
+//		assertEquals(payment, paymentService.addPayment(payment));
+//		
+//	}
+    @Test
+	public void getAllPaymentDetails() {
+		Mockito.when(paymentRepository.findAll())
+		.thenReturn(Stream.of(new Payment(),new Payment()).collect(Collectors.toList()));
 		
-		Payment payment=new Payment();
-		payment.setPaymentId(1110);
-		payment.setType("card");
-		when(paymentRepository.findById(paymentId)).thenReturn(getPaymentDetails());
-		assertEquals(payment, paymentService.addPayment(payment));
+		assertEquals(2, paymentService.getAllPaymentDetails().size());
+		
 		
 	}
 }
