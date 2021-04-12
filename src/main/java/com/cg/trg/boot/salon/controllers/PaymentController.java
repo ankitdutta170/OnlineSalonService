@@ -42,7 +42,7 @@ public class PaymentController {
 		}
 	}
 
-	@PutMapping("/payment/{id}")
+	@PutMapping("/payment/update/{id}")
 	public String updatePayment(@PathVariable(value = "id") long paymentId, Payment payment) {
 		Payment check = repo.getPaymentDetails(paymentId);
 		if(check==null) {
@@ -56,11 +56,11 @@ public class PaymentController {
 		
 	}
 
-	@GetMapping("/payment/{id}")
+	@GetMapping("/payment/details/{id}")
 	public ResponseEntity<?> getPaymentDetails(@PathVariable(value = "id") long paymentId) {
 		Payment pay = repo.getPaymentDetails(paymentId);
 		if (pay == null) {
-			throw new PaymentNotFound("Request", "Appointment with appointment id:" + paymentId + "not found");
+			throw new PaymentNotFound("Request", "Payment with payment id:" + paymentId + "not found");
 		}
 		return new ResponseEntity<Payment>(pay, HttpStatus.OK);
 	}

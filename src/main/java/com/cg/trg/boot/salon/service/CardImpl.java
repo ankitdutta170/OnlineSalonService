@@ -3,7 +3,6 @@ package com.cg.trg.boot.salon.service;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cg.trg.boot.salon.bean.Card;
-import com.cg.trg.boot.salon.bean.Payment;
 import com.cg.trg.boot.salon.dao.ICardRepository;
 
 
@@ -25,6 +24,25 @@ public class CardImpl implements ICardService {
 		}
 		else {
 			return null;
+		}
+	}
+	@Override
+	public Card updateCard(long cardId, Card card) {
+		if(repository.existsById(cardId)) {
+			Card cardToBeUpdated = repository.findById(cardId).get();
+			repository.save(card);
+			return cardToBeUpdated;
+		}
+		return null;
+	}
+	@Override
+	public Card getCardDetails(long cardId) {
+		java.util.Optional<Card> card= repository.findById(cardId);
+		if(card.isPresent()) {
+			return card.get();
+		}
+		else {
+		return null;
 		}
 	}
 }
