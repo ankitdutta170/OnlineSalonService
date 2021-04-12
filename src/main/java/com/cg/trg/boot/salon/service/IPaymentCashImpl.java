@@ -5,24 +5,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.trg.boot.salon.bean.Payment;
+import com.cg.trg.boot.salon.bean.PaymentCash;
+import com.cg.trg.boot.salon.dao.IPaymentCashRepository;
 import com.cg.trg.boot.salon.dao.IPaymentRepository;
 
 @Service
-public class PaymentServiceImpl implements IPaymentService{
+public class IPaymentCashImpl implements IPaymentCashService{
 	 	@Autowired
-	    IPaymentRepository repository;
+	 	IPaymentCashRepository repository;
 	 	
 	 
 		@Override
-		public Payment addPayment(Payment payment) {
+		public PaymentCash addCashPayment(PaymentCash payment) {
 			repository.save(payment);
 			return payment;
 		}
 		
 
 		@Override
-		public Payment removePayment(long paymentId) {
-			java.util.Optional<Payment> PaymentToBeDeleted =  repository.findById(paymentId);
+		public PaymentCash removeCashPayment(long paymentId) {
+			java.util.Optional<PaymentCash> PaymentToBeDeleted =  repository.findById(paymentId);
 			repository.deleteById(paymentId);
 			
 			if(PaymentToBeDeleted.isPresent()) {
@@ -36,9 +38,9 @@ public class PaymentServiceImpl implements IPaymentService{
 		
 
 		@Override
-		public Payment updatePayment(long paymentId, Payment payment) {
+		public PaymentCash updateCashPayment(long paymentId, PaymentCash payment) {
 			if(repository.existsById(paymentId)) {
-				Payment paymentToBeUpdated = repository.findById(paymentId).get();
+				PaymentCash paymentToBeUpdated = repository.findById(paymentId).get();
 				repository.save(payment);
 				return paymentToBeUpdated;
 			}
@@ -46,8 +48,8 @@ public class PaymentServiceImpl implements IPaymentService{
 		}
 
 		@Override
-		public Payment getPaymentDetails(long paymentId) {
-			java.util.Optional<Payment> pay= repository.findById(paymentId);
+		public PaymentCash getCashPaymentDetails(long paymentId) {
+			java.util.Optional<PaymentCash> pay= repository.findById(paymentId);
 			if(pay.isPresent()) {
 				return pay.get();
 			}
@@ -57,9 +59,9 @@ public class PaymentServiceImpl implements IPaymentService{
 		}
 
 		@Override
-		public List<Payment> getAllPaymentDetails() {
+		public List<PaymentCash> getAllCashPaymentDetails() {
 			
-			List<Payment> pay = repository.findAll();
+			List<PaymentCash> pay = repository.findAll();
 			return pay;
 		}
 	
