@@ -1,17 +1,24 @@
 package com.cg.trg.boot.salon.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import com.cg.trg.boot.salon.bean.Appointment;
 import com.cg.trg.boot.salon.bean.Billing;
 import com.cg.trg.boot.salon.bean.Card;
 import com.cg.trg.boot.salon.bean.Customer;
@@ -42,6 +49,46 @@ class BillingServiceTest {
 		bill.setCustomer(customer);
 		bill.setPayment(payment);
 	
+	}
+	@Test
+	public void getAllBillTest() {
+		Mockito.when(IBillingRepository.findAll())
+		.thenReturn(java.util.stream.Stream.of(new Billing(),new Billing()).collect(Collectors.toList()));
+		
+		assertEquals(2, appointmentService.getAllBills().size());
+		verify(appointmentRepository, times(1)).findAll();
+		
+	}
+	
+	@Test
+	public void deleteAppointmentTest() {
+		int appointmentId = 1;
+		appointmentService.removeBill(appointmentId);
+		
+		verify(billingRepository, times(1)).deleteById((long) appointmentId);
+	}
+	
+	
+	@Test
+	public void getBillingById() {
+		Optional<Billing> bill = appointmentRepository.findById(1L);
+		if(bill.isPresent()) {
+			assertEquals(bill.get().getAppointmentId(), 1L);
+		}
+	}
+	
+	@Test
+	public void updateBillingTest() {
+		Optional<Billing> bill = billRepository.findById(1L);
+		if(bill.isPresent()) {
+			bill.get().setVisitType("Home");
+			billingRepository.save(bill.get());
+			
+		}
+		Optional<Appointment> updatedBilling = billRepository.findById(1L);
+		if(updatedBilling.isPresent()) {
+			assertThat(updatedBilling.get().getVisitType().equals("Home"));
+		}
 	}
 	
 
