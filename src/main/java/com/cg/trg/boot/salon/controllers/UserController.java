@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.trg.boot.salon.bean.User;
+import com.cg.trg.boot.salon.exceptions.PasswordMismatchException;
+import com.cg.trg.boot.salon.exceptions.UserNotFoundException;
 import com.cg.trg.boot.salon.service.IUserServiceImpl;
 
 import io.swagger.models.Response;
@@ -28,15 +30,17 @@ public class UserController {
 	@GetMapping(value = "{signin}")
     public String signIn(@PathVariable("signIn") User user) {
 		
-		if(service.signIn(user) != null)
-		{
-			return "Sign In Successful.";
+		try {
+			service.signIn(user);
+			return "Sign In Successfull";
+		}catch(UserNotFoundException ex) {
+			System.out.println(ex.getMessage());
+		}catch(PasswordMismatchException ex) {
+			System.out.println(ex.getMessage());
 			
 		}
-		else {
-			return "Sign In Unsuccessful";
-			
-		}
+		return "SignIn Unsuccessfull";
+		
 		
         
        
