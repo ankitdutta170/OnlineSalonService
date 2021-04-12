@@ -15,16 +15,26 @@ public class Payment {
 	private String type;
 	private String status;
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "card_id")
+	@JoinColumn(name = "card_id_fk")
 	private Card card;
-	
-	
+	@OneToOne(mappedBy = "payment", targetEntity = Billing.class)
+	private Billing billing;
 	
 	public Payment() {
 		
 	}
 	
 
+	
+
+	public Payment(long paymentId, String type, String status, Card card, Billing billing) {
+		super();
+		this.paymentId = paymentId;
+		this.type = type;
+		this.status = status;
+		this.card = card;
+		this.billing = billing;
+	}
 	public Payment(long paymentId, String type, String status, Card card) {
 		super();
 		this.paymentId = paymentId;
@@ -33,6 +43,16 @@ public class Payment {
 		this.card = card;
 		
 	}
+
+	public Payment( String type, String status, Card card, Billing billing) {
+		super();
+		
+		this.type = type;
+		this.status = status;
+		this.card = card;
+		this.billing = billing;
+	}
+
 
 	public long getPaymentId() {
 		return paymentId;
@@ -68,11 +88,30 @@ public class Payment {
 	
 	
 	
+	public Billing getBilling() {
+		return billing;
+	}
+
+
+
+
+	public void setBilling(Billing billing) {
+		this.billing = billing;
+	}
+
+
+
+
 	@Override
 	public String toString() {
 		return "Payment [paymentId=" + paymentId + ", type=" + type + ", status=" + status + ", card=" + card
-				+ "]";
+				+ ", billing=" + billing + "]";
 	}
+
+
+
+
+	
 
 	
 

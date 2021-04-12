@@ -2,6 +2,7 @@ package com.cg.trg.boot.salon.bean;
 
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,29 +21,50 @@ public class Billing {
 	private double amount;
 	private LocalDate billingDate;
 	@ManyToOne
-	@JoinColumn(name="user_id")
+	@JoinColumn(name="user_id_fk")
 	private Customer customer;
 	
 	
 	@OneToOne
-	@JoinColumn(name="payment_id")
+	@JoinColumn(name="payment_id_fk")
 	private Payment payment;
 	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="appointment_id_fk")
+	private Appointment appointment;
 	public Billing() {
 		
 	}
 
 	
-	public Billing(long billId, double amount, LocalDate billingDate, Customer customer,
-			Payment payment) {
+	
+
+
+
+	public Billing(long billId, double amount, LocalDate billingDate, Customer customer, Payment payment,
+			Appointment appointment) {
 		super();
 		this.billId = billId;
 		this.amount = amount;
 		this.billingDate = billingDate;
 		this.customer = customer;
-		
 		this.payment = payment;
+		this.appointment = appointment;
 	}
+	
+	public Billing(double amount, LocalDate billingDate, Customer customer, Payment payment,
+			Appointment appointment) {
+		super();
+		
+		this.amount = amount;
+		this.billingDate = billingDate;
+		this.customer = customer;
+		this.payment = payment;
+		this.appointment = appointment;
+	}
+
+
+
 
 
 
@@ -89,11 +111,36 @@ public class Billing {
 	}
 	
 
+	public Appointment getAppointment() {
+		return appointment;
+	}
+
+
+
+
+
+
+	public void setAppointment(Appointment appointment) {
+		this.appointment = appointment;
+	}
+
+
+
+
+
+
 	@Override
 	public String toString() {
 		return "Billing [billId=" + billId + ", amount=" + amount + ", billingDate=" + billingDate + ", customer="
-				+ customer +  ", payment=" + payment + "]";
+				+ customer + ", payment=" + payment + ", appointment=" + appointment + "]";
 	}
+
+
+
+
+
+
+	
 
 
 	

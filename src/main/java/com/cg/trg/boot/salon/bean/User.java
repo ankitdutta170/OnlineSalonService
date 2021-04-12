@@ -32,6 +32,14 @@ public class User {
 		this.role = role;
 		this.isLoggedIn = isLoggedIn;
 	}
+	
+	public User(String password, String role, boolean isLoggedIn) {
+		super();
+		this.password = password;
+		this.role = role;
+		this.isLoggedIn = isLoggedIn;
+	}
+	
 	public long getUserId() {
 		return userId;
 	}

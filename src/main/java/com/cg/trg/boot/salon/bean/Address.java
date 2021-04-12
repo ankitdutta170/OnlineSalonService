@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 @Entity
 @Table(name = "Address")
@@ -23,15 +24,18 @@ public class Address {
 	private String state;
 	private int pincode;
 	@ManyToOne
-	@JoinColumn(name="user_id")
+	@JoinColumn(name="user_id_fk")
 	private Customer customer;
+	@OneToOne(mappedBy = "address",targetEntity = Appointment.class)
+	private Appointment appointment;
 	
 	public Address() {
 		
 	}
 	
+	
 	public Address(String addressId, String doorNo, String street, String area, String city, String state, int pincode,
-			Customer customer) {
+			Customer customer, Appointment appointment) {
 		super();
 		this.addressId = addressId;
 		this.doorNo = doorNo;
@@ -41,7 +45,23 @@ public class Address {
 		this.state = state;
 		this.pincode = pincode;
 		this.customer = customer;
+		this.appointment = appointment;
 	}
+	
+	public Address(String doorNo, String street, String area, String city, String state, int pincode,
+			Customer customer, Appointment appointment) {
+		super();
+		
+		this.doorNo = doorNo;
+		this.street = street;
+		this.area = area;
+		this.city = city;
+		this.state = state;
+		this.pincode = pincode;
+		this.customer = customer;
+		this.appointment = appointment;
+	}
+
 	public String getDoorNo() {
 		return doorNo;
 	}
@@ -90,11 +110,26 @@ public class Address {
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
+	
+	public Appointment getAppointment() {
+		return appointment;
+	}
+
+
+	public void setAppointment(Appointment appointment) {
+		this.appointment = appointment;
+	}
+
+
 	@Override
 	public String toString() {
 		return "Address [addressId=" + addressId + ", doorNo=" + doorNo + ", street=" + street + ", area=" + area
-				+ ", city=" + city + ", state=" + state + ", pincode=" + pincode + ", customer=" + customer + "]";
+				+ ", city=" + city + ", state=" + state + ", pincode=" + pincode + ", customer=" + customer
+				+ ", appointment=" + appointment + "]";
 	}
+
+
+	
 	
 	
 	
