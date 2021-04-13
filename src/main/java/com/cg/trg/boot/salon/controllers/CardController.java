@@ -1,5 +1,6 @@
 package com.cg.trg.boot.salon.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,6 +17,7 @@ import com.cg.trg.boot.salon.service.CardImpl;
 
 @RestController
 public class CardController {
+	@Autowired
 	private CardImpl repository;
 	
 	@PostMapping("/addcard")
@@ -55,7 +57,7 @@ public class CardController {
 		public ResponseEntity<?> getCardDetails(@PathVariable(value = "id") long cardId) {
 			Card check = repository.getCardDetails(cardId);
 			if (check==null) {
-				throw new CardNotFoundException("Request", "Card with payment id:" + cardId + "not found");
+				throw new CardNotFoundException("Request", "Card with payment id: " + cardId + " not found");
 			}
 			return new ResponseEntity<Card>(check, HttpStatus.OK);
 		}
