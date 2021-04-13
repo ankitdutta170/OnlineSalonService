@@ -1,7 +1,5 @@
 package com.cg.trg.boot.salon.bean;
 
-
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

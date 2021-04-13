@@ -1,11 +1,9 @@
 package com.cg.trg.boot.salon.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import java.time.LocalDate;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -73,13 +71,13 @@ class AdressServiceTest {
 	public void updateAdressTest() {
 		Optional<Address> address = adressRepository.findById(1L);
 		if(address.isPresent()) {
-			//address.get().setVisitType("Home");
+			
 			adressRepository.save(address.get());
 			
 		}
 		Optional<Address> updatedAdress = adressRepository.findById(1L);
 		if(updatedAdress.isPresent()) {
-			//assertThat(updatedAdress.get().getVisitType().equals("Home"));
+			
 		}
 	}
 
