@@ -1,11 +1,12 @@
 package com.cg.trg.boot.salon.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.cg.trg.boot.salon.bean.Card;
 import com.cg.trg.boot.salon.dao.ICardRepository;
 
-
+@Service
 public class CardImpl implements ICardService {
 	
 	@Autowired
