@@ -27,7 +27,7 @@ public class Appointment {
 	private String visitType;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="salon_service_id")
+	@JoinColumn(name="salon_service_id_fk")
 	private SalonService preferredService;
 	
 	
@@ -35,20 +35,21 @@ public class Appointment {
 	
 	private LocalTime preferredTime;
 	@ManyToOne
-	@JoinColumn(name="user_id")
+	@JoinColumn(name="user_id_fk")
 	private Customer customer;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="address_id")
+	@JoinColumn(name="address_id_fk")
 	private Address address;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="bill_id")
+	@OneToOne(mappedBy = "appointment", targetEntity = Billing.class)
 	private Billing billing;
 	
 	public Appointment() {
 		
 	}
+
+	
 
 	public Appointment(long appointmentId, String location, String visitType, SalonService preferredService,
 			LocalDate preferredDate, LocalTime preferredTime, Customer customer, Address address, Billing billing) {
@@ -63,6 +64,21 @@ public class Appointment {
 		this.address = address;
 		this.billing = billing;
 	}
+	public Appointment(String location, String visitType, SalonService preferredService,
+			LocalDate preferredDate, LocalTime preferredTime, Customer customer, Address address, Billing billing) {
+		super();
+		
+		this.location = location;
+		this.visitType = visitType;
+		this.preferredService = preferredService;
+		this.preferredDate = preferredDate;
+		this.preferredTime = preferredTime;
+		this.customer = customer;
+		this.address = address;
+		this.billing = billing;
+	}
+
+
 
 	public long getAppointmentId() {
 		return appointmentId;
@@ -135,7 +151,7 @@ public class Appointment {
 	public void setBilling(Billing billing) {
 		this.billing = billing;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Appointment [appointmentId=" + appointmentId + ", location=" + location + ", visitType=" + visitType

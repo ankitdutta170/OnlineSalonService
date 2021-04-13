@@ -11,12 +11,14 @@ import com.cg.trg.boot.salon.dao.IPaymentRepository;
 public class PaymentServiceImpl implements IPaymentService{
 	 	@Autowired
 	    IPaymentRepository repository;
+	 	
 	 
 		@Override
 		public Payment addPayment(Payment payment) {
 			repository.save(payment);
 			return payment;
 		}
+		
 
 		@Override
 		public Payment removePayment(long paymentId) {

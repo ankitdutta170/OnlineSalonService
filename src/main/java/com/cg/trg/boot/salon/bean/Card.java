@@ -21,11 +21,23 @@ public class Card {
 	private String cardNumber;
     private LocalDate cardExpiry;
     private int cvv;
-    
+    @OneToOne(mappedBy = "card", targetEntity = Payment.class)
+    private Payment payment;
 	public Card() {
 		
 	}
 	
+	
+
+	public Card(long cardId, String cardName, String cardNumber, LocalDate cardExpiry, int cvv, Payment payment) {
+		super();
+		this.cardId = cardId;
+		this.cardName = cardName;
+		this.cardNumber = cardNumber;
+		this.cardExpiry = cardExpiry;
+		this.cvv = cvv;
+		this.payment = payment;
+	}
 	public Card(long cardId, String cardName, String cardNumber, LocalDate cardExpiry, int cvv) {
 		super();
 		this.cardId = cardId;
@@ -35,6 +47,17 @@ public class Card {
 		this.cvv = cvv;
 		
 	}
+	
+	public Card(String cardName, String cardNumber, LocalDate cardExpiry, int cvv, Payment payment) {
+		super();
+		
+		this.cardName = cardName;
+		this.cardNumber = cardNumber;
+		this.cardExpiry = cardExpiry;
+		this.cvv = cvv;
+		this.payment = payment;
+	}
+
 
 	public long getCardId() {
 		return cardId;
@@ -70,11 +93,27 @@ public class Card {
 	}
 	
 	
+	public Payment getPayment() {
+		return payment;
+	}
+
+
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "Card [cardId=" + cardId + ", cardName=" + cardName + ", cardNumber=" + cardNumber + ", cardExpiry="
-				+ cardExpiry + ", cvv=" + cvv + "]";
+				+ cardExpiry + ", cvv=" + cvv + ", payment=" + payment + "]";
 	}
+
+
+
+	
 
 	
 	

@@ -2,6 +2,7 @@ package com.cg.trg.boot.salon.service;
 
 import java.util.Optional;
 
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.cg.trg.boot.salon.bean.User;
 import com.cg.trg.boot.salon.dao.IUserRepository;
+import com.cg.trg.boot.salon.exceptions.PasswordMismatchException;
+import com.cg.trg.boot.salon.exceptions.UserNotFoundException;
 @Service
 public class IUserServiceImpl implements IUserService {
 
@@ -26,10 +29,11 @@ public class IUserServiceImpl implements IUserService {
 				return userFromDBTable;
 				
 			}
-				
-			return null;
+			else {	
+			throw new PasswordMismatchException("Password doesn't match!Retry.");
+			}
 		} else {
-			return null;
+			throw new UserNotFoundException("User does not exist");
 		}
 
 	}
