@@ -62,7 +62,7 @@ public class DBInit implements CommandLineRunner{
 		cardRepository.save(new Card("MasterCard","6468486465",LocalDate.of(2023, 10, 21),425,new Payment()));
 		cardRepository.save(new Card("Rupday","5165156262",LocalDate.of(2024, 9, 15),424,new Payment()));
 		cardRepository.save(new Card("Visa","48945615151",LocalDate.of(2022, 8, 10),423,new Payment()));
-		cardRepository.save(new Card("MasterCard","6184166486",LocalDate.of(2027, 17, 20),421,new Payment()));
+		cardRepository.save(new Card("MasterCard","6184166486",LocalDate.of(2027, 1, 20),421,new Payment()));
 		cardRepository.save(new Card("Rupday","5485130305",LocalDate.of(2025, 6, 22),422,new Payment()));
 		logger.info("6 rows inserted in card table");
 		
