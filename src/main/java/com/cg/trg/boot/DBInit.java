@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import org.hibernate.annotations.common.util.impl.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -15,12 +16,16 @@ import com.cg.trg.boot.salon.bean.Billing;
 import com.cg.trg.boot.salon.bean.Customer;
 import com.cg.trg.boot.salon.dao.ICustomerRepository;
 
+import ch.qos.logback.classic.Logger;
+
 
 @Component
 public class DBInit implements CommandLineRunner{
 	@Autowired
 	ICustomerRepository customerRepository;
+		
 	org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(DBInit.class);
+	
 	@Override
 	public void run(String... args) throws Exception {
 		logger.info("Data  Entry process initiated for Customer table");
