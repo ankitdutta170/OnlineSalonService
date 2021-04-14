@@ -2,6 +2,8 @@ package com.cg.trg.boot.salon.bean;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 
 
@@ -14,10 +16,12 @@ public class Payment {
 	private long paymentId;
 	private String type;
 	private String status;
+	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "card_id_fk")
 	private Card card;
-	@OneToOne(mappedBy = "payment", targetEntity = Billing.class)
+	
+	@OneToOne(mappedBy = "payment", targetEntity = Billing.class,cascade=CascadeType.ALL)
 	private Billing billing;
 	
 	public Payment() {
