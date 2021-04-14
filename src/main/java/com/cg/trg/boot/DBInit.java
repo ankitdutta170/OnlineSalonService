@@ -66,8 +66,7 @@ public class DBInit implements CommandLineRunner{
 
 		
 
-		logger.info("Inserting data for customer table");
-		customerRepository.save(new Customer("Ankit", "abc@gmail.com", "7903083839", LocalDate.of(1999,4,8), null, null, null));
+		
 		
 	
 		logger.info("6 rows inserted in payment table");
@@ -84,11 +83,10 @@ public class DBInit implements CommandLineRunner{
 		
 
 		
+		Customer customer = customerServiceImpl.getCustomer(1);
 		logger.info("Inserting data for Appointment");
 		appointmentRepository.save(new Appointment("Whitefield", "Salon", null, LocalDate.of(2021, 4, 18), LocalTime.of(15, 0), customer, null, null));
-		
-		
-		
+
 	}
 
 }

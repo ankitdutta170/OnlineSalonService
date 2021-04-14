@@ -25,8 +25,10 @@ public class Customer extends User {
 	private String email;
 	private String contactNo;
 	private LocalDate dob;
+
 	//@OneToMany(mappedBy = "customer", targetEntity = Card.class)
 	//private List<Card> cards=new ArrayList<>();
+
 	
 	@OneToMany(mappedBy = "customer", targetEntity = Billing.class)
 	@JsonIgnore
@@ -59,7 +61,7 @@ public class Customer extends User {
 		this.bills = bills;
 		this.addresses = addresses;
 		this.appointments = appointments;
-		
+
 	}
 
 	public String getName() {
@@ -117,6 +119,7 @@ public class Customer extends User {
 	public void setAppointments(List<Appointment> appointments) {
 		this.appointments = appointments;
 	}
+
 	
 
 	/*public List<Card> getCards() {
@@ -127,12 +130,15 @@ public class Customer extends User {
 		this.cards = cards;
 	}*/
 
+
+
 	@Override
 	public String toString() {
-		return "Customer [name=" + name + ", email=" + email + ", contactNo=" + contactNo + ", dob=" + dob + "bills=" + bills + ", addresses=" + addresses + ", appointments=" + appointments + "]";
+		return "Customer [name=" + name + ", email=" + email + ", contactNo=" + contactNo + ", dob=" + dob + ", bills="
+				+ bills + ", addresses=" + addresses + ", appointments=" + appointments + "]";
+
 	}
 
-	
 	
 
 	

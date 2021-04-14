@@ -2,14 +2,11 @@ package com.cg.trg.boot.salon.bean;
 
 import java.time.LocalDate;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -26,12 +23,11 @@ public class Card {
 	private String cardNumber;
     private LocalDate cardExpiry;
     private int cvv;
+
     @OneToOne(mappedBy = "card", targetEntity = Payment.class,cascade = CascadeType.ALL)
     @JsonIgnore
+
     private Payment payment;
-    @ManyToOne
-    @JoinColumn(name = "user_id_fk")
-    private Customer customer;
 	public Card() {
 		
 	}
@@ -57,7 +53,7 @@ public class Card {
 		
 	}
 	
-	public Card(String cardName, String cardNumber, LocalDate cardExpiry, int cvv, Payment payment,Customer customer) {
+	public Card(String cardName, String cardNumber, LocalDate cardExpiry, int cvv, Payment payment) {
 		super();
 		
 		this.cardName = cardName;
@@ -65,7 +61,6 @@ public class Card {
 		this.cardExpiry = cardExpiry;
 		this.cvv = cvv;
 		this.payment = payment;
-		this.customer=customer;
 	}
 
 
@@ -115,27 +110,13 @@ public class Card {
 
 
 
-	public Customer getCustomer() {
-		return customer;
-	}
-
-
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-
-
-
 	@Override
 	public String toString() {
 		return "Card [cardId=" + cardId + ", cardName=" + cardName + ", cardNumber=" + cardNumber + ", cardExpiry="
-				+ cardExpiry + ", cvv=" + cvv + ", payment=" + payment + ", customer=" + customer + "]";
+				+ cardExpiry + ", cvv=" + cvv + ", payment=" + payment + "]";
 	}
 
 
-
-	
 
 	
 
