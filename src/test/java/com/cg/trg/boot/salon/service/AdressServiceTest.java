@@ -38,7 +38,7 @@ class AdressServiceTest {
 		adress.setCity("jajpur");
 		adress.setState("Odisha");
 		adress.setPincode(755015);
-		adress.setAddressId("om");
+		adress.setAddressId(01);
 		
 		
 	

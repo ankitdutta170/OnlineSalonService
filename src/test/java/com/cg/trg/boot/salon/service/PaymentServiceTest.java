@@ -28,7 +28,7 @@ class PaymentServiceTest {
 	IPaymentRepository paymentRepository;
 	
 	Card card = new Card(100,"Visa","123456",LocalDate.of(2026, 8, 25),356);
-	Payment payment = new Payment(100,"Card","Paid",card);
+	Payment payment = new Payment("Card","Paid",card);
 	
 	 @Test
 	 @DisplayName("Test for adding Payment")
