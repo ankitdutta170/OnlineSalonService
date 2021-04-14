@@ -2,6 +2,8 @@ package com.cg.trg.boot.salon.bean;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 
 

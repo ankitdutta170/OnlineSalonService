@@ -1,6 +1,5 @@
 package com.cg.trg.boot.salon.bean;
 
-import java.io.Serializable;
 
 
 import javax.persistence.Entity;
@@ -9,7 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.Table;
 
 @Entity(name = "Users")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -32,7 +30,7 @@ public class User {
 		this.userId = userId;
 		this.userName = userName;
 		this.password = password;
-		this.role = role;
+		//this.role = role;
 		this.isLoggedIn = isLoggedIn;
 	}
 	

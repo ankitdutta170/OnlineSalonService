@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,10 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.cg.trg.boot.salon.bean.Appointment;
 import com.cg.trg.boot.salon.bean.Customer;
-import com.cg.trg.boot.salon.exceptions.AppointmentNotFoundException;
 import com.cg.trg.boot.salon.exceptions.CustomerNotFoundException;
 import com.cg.trg.boot.salon.exceptions.EmptyDataException;
 import com.cg.trg.boot.salon.service.ICustomerServiceImpl;

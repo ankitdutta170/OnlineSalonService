@@ -9,9 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.cg.trg.boot.salon.exceptions.AppointmentNotFoundException;
 import com.cg.trg.boot.salon.exceptions.CustomerNotFoundException;
-import com.cg.trg.boot.salon.exceptions.DuplicateAppointmentException;
 import com.cg.trg.boot.salon.exceptions.DuplicateCustomerException;
 import com.cg.trg.boot.salon.exceptions.EmptyDataException;
 @ControllerAdvice
