@@ -24,7 +24,12 @@ public class ISalonServiceImpl implements ISalonService {
 	public SalonService removeService(long id) {
 		Optional<SalonService> salonServiceToBeDeleted = repository.findById(id);
 		repository.deleteById(id);
-		return null;
+		if(salonServiceToBeDeleted.isPresent()) {
+			return salonServiceToBeDeleted.get();
+		}
+		else {
+			return null;
+		}
 	}
 
 	@Override
