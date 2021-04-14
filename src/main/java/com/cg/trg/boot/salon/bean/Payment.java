@@ -22,6 +22,7 @@ public class Payment {
 	private Card card;
 	
 	@OneToOne(mappedBy = "payment", targetEntity = Billing.class,cascade=CascadeType.ALL)
+	@JsonIgnore
 	private Billing billing;
 	
 	public Payment() {

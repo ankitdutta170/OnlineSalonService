@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "SalonService")
 public class SalonService {
@@ -21,6 +23,7 @@ public class SalonService {
 	private int discount;
 	private String duration;
 	@OneToOne(mappedBy = "preferredService",targetEntity = Appointment.class)
+	@JsonIgnore
 	private Appointment appointment;
 	public SalonService() {
 		super();

@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "Card")
 public class Card {
@@ -25,6 +27,7 @@ public class Card {
     private LocalDate cardExpiry;
     private int cvv;
     @OneToOne(mappedBy = "card", targetEntity = Payment.class,cascade = CascadeType.ALL)
+    @JsonIgnore
     private Payment payment;
     @ManyToOne
     @JoinColumn(name = "user_id_fk")

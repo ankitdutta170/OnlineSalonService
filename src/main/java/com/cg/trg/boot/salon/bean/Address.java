@@ -8,6 +8,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "Address")
 public class Address {
@@ -25,6 +27,7 @@ public class Address {
 	@JoinColumn(name="user_id_fk")
 	private Customer customer;
 	@OneToOne(mappedBy = "address",targetEntity = Appointment.class)
+	@JsonIgnore
 	private Appointment appointment;
 	
 	public Address() {
