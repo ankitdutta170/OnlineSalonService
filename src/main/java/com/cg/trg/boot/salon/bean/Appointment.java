@@ -14,6 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+@JsonIgnoreProperties({"hibernateLazyInitilizer","handler"})
 @Entity
 @Table(name = "Appointment")
 public class Appointment {
@@ -25,7 +28,7 @@ public class Appointment {
 	private String location;
 	
 	private String visitType;
-	
+	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="salon_service_id_fk")
 	private SalonService preferredService;
@@ -34,14 +37,15 @@ public class Appointment {
 	private LocalDate preferredDate;
 	
 	private LocalTime preferredTime;
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="user_id_fk")
 	private Customer customer;
-	
+	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="address_id_fk")
 	private Address address;
-	
+	@JsonIgnore
 	@OneToOne(mappedBy = "appointment", targetEntity = Billing.class)
 	private Billing billing;
 	

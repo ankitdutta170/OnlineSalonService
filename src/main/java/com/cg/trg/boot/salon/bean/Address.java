@@ -10,6 +10,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+@JsonIgnoreProperties({"hibernateLazyInitilizer","handler"})
 @Entity
 @Table(name = "Address")
 public class Address {
@@ -26,9 +28,7 @@ public class Address {
 	@ManyToOne
 	@JoinColumn(name="user_id_fk")
 	private Customer customer;
-	@OneToOne(mappedBy = "address",targetEntity = Appointment.class)
-	@JsonIgnore
-	private Appointment appointment;
+	
 	
 	public Address() {
 		
@@ -36,7 +36,7 @@ public class Address {
 	
 	
 	public Address(String addressId, String doorNo, String street, String area, String city, String state, int pincode,
-			Customer customer, Appointment appointment) {
+			Customer customer) {
 		super();
 		this.addressId = addressId;
 		this.doorNo = doorNo;
@@ -46,7 +46,7 @@ public class Address {
 		this.state = state;
 		this.pincode = pincode;
 		this.customer = customer;
-		this.appointment = appointment;
+		
 	}
 	
 	public Address(String doorNo, String street, String area, String city, String state, int pincode,
@@ -60,7 +60,7 @@ public class Address {
 		this.state = state;
 		this.pincode = pincode;
 		this.customer = customer;
-		this.appointment = appointment;
+		
 	}
 
 	public String getDoorNo() {
@@ -112,21 +112,14 @@ public class Address {
 		this.customer = customer;
 	}
 	
-	public Appointment getAppointment() {
-		return appointment;
-	}
-
-
-	public void setAppointment(Appointment appointment) {
-		this.appointment = appointment;
-	}
+	
 
 
 	@Override
 	public String toString() {
 		return "Address [addressId=" + addressId + ", doorNo=" + doorNo + ", street=" + street + ", area=" + area
 				+ ", city=" + city + ", state=" + state + ", pincode=" + pincode + ", customer=" + customer
-				+ ", appointment=" + appointment + "]";
+				+  "]";
 	}
 
 

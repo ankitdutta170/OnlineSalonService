@@ -33,11 +33,8 @@ public class AppointmentController {
 	AppointmentServiceImpl service;
 	
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public String saveAppointment(Appointment appointment, @RequestBody Address address, @RequestBody Customer customer, @RequestBody SalonService salonService, @RequestBody Billing billing) {
-		appointment.setAddress(address);
-		appointment.setCustomer(customer);
-		appointment.setPreferredService(salonService);
-		appointment.setBilling(billing);
+	public String saveAppointment(@RequestBody Appointment appointment) {
+		
 		Appointment saveAppointment = service.addAppointment(appointment);
 		if(saveAppointment != null) {
 			return "Appointment successfully made";

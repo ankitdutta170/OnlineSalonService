@@ -17,7 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+@JsonIgnoreProperties({"hibernateLazyInitilizer","handler"})
 @Entity
 public class Customer extends User {
 
@@ -29,16 +30,14 @@ public class Customer extends User {
 	//@OneToMany(mappedBy = "customer", targetEntity = Card.class)
 	//private List<Card> cards=new ArrayList<>();
 
-	
+	@JsonIgnore
 	@OneToMany(mappedBy = "customer", targetEntity = Billing.class)
-	@JsonIgnore
 	private List<Billing> bills = new ArrayList<>();
+	@JsonIgnore
 	@OneToMany(mappedBy = "customer", targetEntity = Address.class)
-	@JsonIgnore
 	private Set<Address> addresses = new HashSet<>();
-
-	@OneToMany(mappedBy = "customer", targetEntity = Appointment.class)
 	@JsonIgnore
+	@OneToMany(mappedBy = "customer", targetEntity = Appointment.class)
 	private List<Appointment> appointments= new ArrayList<>();
 	public Customer() {
 		super();

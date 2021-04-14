@@ -12,6 +12,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+@JsonIgnoreProperties({"hibernateLazyInitilizer","handler"})
 @Entity
 @Table(name = "Bill")
 public class Billing {
@@ -28,7 +31,7 @@ public class Billing {
 	@OneToOne
 	@JoinColumn(name="payment_id_fk")
 	private Payment payment;
-	
+	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="appointment_id_fk")
 	private Appointment appointment;
