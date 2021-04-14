@@ -16,9 +16,10 @@ import com.cg.trg.boot.salon.bean.Billing;
 import com.cg.trg.boot.salon.bean.Card;
 import com.cg.trg.boot.salon.bean.Customer;
 import com.cg.trg.boot.salon.bean.SalonService;
+import com.cg.trg.boot.salon.bean.User;
 import com.cg.trg.boot.salon.dao.ICustomerRepository;
 import com.cg.trg.boot.salon.dao.ISalonRepository;
-
+import com.cg.trg.boot.salon.dao.IUserRepository;
 import com.cg.trg.boot.salon.dao.IAppointmentRepository;
 import com.cg.trg.boot.salon.dao.ICustomerRepository;
 import com.cg.trg.boot.salon.service.ICustomerServiceImpl;
@@ -63,6 +64,9 @@ public class DBInit implements CommandLineRunner{
 	@Autowired 
 	ICustomerServiceImpl customerService;
 	
+	@Autowired
+	IUserRepository userRepository;
+	
 
 	org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(DBInit.class);
 	
@@ -106,6 +110,14 @@ public class DBInit implements CommandLineRunner{
 		logger.info("6 rows inserted in salon_service table");
 
 		
-
+		logger.info("Inserting data for userId and Password");
+		userRepository.save(new User(1, "sid", "password", false));
+		userRepository.save(new User(2, "sai", "pass", false));
+		userRepository.save(new User(3, "ankit", "word", false));
+		userRepository.save(new User(4, "om", "omcapg", false));
+		userRepository.save(new User(5, "alam", "k.alam", false));
+		userRepository.save(new User(6, "sulabh", "s@password", false));
+		
+		logger.info("6 rows inserted in user_service table");
 	}
 }
