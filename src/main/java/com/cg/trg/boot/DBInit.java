@@ -14,7 +14,9 @@ import com.cg.trg.boot.salon.bean.Address;
 import com.cg.trg.boot.salon.bean.Appointment;
 import com.cg.trg.boot.salon.bean.Billing;
 import com.cg.trg.boot.salon.bean.Customer;
+import com.cg.trg.boot.salon.bean.SalonService;
 import com.cg.trg.boot.salon.dao.ICustomerRepository;
+import com.cg.trg.boot.salon.dao.ISalonRepository;
 
 import ch.qos.logback.classic.Logger;
 
@@ -23,7 +25,9 @@ import ch.qos.logback.classic.Logger;
 public class DBInit implements CommandLineRunner{
 	@Autowired
 	ICustomerRepository customerRepository;
-		
+	@Autowired
+	ISalonRepository salonRepository;
+	
 	org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(DBInit.class);
 	
 	@Override
@@ -40,6 +44,18 @@ public class DBInit implements CommandLineRunner{
 
 		
 
-	}
+	
+		logger.info("Data  Entry process initiated for Salon_Service table");
+		salonRepository.save(new SalonService(1,"Hair",200, 0,"30 Minutes", null));
+		salonRepository.save(new SalonService(2,"Facial",250, 0,"25 Minutes", null));
+		salonRepository.save(new SalonService(3,"Hair Spa",300, 0,"45 Minutes", null));
+		salonRepository.save(new SalonService(4,"Trimming",100, 0,"20 Minutes", null));
+		salonRepository.save(new SalonService(5,"Groom Makeup",1500, 0,"1.5 Hours", null));
+		salonRepository.save(new SalonService(6,"Bride Makeup",2000, 0,"2 Hours", null));
 
+		logger.info("6 rows inserted in salon_service table");
+
+		
+
+	}
 }
