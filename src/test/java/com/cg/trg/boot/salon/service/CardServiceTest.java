@@ -25,40 +25,42 @@ public class CardServiceTest {
 	CardImpl cardService;
 	@MockBean
 	ICardRepository cardRepository;
-	
-	Card card = new Card(100,"Visa","123456",LocalDate.of(2026, 8, 25),356);
-	Payment payment = new Payment(100,"Card","Paid",card);
+
+	Card card = new Card(100, "Visa", "123456", LocalDate.of(2026, 8, 25), 356);
+	Payment payment = new Payment(100, "Card", "Paid", card);
+
 	@Test
-	 @DisplayName("Test for adding Card")
-		public void addCardTest() {
-	    	when(cardRepository.save(card)).thenReturn(card);
-			assertEquals(card, cardService.addCard(card));
-			}
+	@DisplayName("Test for adding Card")
+	public void addCardTest() {
+		when(cardRepository.save(card)).thenReturn(card);
+		assertEquals(card, cardService.addCard(card));
+	}
+
 	@Test
-	 @DisplayName("Test for Deleteing card by Id")
+	@DisplayName("Test for Deleteing card by Id")
 	public void deleteCardTest() {
 		int cardId = 1;
 		cardService.removeCard(cardId);
-		
+
 		verify(cardRepository, times(1)).deleteById((long) cardId);
 	}
-	 @Test
-	 @DisplayName("Test for Updating Card")
- 	public void updateCardTest() {
- 		Optional<Card> card = cardRepository.findById(1L);
- 		if(card.isPresent()) {
- 			card.get().setCardName("Visa");
- 			cardRepository.save(card.get());
- 			
- 		}
-	}
-	 @Test
-	 @DisplayName("Test for retrive Card Details By id")
-		public void getPaymentDetailsTest() {
-	    
-	    	
-			Mockito.when(cardRepository.findById(100L))
-			.thenReturn(java.util.Optional.ofNullable(card));
-			
+
+	@Test
+	@DisplayName("Test for Updating Card")
+	public void updateCardTest() {
+		Optional<Card> card = cardRepository.findById(1L);
+		if (card.isPresent()) {
+			card.get().setCardName("Visa");
+			cardRepository.save(card.get());
+
 		}
+	}
+
+	@Test
+	@DisplayName("Test for retrive Card Details By id")
+	public void getPaymentDetailsTest() {
+
+		Mockito.when(cardRepository.findById(100L)).thenReturn(java.util.Optional.ofNullable(card));
+
+	}
 }

@@ -79,11 +79,9 @@ public class DBInit implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		
+
+
 		
-		logger.info("Data  Entry process initiated for Customer table");
-
-
-		logger.info("6 rows inserted in customer table");
 		
 		
 		logger.info("Data  Entry process initiated for Bill table");
@@ -107,31 +105,41 @@ public class DBInit implements CommandLineRunner{
 		
 		
 	
-		logger.info("6 rows inserted in payment table");
-		Payment payment=paymentService.getPaymentDetails(1);
-		Customer customer=customerService.getCustomer(1);
 		logger.info("Data  Entry process initiated for Card table");
-		cardRepository.save(new Card("Visa","123456789",LocalDate.of(2025, 5, 20),420,payment));
-		logger.info("Data  Entry process initiated for Payment table");
-		Card card=cardimpl.getCardDetails(3);
-		paymentRepository.save(new Payment("card","Successfull",card,new Billing()));
-		
-
+		cardRepository.save(new Card("Visa","123456789",LocalDate.of(2025, 5, 20),420,null));
+		cardRepository.save(new Card("MasterCard","1601654314",LocalDate.of(2027, 7, 21),425,null));
+		cardRepository.save(new Card("RuPay","434524532453",LocalDate.of(2024, 6, 20),424,null));
+		cardRepository.save(new Card("Visa","43434873",LocalDate.of(2023, 4, 20),423,null));
+		cardRepository.save(new Card("MasterCard","12453439",LocalDate.of(2021, 12, 14),422,null));
+		cardRepository.save(new Card("RuPday","345345345",LocalDate.of(2022, 11, 2),421,null));
 		logger.info("6 rows inserted in card table");
 		
+		
+		
+		logger.info("Data  Entry process initiated for Payment table");
+		paymentRepository.save(new Payment("card","Successfull",null,null));
+		paymentRepository.save(new Payment("cash","pending",null,null));
+		paymentRepository.save(new Payment("card","pending",null,null));
+		paymentRepository.save(new Payment("cash","Successfull",null,null));
+		paymentRepository.save(new Payment("card","Successfull",null,null));
+		paymentRepository.save(new Payment("cash","pending",null,null));
+		logger.info("6 rows inserted in payment table");
+		
+		
 
 		
-		logger.info("Inserting data for Appointment");
-		appointmentRepository.save(new Appointment("Whitefield", "Salon", null, LocalDate.of(2021, 4, 18), LocalTime.of(15, 0), customer, null, null));
+//		logger.info("Inserting data for Appointment");
+//		Customer customer=customerService.getCustomer(1);
+//		appointmentRepository.save(new Appointment("Whitefield", "Salon", null, LocalDate.of(2021, 4, 18), LocalTime.of(15, 0), customer, null, null));
 
 	
 		logger.info("Data  Entry process initiated for Salon_Service table");
-		salonRepository.save(new SalonService(1,"Hair",200, 0,"30 Minutes", null));
-		salonRepository.save(new SalonService(2,"Facial",250, 0,"25 Minutes", null));
-		salonRepository.save(new SalonService(3,"Hair Spa",300, 0,"45 Minutes", null));
-		salonRepository.save(new SalonService(4,"Trimming",100, 0,"20 Minutes", null));
-		salonRepository.save(new SalonService(5,"Groom Makeup",1500, 0,"1.5 Hours", null));
-		salonRepository.save(new SalonService(6,"Bride Makeup",2000, 0,"2 Hours", null));
+		salonRepository.save(new SalonService("Hair",200.0, 0,"30 Minutes", null));
+		salonRepository.save(new SalonService("Facial",250.0, 0,"25 Minutes", null));
+		salonRepository.save(new SalonService("Hair Spa",300.0, 0,"45 Minutes", null));
+		salonRepository.save(new SalonService("Trimming",100.0, 0,"20 Minutes", null));
+		salonRepository.save(new SalonService("Groom Makeup",1500.0, 0,"1.5 Hours", null));
+		salonRepository.save(new SalonService("Bride Makeup",2000.0, 0,"2 Hours", null));
 
 		logger.info("6 rows inserted in salon_service table");
 
