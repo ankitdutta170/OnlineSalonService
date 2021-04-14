@@ -23,6 +23,8 @@ public class Customer extends User {
 	private String email;
 	private String contactNo;
 	private LocalDate dob;
+	@OneToMany(mappedBy = "customer", targetEntity = Card.class)
+	private List<Card> cards=new ArrayList<>();
 	
 	@OneToMany(mappedBy = "customer", targetEntity = Billing.class)
 	private List<Billing> bills = new ArrayList<>();
@@ -43,7 +45,7 @@ public class Customer extends User {
 	
 
 	public Customer(String name, String email, String contactNo, LocalDate dob, List<Billing> bills, Set<Address> addresses,
-			List<Appointment> appointments) {
+			List<Appointment> appointments, List<Card> cards) {
 		super();
 		this.name = name;
 		this.email = email;
@@ -52,6 +54,7 @@ public class Customer extends User {
 		this.bills = bills;
 		this.addresses = addresses;
 		this.appointments = appointments;
+		this.cards=cards;
 	}
 
 	public String getName() {
@@ -109,13 +112,23 @@ public class Customer extends User {
 	public void setAppointments(List<Appointment> appointments) {
 		this.appointments = appointments;
 	}
+	
+
+	public List<Card> getCards() {
+		return cards;
+	}
+
+	public void setCards(List<Card> cards) {
+		this.cards = cards;
+	}
 
 	@Override
 	public String toString() {
-		return "Customer [name=" + name + ", email=" + email + ", contactNo=" + contactNo + ", dob=" + dob + ", bills="
-				+ bills + ", addresses=" + addresses + ", appointments=" + appointments + "]";
+		return "Customer [name=" + name + ", email=" + email + ", contactNo=" + contactNo + ", dob=" + dob + ", cards="
+				+ cards + ", bills=" + bills + ", addresses=" + addresses + ", appointments=" + appointments + "]";
 	}
 
+	
 	
 
 	
