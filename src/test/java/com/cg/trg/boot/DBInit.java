@@ -1,11 +1,13 @@
 package com.cg.trg.boot;
 
 import java.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 
 import com.cg.trg.boot.salon.bean.Address;
 import com.cg.trg.boot.salon.bean.Appointment;
@@ -14,7 +16,7 @@ import com.cg.trg.boot.salon.bean.Customer;
 import com.cg.trg.boot.salon.dao.ICustomerRepository;
 
 
-
+@Component
 public class DBInit implements CommandLineRunner{
 	@Autowired
 	ICustomerRepository customerRepository;
@@ -27,8 +29,8 @@ public class DBInit implements CommandLineRunner{
 		customerRepository.save(new Customer("Om","abcde@gmail.com","7903083837",LocalDate.of(1999, 4, 6),new ArrayList<Billing>(),new HashSet<Address>(),new ArrayList<Appointment>()));
 		customerRepository.save(new Customer("Sulabh","abcdef@gmail.com","7903083836",LocalDate.of(1999, 4, 5),new ArrayList<Billing>(),new HashSet<Address>(),new ArrayList<Appointment>()));
 		customerRepository.save(new Customer("Siddharth","abcdefg@gmail.com","7903083835",LocalDate.of(1999, 4, 4),new ArrayList<Billing>(),new HashSet<Address>(),new ArrayList<Appointment>()));
-		customerRepository.save(new Customer("Kurshed","abcdefgh@gmail.com","7903083834",LocalDate.of(1999, 4, 3s),new ArrayList<Billing>(),new HashSet<Address>(),new ArrayList<Appointment>()));
-		
+		customerRepository.save(new Customer("Kurshed","abcdefgh@gmail.com","7903083834",LocalDate.of(1999, 4, 3),new ArrayList<Billing>(),new HashSet<Address>(),new ArrayList<Appointment>()));
+		logger.info("6 rows inserted in customer table");
 	}
 
 }
