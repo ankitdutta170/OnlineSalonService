@@ -129,12 +129,12 @@ public class DBInit implements CommandLineRunner{
 
 	
 		logger.info("Data  Entry process initiated for Salon_Service table");
-		salonRepository.save(new SalonService("Hair",200.0, 0,"30 Minutes", null));
-		salonRepository.save(new SalonService("Facial",250.0, 0,"25 Minutes", null));
-		salonRepository.save(new SalonService("Hair Spa",300.0, 0,"45 Minutes", null));
-		salonRepository.save(new SalonService("Trimming",100.0, 0,"20 Minutes", null));
-		salonRepository.save(new SalonService("Groom Makeup",1500.0, 0,"1.5 Hours", null));
-		salonRepository.save(new SalonService("Bride Makeup",2000.0, 0,"2 Hours", null));
+		salonRepository.save(new SalonService("Hair",200.0, 0,"30 Minutes"));
+		salonRepository.save(new SalonService("Facial",250.0, 0,"25 Minutes"));
+		salonRepository.save(new SalonService("Hair Spa",300.0, 0,"45 Minutes"));
+		salonRepository.save(new SalonService("Trimming",100.0, 0,"20 Minutes"));
+		salonRepository.save(new SalonService("Groom Makeup",1500.0, 0,"1.5 Hours"));
+		salonRepository.save(new SalonService("Bride Makeup",2000.0, 0,"2 Hours"));
 
 		logger.info("6 rows inserted in salon_service table");
 

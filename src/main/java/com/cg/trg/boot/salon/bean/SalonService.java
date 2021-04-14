@@ -20,29 +20,29 @@ public class SalonService {
 	private double price;
 	private int discount;
 	private String duration;
-	@JsonIgnore
-	@OneToOne(mappedBy = "preferredService",targetEntity = Appointment.class)
-	private Appointment appointment;
+	//@OneToOne(mappedBy = "preferredService",targetEntity = Appointment.class)
+	//@JsonIgnore
+	//private Appointment appointment;
 	public SalonService() {
 		super();
 	}
-	public SalonService(long serviceId, String serviceName, double price, int discount, String duration,Appointment appointment) {
+	public SalonService(long serviceId, String serviceName, double price, int discount, String duration) {
 		super();
 		this.serviceId = serviceId;
 		this.serviceName = serviceName;
 		this.price = price;
 		this.discount = discount;
 		this.duration = duration;
-		this.appointment = appointment;
+		//this.appointment = appointment;
 	}
-	public SalonService(String serviceName, double price, int discount, String duration,Appointment appointment) {
+	public SalonService(String serviceName, double price, int discount, String duration) {
 		super();
 		
 		this.serviceName = serviceName;
 		this.price = price;
 		this.discount = discount;
 		this.duration = duration;
-		this.appointment = appointment;
+		//this.appointment = appointment;
 	}
 	public long getServiceId() {
 		return serviceId;
@@ -74,18 +74,24 @@ public class SalonService {
 	public void setDuration(String duration) {
 		this.duration = duration;
 	}
-	public Appointment getAppointment() {
+	/*public Appointment getAppointment() {
 		return appointment;
 	}
 	public void setAppointment(Appointment appointment) {
 		this.appointment = appointment;
 	}
+	
 	@Override
 	public String toString() {
 		return "SalonService [serviceId=" + serviceId + ", serviceName=" + serviceName + ", price=" + price
 				+ ", discount=" + discount + ", duration=" + duration + ", appointment=" + appointment + "]";
 	}
 	
-	
+	*/
+	@Override
+	public String toString() {
+		return "SalonService [serviceId=" + serviceId + ", serviceName=" + serviceName + ", price=" + price
+				+ ", discount=" + discount + ", duration=" + duration + "]";
+	}
 	
 }
