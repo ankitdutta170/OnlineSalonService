@@ -83,7 +83,6 @@ public class DBInit implements CommandLineRunner{
 		
 
 		
-		Customer customer = customerServiceImpl.getCustomer(1);
 		logger.info("Inserting data for Appointment");
 		appointmentRepository.save(new Appointment("Whitefield", "Salon", null, LocalDate.of(2021, 4, 18), LocalTime.of(15, 0), customer, null, null));
 
