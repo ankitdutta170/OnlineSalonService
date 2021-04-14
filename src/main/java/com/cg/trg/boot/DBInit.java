@@ -1,12 +1,16 @@
 package com.cg.trg.boot;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import com.cg.trg.boot.salon.bean.Address;
+import com.cg.trg.boot.salon.bean.Appointment;
 import com.cg.trg.boot.salon.bean.Billing;
 import com.cg.trg.boot.salon.bean.Card;
+import com.cg.trg.boot.salon.bean.Customer;
 import com.cg.trg.boot.salon.dao.IAddressRepository;
 import com.cg.trg.boot.salon.dao.IBillingRepository;
 import com.cg.trg.boot.salon.bean.SalonService;
@@ -76,22 +80,22 @@ public class DBInit implements CommandLineRunner{
 		
 		
 		logger.info("Data  Entry process initiated for Bill table");
-		//bill.save(new Billing(500.00,LocalDate.of(1999, 4, 8),null,null,null));
-		//bill.save(new Billing(100.00,LocalDate.of(1999, 4, 7),null,null,null));
-		//bill.save(new Billing(700.00,LocalDate.of(1999, 4, 6),null,null,null));
-		//bill.save(new Billing(300.00,LocalDate.of(1999, 4, 5),null,null,null));
-		//bill.save(new Billing(250.00,LocalDate.of(1999, 4, 4),null,null,null));
-		//bill.save(new Billing(500.00,LocalDate.of(1999, 4, 3),null,null,null));
+		bill.save(new Billing(500.00,LocalDate.of(1999, 4, 8),null,null,null));
+		bill.save(new Billing(100.00,LocalDate.of(1999, 4, 7),null,null,null));
+		bill.save(new Billing(700.00,LocalDate.of(1999, 4, 6),null,null,null));
+		bill.save(new Billing(300.00,LocalDate.of(1999, 4, 5),null,null,null));
+		bill.save(new Billing(250.00,LocalDate.of(1999, 4, 4),null,null,null));
+		bill.save(new Billing(500.00,LocalDate.of(1999, 4, 3),null,null,null));
 
 		logger.info("6 rows inserted in bill table");
 		
 		logger.info("Data  Entry process initiated for Address table");
-		//address.save(new Address("House No: 4","near Hanuman temple","Bhubaneswar","Khorda","Odisha",755001,null,null));
-		//address.save(new Address("plat no:34","near bus stand","sankhachila","jajpur","odisha",755015,null,null));
-		//address.save(new Address("room no:4","Arakere signal","BG road","Bangalore","Kanataka",560076,null,null));
-		//address.save(new Address("plot no:89","lay out office","arakere","bengalurur","Kanataka",560076,null,null));
-		//address.save(new Address("348","near temple","sankhachila","jajpur","odisha",755015,null,null));
-		//address.save(new Address("907","laxminagar","sankhachila","jajpur","odisha",755015,null,null));
+		address.save(new Address("House No: 4","near Hanuman temple","Bhubaneswar","Khorda","Odisha",755001,null));
+		address.save(new Address("plat no:34","near bus stand","sankhachila","jajpur","odisha",755015,null));
+		address.save(new Address("room no:4","Arakere signal","BG road","Bangalore","Kanataka",560076,null));
+		address.save(new Address("plot no:89","lay out office","arakere","bengalurur","Kanataka",560076,null));
+		address.save(new Address("348","near temple","sankhachila","jajpur","odisha",755015,null));
+		address.save(new Address("907","laxminagar","sankhachila","jajpur","odisha",755015,null));
 		logger.info("6 rows inserted in address table");
 		
 		
@@ -108,20 +112,20 @@ public class DBInit implements CommandLineRunner{
 		
 		
 		logger.info("Data  Entry process initiated for Payment table");
-		paymentRepository.save(new Payment("card","Successfull",null,null));
-		paymentRepository.save(new Payment("cash","pending",null,null));
-		paymentRepository.save(new Payment("card","pending",null,null));
-		paymentRepository.save(new Payment("cash","Successfull",null,null));
-		paymentRepository.save(new Payment("card","Successfull",null,null));
-		paymentRepository.save(new Payment("cash","pending",null,null));
+		paymentRepository.save(new Payment("card","Successfull",null));
+		paymentRepository.save(new Payment("cash","pending",null));
+		paymentRepository.save(new Payment("card","pending",null));
+		paymentRepository.save(new Payment("cash","Successfull",null));
+		paymentRepository.save(new Payment("card","Successfull",null));
+		paymentRepository.save(new Payment("cash","pending",null));
 		logger.info("6 rows inserted in payment table");
 		
 		
 
 		
-//		logger.info("Inserting data for Appointment");
-//		Customer customer=customerService.getCustomer(1);
-//		appointmentRepository.save(new Appointment("Whitefield", "Salon", null, LocalDate.of(2021, 4, 18), LocalTime.of(15, 0), customer, null, null));
+		logger.info("Inserting data for Appointment");
+		Customer customer=customerService.getCustomer(1);
+		appointmentRepository.save(new Appointment("Whitefield", "Salon", null, LocalDate.of(2021, 4, 18), LocalTime.of(15, 0), customer, null, null));
 
 	
 		logger.info("Data  Entry process initiated for Salon_Service table");

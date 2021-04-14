@@ -34,7 +34,7 @@ class BillingServiceTest {
 		Billing bill = new Billing();
 		Customer customer = new Customer(100,"12345","Customer",false);
 		Card card = new Card(100,"Visa","123456",LocalDate.of(2026, 8, 25),356);
-		Payment payment = new Payment(100,"Card","Paid",card);
+		Payment payment = new Payment("Card","Paid",card);
 				
 		bill.setBillId(100);
 		bill.setAmount(500.00);

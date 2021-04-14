@@ -27,7 +27,7 @@ public class Billing {
 	@JoinColumn(name="user_id_fk")
 	private Customer customer;
 	
-	
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name="payment_id_fk")
 	private Payment payment;

@@ -18,13 +18,14 @@ public class Address {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private String addressId;
+	private long addressId;
 	private String doorNo;
 	private String street;
 	private String area;
 	private String city;
 	private String state;
 	private int pincode;
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="user_id_fk")
 	private Customer customer;
@@ -35,7 +36,7 @@ public class Address {
 	}
 	
 	
-	public Address(String addressId, String doorNo, String street, String area, String city, String state, int pincode,
+	public Address(long addressId, String doorNo, String street, String area, String city, String state, int pincode,
 			Customer customer) {
 		super();
 		this.addressId = addressId;
@@ -50,7 +51,7 @@ public class Address {
 	}
 	
 	public Address(String doorNo, String street, String area, String city, String state, int pincode,
-			Customer customer, Appointment appointment) {
+			Customer customer) {
 		super();
 		
 		this.doorNo = doorNo;
@@ -99,10 +100,10 @@ public class Address {
 	public void setPincode(int pincode) {
 		this.pincode = pincode;
 	}
-	public String getAddressId() {
+	public long getAddressId() {
 		return addressId;
 	}
-	public void setAddressId(String addressId) {
+	public void setAddressId(long addressId) {
 		this.addressId = addressId;
 	}
 	public Customer getCustomer() {
