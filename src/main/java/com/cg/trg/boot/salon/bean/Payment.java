@@ -21,7 +21,7 @@ public class Payment {
 	@JoinColumn(name = "card_id_fk")
 	private Card card;
 	
-	@OneToOne(mappedBy = "payment", targetEntity = Billing.class)
+	@OneToOne(mappedBy = "payment", targetEntity = Billing.class,cascade=CascadeType.ALL)
 	private Billing billing;
 	
 	public Payment() {

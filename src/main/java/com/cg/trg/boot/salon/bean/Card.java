@@ -2,6 +2,7 @@ package com.cg.trg.boot.salon.bean;
 
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,7 +22,7 @@ public class Card {
 	private String cardNumber;
     private LocalDate cardExpiry;
     private int cvv;
-    @OneToOne(mappedBy = "card", targetEntity = Payment.class)
+    @OneToOne(mappedBy = "card", targetEntity = Payment.class,cascade=CascadeType.ALL)
     private Payment payment;
 	public Card() {
 		
