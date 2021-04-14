@@ -2,6 +2,8 @@ package com.cg.trg.boot;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -73,8 +75,13 @@ public class DBInit implements CommandLineRunner{
 	
 	@Override
 	public void run(String... args) throws Exception {
-		
-
+		logger.info("Data  Entry process initiated for Customer table");
+		customerRepository.save(new Customer("Ankit","abc@gmail.com","7903083839",LocalDate.of(1999, 4, 8),new ArrayList<Billing>(),new HashSet<Address>(),new ArrayList<Appointment>()));
+		customerRepository.save(new Customer("Sai","abcd@gmail.com","7903083838",LocalDate.of(1999, 4, 7),new ArrayList<Billing>(),new HashSet<Address>(),new ArrayList<Appointment>()));
+		customerRepository.save(new Customer("Om","abcde@gmail.com","7903083837",LocalDate.of(1999, 4, 6),new ArrayList<Billing>(),new HashSet<Address>(),new ArrayList<Appointment>()));
+		customerRepository.save(new Customer("Sulabh","abcdef@gmail.com","7903083836",LocalDate.of(1999, 4, 5),new ArrayList<Billing>(),new HashSet<Address>(),new ArrayList<Appointment>()));
+		customerRepository.save(new Customer("Siddharth","abcdefg@gmail.com","7903083835",LocalDate.of(1999, 4, 4),new ArrayList<Billing>(),new HashSet<Address>(),new ArrayList<Appointment>()));
+		customerRepository.save(new Customer("Kurshed","abcdefgh@gmail.com","7903083834",LocalDate.of(1999, 4, 3),new ArrayList<Billing>(),new HashSet<Address>(),new ArrayList<Appointment>()));
 
 		
 		
@@ -126,6 +133,7 @@ public class DBInit implements CommandLineRunner{
 		logger.info("Inserting data for Appointment");
 		Customer customer=customerService.getCustomer(1);
 		appointmentRepository.save(new Appointment("Whitefield", "Salon", null, LocalDate.of(2021, 4, 18), LocalTime.of(15, 0), customer, null, null));
+		appointmentRepository.save(new Appointment("ABC", "Salon", null, LocalDate.of(2021, 4, 19), LocalTime.of(16, 0), customer, null, null));
 
 	
 		logger.info("Data  Entry process initiated for Salon_Service table");
@@ -139,14 +147,14 @@ public class DBInit implements CommandLineRunner{
 		logger.info("6 rows inserted in salon_service table");
 
 		
-		logger.info("Inserting data for userId and Password");
-		userRepository.save(new User(1, "sid", "password", false));
-		userRepository.save(new User(2, "sai", "pass", false));
-		userRepository.save(new User(3, "ankit", "word", false));
-		userRepository.save(new User(4, "om", "omcapg", false));
-		userRepository.save(new User(5, "alam", "k.alam", false));
-		userRepository.save(new User(6, "sulabh", "s@password", false));
+		//logger.info("Inserting data for userId and Password");
+		//userRepository.save(new User(1, "sid", "password", false));
+		//userRepository.save(new User(2, "sai", "pass", false));
+		//userRepository.save(new User(3, "ankit", "word", false));
+		//userRepository.save(new User(4, "om", "omcapg", false));
+		//userRepository.save(new User(5, "alam", "k.alam", false));
+		//userRepository.save(new User(6, "sulabh", "s@password", false));
 		
-		logger.info("6 rows inserted in user_service table");
+		//logger.info("6 rows inserted in user_service table");
 	}
 }
