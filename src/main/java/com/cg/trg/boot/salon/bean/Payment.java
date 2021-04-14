@@ -17,7 +17,11 @@ public class Payment {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "card_id_fk")
 	private Card card;
-	@OneToOne(mappedBy = "payment", targetEntity = Billing.class)
+
+	
+	@OneToOne(mappedBy = "payment", targetEntity = Billing.class,cascade=CascadeType.ALL)
+	@JsonIgnore
+
 	private Billing billing;
 	
 	public Payment() {

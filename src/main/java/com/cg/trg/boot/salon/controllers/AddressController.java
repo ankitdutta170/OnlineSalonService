@@ -24,7 +24,7 @@ import com.cg.trg.boot.salon.service.AddressServiceImpl;
 public class AddressController {
 	@Autowired
 	 AddressServiceImpl service;
-	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping
 	public String saveAddress(Address address) {
 		Address addres = service.addAddress(address);
 		if(addres != null) {

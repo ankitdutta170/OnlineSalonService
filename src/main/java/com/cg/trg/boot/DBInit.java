@@ -15,6 +15,9 @@ import com.cg.trg.boot.salon.bean.Appointment;
 import com.cg.trg.boot.salon.bean.Billing;
 import com.cg.trg.boot.salon.bean.Card;
 import com.cg.trg.boot.salon.bean.Customer;
+
+import com.cg.trg.boot.salon.dao.IAddressRepository;
+import com.cg.trg.boot.salon.dao.IBillingRepository;
 import com.cg.trg.boot.salon.bean.SalonService;
 import com.cg.trg.boot.salon.bean.User;
 import com.cg.trg.boot.salon.dao.ICustomerRepository;
@@ -40,6 +43,12 @@ import ch.qos.logback.classic.Logger;
 public class DBInit implements CommandLineRunner{
 	@Autowired
 	ICustomerRepository customerRepository;
+	
+	
+	@Autowired
+	IBillingRepository bill;
+	@Autowired
+	IAddressRepository address;
 	@Autowired
 	ISalonRepository salonRepository;
 	
@@ -68,6 +77,7 @@ public class DBInit implements CommandLineRunner{
 	IUserRepository userRepository;
 	
 
+
 	org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(DBInit.class);
 	
 	@Override
@@ -76,8 +86,28 @@ public class DBInit implements CommandLineRunner{
 		
 		logger.info("Data  Entry process initiated for Customer table");
 
-		
 
+		logger.info("6 rows inserted in customer table");
+		
+		
+		logger.info("Data  Entry process initiated for Bill table");
+		bill.save(new Billing(500.00,LocalDate.of(1999, 4, 8),null,null,null));
+		bill.save(new Billing(100.00,LocalDate.of(1999, 4, 7),null,null,null));
+		bill.save(new Billing(700.00,LocalDate.of(1999, 4, 6),null,null,null));
+		bill.save(new Billing(300.00,LocalDate.of(1999, 4, 5),null,null,null));
+		bill.save(new Billing(250.00,LocalDate.of(1999, 4, 4),null,null,null));
+		bill.save(new Billing(500.00,LocalDate.of(1999, 4, 3),null,null,null));
+
+		logger.info("6 rows inserted in bill table");
+		
+		logger.info("Data  Entry process initiated for Address table");
+		address.save(new Address("House No: 4","near Hanuman temple","Bhubaneswar","Khorda","Odisha",755001,null,null));
+		address.save(new Address("plat no:34","near bus stand","sankhachila","jajpur","odisha",755015,null,null));
+		address.save(new Address("room no:4","Arakere signal","BG road","Bangalore","Kanataka",560076,null,null));
+		address.save(new Address("plot no:89","lay out office","arakere","bengalurur","Kanataka",560076,null,null));
+		address.save(new Address("348","near temple","sankhachila","jajpur","odisha",755015,null,null));
+		address.save(new Address("907","laxminagar","sankhachila","jajpur","odisha",755015,null,null));
+		logger.info("6 rows inserted in address table");
 		
 		
 	
@@ -85,7 +115,7 @@ public class DBInit implements CommandLineRunner{
 		Payment payment=paymentService.getPaymentDetails(1);
 		Customer customer=customerService.getCustomer(1);
 		logger.info("Data  Entry process initiated for Card table");
-		cardRepository.save(new Card("Visa","123456789",LocalDate.of(2025, 5, 20),420,payment,customer));
+		cardRepository.save(new Card("Visa","123456789",LocalDate.of(2025, 5, 20),420,payment));
 		logger.info("Data  Entry process initiated for Payment table");
 		Card card=cardimpl.getCardDetails(3);
 		paymentRepository.save(new Payment("card","Successfull",card,new Billing()));
