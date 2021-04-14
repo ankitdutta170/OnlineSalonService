@@ -23,11 +23,7 @@ import com.cg.trg.boot.salon.service.AppointmentServiceImpl;
 
 @SpringBootTest
 class OnlineSalonServiceApplicationTests {
-	@Autowired
-	AppointmentServiceImpl appointmentService;
-	
-	@MockBean
-	IAppointmentRepository appointmentRepository;
+
 	@Test
 	void contextLoads() {
 	}

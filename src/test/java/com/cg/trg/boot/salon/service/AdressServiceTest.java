@@ -39,7 +39,7 @@ class AdressServiceTest {
 		adress.setState("Odisha");
 		adress.setPincode(755015);
 		adress.setAddressId("om");
-		adress.setAppointment(appointment);
+		
 		
 	
 	}
