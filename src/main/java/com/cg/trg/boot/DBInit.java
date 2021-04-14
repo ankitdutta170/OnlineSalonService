@@ -16,6 +16,12 @@ import com.cg.trg.boot.salon.bean.Billing;
 import com.cg.trg.boot.salon.bean.Card;
 import com.cg.trg.boot.salon.bean.Customer;
 
+import com.cg.trg.boot.salon.dao.IAddressRepository;
+import com.cg.trg.boot.salon.dao.IBillingRepository;
+import com.cg.trg.boot.salon.bean.SalonService;
+import com.cg.trg.boot.salon.dao.ICustomerRepository;
+import com.cg.trg.boot.salon.dao.ISalonRepository;
+
 import com.cg.trg.boot.salon.dao.IAppointmentRepository;
 import com.cg.trg.boot.salon.dao.ICustomerRepository;
 import com.cg.trg.boot.salon.service.ICustomerServiceImpl;
@@ -36,7 +42,14 @@ import ch.qos.logback.classic.Logger;
 public class DBInit implements CommandLineRunner{
 	@Autowired
 	ICustomerRepository customerRepository;
-
+	
+	
+	@Autowired
+	IBillingRepository bill;
+	@Autowired
+	IAddressRepository address;
+	@Autowired
+	ISalonRepository salonRepository;
 	
 	@Autowired
 	IAppointmentRepository appointmentRepository;
@@ -46,15 +59,20 @@ public class DBInit implements CommandLineRunner{
 
 	@Autowired
 	IPaymentRepository paymentRepository;
+	
 	@Autowired
 	ICardRepository cardRepository;
+	
 	@Autowired
 	PaymentServiceImpl paymentService;
+	
 	@Autowired
 	CardImpl cardimpl;
+	
 	@Autowired 
 	ICustomerServiceImpl customerService;
 	
+
 
 	org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(DBInit.class);
 	
@@ -64,8 +82,28 @@ public class DBInit implements CommandLineRunner{
 		
 		logger.info("Data  Entry process initiated for Customer table");
 
-		
 
+		logger.info("6 rows inserted in customer table");
+		
+		
+		logger.info("Data  Entry process initiated for Bill table");
+		bill.save(new Billing(500.00,LocalDate.of(1999, 4, 8),null,null,null));
+		bill.save(new Billing(100.00,LocalDate.of(1999, 4, 7),null,null,null));
+		bill.save(new Billing(700.00,LocalDate.of(1999, 4, 6),null,null,null));
+		bill.save(new Billing(300.00,LocalDate.of(1999, 4, 5),null,null,null));
+		bill.save(new Billing(250.00,LocalDate.of(1999, 4, 4),null,null,null));
+		bill.save(new Billing(500.00,LocalDate.of(1999, 4, 3),null,null,null));
+
+		logger.info("6 rows inserted in bill table");
+		
+		logger.info("Data  Entry process initiated for Address table");
+		address.save(new Address("House No: 4","near Hanuman temple","Bhubaneswar","Khorda","Odisha",755001,null,null));
+		address.save(new Address("plat no:34","near bus stand","sankhachila","jajpur","odisha",755015,null,null));
+		address.save(new Address("room no:4","Arakere signal","BG road","Bangalore","Kanataka",560076,null,null));
+		address.save(new Address("plot no:89","lay out office","arakere","bengalurur","Kanataka",560076,null,null));
+		address.save(new Address("348","near temple","sankhachila","jajpur","odisha",755015,null,null));
+		address.save(new Address("907","laxminagar","sankhachila","jajpur","odisha",755015,null,null));
+		logger.info("6 rows inserted in address table");
 		
 		
 	
@@ -73,7 +111,7 @@ public class DBInit implements CommandLineRunner{
 		Payment payment=paymentService.getPaymentDetails(1);
 		Customer customer=customerService.getCustomer(1);
 		logger.info("Data  Entry process initiated for Card table");
-		cardRepository.save(new Card("Visa","123456789",LocalDate.of(2025, 5, 20),420,payment,customer));
+		cardRepository.save(new Card("Visa","123456789",LocalDate.of(2025, 5, 20),420,payment));
 		logger.info("Data  Entry process initiated for Payment table");
 		Card card=cardimpl.getCardDetails(3);
 		paymentRepository.save(new Payment("card","Successfull",card,new Billing()));
@@ -83,10 +121,21 @@ public class DBInit implements CommandLineRunner{
 		
 
 		
-		Customer customer = customerServiceImpl.getCustomer(1);
 		logger.info("Inserting data for Appointment");
 		appointmentRepository.save(new Appointment("Whitefield", "Salon", null, LocalDate.of(2021, 4, 18), LocalTime.of(15, 0), customer, null, null));
 
-	}
+	
+		logger.info("Data  Entry process initiated for Salon_Service table");
+		salonRepository.save(new SalonService(1,"Hair",200, 0,"30 Minutes", null));
+		salonRepository.save(new SalonService(2,"Facial",250, 0,"25 Minutes", null));
+		salonRepository.save(new SalonService(3,"Hair Spa",300, 0,"45 Minutes", null));
+		salonRepository.save(new SalonService(4,"Trimming",100, 0,"20 Minutes", null));
+		salonRepository.save(new SalonService(5,"Groom Makeup",1500, 0,"1.5 Hours", null));
+		salonRepository.save(new SalonService(6,"Bride Makeup",2000, 0,"2 Hours", null));
 
+		logger.info("6 rows inserted in salon_service table");
+
+		
+
+	}
 }
