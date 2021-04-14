@@ -13,8 +13,12 @@ import org.springframework.stereotype.Component;
 import com.cg.trg.boot.salon.bean.Address;
 import com.cg.trg.boot.salon.bean.Appointment;
 import com.cg.trg.boot.salon.bean.Billing;
+import com.cg.trg.boot.salon.bean.Card;
 import com.cg.trg.boot.salon.bean.Customer;
+import com.cg.trg.boot.salon.bean.Payment;
+import com.cg.trg.boot.salon.dao.ICardRepository;
 import com.cg.trg.boot.salon.dao.ICustomerRepository;
+import com.cg.trg.boot.salon.dao.IPaymentRepository;
 
 import ch.qos.logback.classic.Logger;
 
@@ -23,6 +27,10 @@ import ch.qos.logback.classic.Logger;
 public class DBInit implements CommandLineRunner{
 	@Autowired
 	ICustomerRepository customerRepository;
+	@Autowired
+	IPaymentRepository paymentRepository;
+	@Autowired
+	ICardRepository cardRepository;
 		
 	org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(DBInit.class);
 	
@@ -37,6 +45,27 @@ public class DBInit implements CommandLineRunner{
 		customerRepository.save(new Customer("Kurshed","abcdefgh@gmail.com","7903083834",LocalDate.of(1999, 4, 3),new ArrayList<Billing>(),new HashSet<Address>(),new ArrayList<Appointment>()));
 
 		logger.info("6 rows inserted in customer table");
+		
+		
+		logger.info("Data  Entry process initiated for Payment table");
+		paymentRepository.save(new Payment("card","Successfull",new Card(),new Billing()));
+		paymentRepository.save(new Payment("card","pending",new Card(),new Billing()));
+		paymentRepository.save(new Payment("Cash","Successfull",null,new Billing()));
+		paymentRepository.save(new Payment("Cash","Successfull",null,new Billing()));
+		paymentRepository.save(new Payment("card","pending",new Card(),new Billing()));
+		paymentRepository.save(new Payment("card","Successfull",new Card(),new Billing()));
+		
+		logger.info("6 rows inserted in payment table");
+		
+		logger.info("Data  Entry process initiated for Card table");
+		cardRepository.save(new Card("Visa","123456789",LocalDate.of(2025, 5, 20),420,new Payment()));
+		cardRepository.save(new Card("MasterCard","6468486465",LocalDate.of(2023, 10, 21),425,new Payment()));
+		cardRepository.save(new Card("Rupday","5165156262",LocalDate.of(2024, 9, 15),424,new Payment()));
+		cardRepository.save(new Card("Visa","48945615151",LocalDate.of(2022, 8, 10),423,new Payment()));
+		cardRepository.save(new Card("MasterCard","6184166486",LocalDate.of(2027, 17, 20),421,new Payment()));
+		cardRepository.save(new Card("Rupday","5485130305",LocalDate.of(2025, 6, 22),422,new Payment()));
+		logger.info("6 rows inserted in card table");
+		
 
 		
 

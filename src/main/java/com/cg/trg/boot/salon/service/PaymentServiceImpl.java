@@ -38,8 +38,9 @@ public class PaymentServiceImpl implements IPaymentService{
 		@Override
 		public Payment updatePayment(long paymentId, Payment payment) {
 			if(repository.existsById(paymentId)) {
-				Payment paymentToBeUpdated = repository.findById(paymentId).get();
 				repository.save(payment);
+				Payment paymentToBeUpdated = repository.findById(paymentId).get();
+				
 				return paymentToBeUpdated;
 			}
 			return null;
