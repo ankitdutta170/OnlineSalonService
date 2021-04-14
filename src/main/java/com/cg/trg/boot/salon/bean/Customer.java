@@ -16,6 +16,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Customer extends User {
 
@@ -23,13 +25,20 @@ public class Customer extends User {
 	private String email;
 	private String contactNo;
 	private LocalDate dob;
+
+	//@OneToMany(mappedBy = "customer", targetEntity = Card.class)
+	//private List<Card> cards=new ArrayList<>();
+
 	
 	@OneToMany(mappedBy = "customer", targetEntity = Billing.class)
+	@JsonIgnore
 	private List<Billing> bills = new ArrayList<>();
 	@OneToMany(mappedBy = "customer", targetEntity = Address.class)
+	@JsonIgnore
 	private Set<Address> addresses = new HashSet<>();
 
 	@OneToMany(mappedBy = "customer", targetEntity = Appointment.class)
+	@JsonIgnore
 	private List<Appointment> appointments= new ArrayList<>();
 	public Customer() {
 		super();
@@ -52,6 +61,7 @@ public class Customer extends User {
 		this.bills = bills;
 		this.addresses = addresses;
 		this.appointments = appointments;
+
 	}
 
 	public String getName() {
@@ -110,10 +120,23 @@ public class Customer extends User {
 		this.appointments = appointments;
 	}
 
+	
+
+	/*public List<Card> getCards() {
+		return cards;
+	}
+
+	public void setCards(List<Card> cards) {
+		this.cards = cards;
+	}*/
+
+
+
 	@Override
 	public String toString() {
 		return "Customer [name=" + name + ", email=" + email + ", contactNo=" + contactNo + ", dob=" + dob + ", bills="
 				+ bills + ", addresses=" + addresses + ", appointments=" + appointments + "]";
+
 	}
 
 	
