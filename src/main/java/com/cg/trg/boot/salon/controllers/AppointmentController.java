@@ -52,8 +52,8 @@ public class AppointmentController {
 			return "Appointment failed to delete";
 	}
 	
-	@PutMapping
-	public String updateAppointment(long id, Appointment appointment) {
+	@PutMapping("/update/{id}")
+	public String updateAppointment(@PathVariable("id")long id, @RequestBody Appointment appointment) {
 		Appointment updatedAppointment = service.updateAppointment(id, appointment);
 		if(updatedAppointment != null) {
 			return "Appointment succesfully updated";
