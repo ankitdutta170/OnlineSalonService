@@ -2,6 +2,9 @@ package com.cg.trg.boot.salon.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -28,38 +31,58 @@ public class AppointmentController {
 	@Autowired
 	AppointmentServiceImpl service;
 	
-	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public String saveAppointment(@RequestBody Appointment appointment) {
-		
+	@PostMapping
+	public ResponseEntity<String> saveAppointment(@RequestBody Appointment appointment,HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("userId");
+		String userName = (String) session.getAttribute("username");
+		System.out.println("*******************" + userName + "*************************");
+		System.out.println("*******************" + userId + "*************************");
 		Appointment saveAppointment = service.addAppointment(appointment);
 		if(saveAppointment != null) {
-			return "Appointment successfully made";
+			return new ResponseEntity<String>("Appointment saved successfully", HttpStatus.OK);
 		}
 		else
-			return "Failed to give appointment";
+			return new ResponseEntity<String>("Appointment failed to save", HttpStatus.NOT_FOUND);
 	}
 	@DeleteMapping("{aid}")
-	public String removeAppointment(@PathVariable("aid") long id) {
+	public ResponseEntity<String> removeAppointment(@PathVariable("aid") long id,HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("userId");
+		String userName = (String) session.getAttribute("username");
+		System.out.println("*******************" + userName + "*************************");
+		System.out.println("*******************" + userId + "*************************");
 		Appointment deleteAppointment = service.removeAppointment(id);
 		if(deleteAppointment != null) {
-			return "Appointment successfully deleted";
+			return new ResponseEntity<String>("Appointment successfully deleted", HttpStatus.OK);
 		}
 		else
-			return "Appointment failed to delete";
+			return new ResponseEntity<String>("Appoitment failed to delete", HttpStatus.BAD_REQUEST);
 	}
 	
 	@PutMapping("/update/{id}")
-	public String updateAppointment(@PathVariable("id")long id, @RequestBody Appointment appointment) {
+	public ResponseEntity<String> updateAppointment(@PathVariable("id")long id, @RequestBody Appointment appointment,HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("userId");
+		String userName = (String) session.getAttribute("username");
+		System.out.println("*******************" + userName + "*************************");
+		System.out.println("*******************" + userId + "*************************");
 		Appointment updatedAppointment = service.updateAppointment(id, appointment);
 		if(updatedAppointment != null) {
-			return "Appointment succesfully updated";
+			return new ResponseEntity<String>("Appointment successfully updated", HttpStatus.OK);
 		}
 		else
-			return "Appointment failed to update";
+			return new ResponseEntity<String>("Appointment failed to delete", HttpStatus.BAD_REQUEST);
 	}
 	
 	@GetMapping("{aid}")
-	public ResponseEntity<?> getAppointment(@PathVariable("aid")long id){
+	public ResponseEntity<?> getAppointment(@PathVariable("aid")long id,HttpServletRequest request){
+		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("userId");
+		String userName = (String) session.getAttribute("username");
+		System.out.println("*******************" + userName + "*************************");
+		System.out.println("*******************" + userId + "*************************");
+		
 		Appointment appointment = service.getAppointment(id);
 		if(appointment == null) {
 			throw new AppointmentNotFoundException("Request", "Appointment with appointment id:"+id+"not found");
@@ -67,12 +90,19 @@ public class AppointmentController {
 		return new ResponseEntity<Appointment>(appointment, HttpStatus.OK);
 	}
 	@GetMapping
-	public List<Appointment> getAllAppointments(){
+	public ResponseEntity<List<Appointment>> getAllAppointments(HttpServletRequest request){
+		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("userId");
+		String userName = (String) session.getAttribute("username");
+		System.out.println("*******************" + userName + "*************************");
+		System.out.println("*******************" + userId + "*************************");
+		
+		
 		List<Appointment> appointments = service.getAllAppointments();
 		if(appointments.size() == 0) {
 			throw new EmptyDataException("No Appointments saved in database");
 		}
-		return appointments;
+		return new ResponseEntity<List<Appointment>>(appointments, HttpStatus.OK);
 		
 	}
 	

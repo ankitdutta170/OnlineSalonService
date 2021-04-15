@@ -3,7 +3,6 @@ package com.cg.trg.boot.salon.controllers;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,12 +13,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-
 import com.cg.trg.boot.salon.bean.SalonService;
 import com.cg.trg.boot.salon.exceptions.NoDataException;
 import com.cg.trg.boot.salon.exceptions.SalonServiceNotFoundException;
 import com.cg.trg.boot.salon.service.ISalonServiceImpl;
+
 @CrossOrigin
 @RestController
 @RequestMapping("salonservices")
@@ -47,6 +45,7 @@ public class SalonServiceController {
 		}
 		return new ResponseEntity<SalonService>(service1, HttpStatus.OK);
 	}
+	
 	@GetMapping
 	public List<SalonService> getAllServices(){
 		List<SalonService>services = service.getAllServices();
@@ -54,7 +53,6 @@ public class SalonServiceController {
 			throw new NoDataException("No Service saved in database");
 		}
 		return services;
-		
 	}
     
     @PutMapping("/update/{sid}")
@@ -66,6 +64,7 @@ public class SalonServiceController {
 		else
 			return "SalonService failed to update";
 	}
+    
     @DeleteMapping("{aid}")
 	public String removeSalonService(@PathVariable("aid") long id) {
 		SalonService deleteSalonService = service.removeService(id);
@@ -75,6 +74,7 @@ public class SalonServiceController {
 		else
 			return "SalonService failed to delete";
 	}
+    
     @GetMapping("/count/{id}")
     public String getCountOfAppointmentsOfService(@PathVariable("id")long id) {
     	SalonService salonService = service.getService(id);

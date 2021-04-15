@@ -2,20 +2,21 @@ package com.cg.trg.boot.salon.service;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.cg.trg.boot.salon.bean.SalonService;
 import com.cg.trg.boot.salon.dao.IAppointmentRepository;
 import com.cg.trg.boot.salon.dao.ISalonRepository;
+
 @Service
 public class ISalonServiceImpl implements ISalonService {
+	
 	@Autowired
 	IAppointmentRepository appointmentRepository;
 
 	@Autowired
 	ISalonRepository repository;
+	
 	@Override
 	public SalonService addService(SalonService salonService) {
 	repository.save(salonService);
@@ -42,7 +43,6 @@ public class ISalonServiceImpl implements ISalonService {
 			return salonServiceToBeUpdated;
 		}
 		return null;
-		
 	}
 
 	@Override
@@ -54,14 +54,12 @@ public class ISalonServiceImpl implements ISalonService {
 		else {
 		return null;
 		}
-		
 	}
 
 	@Override
 	public List<SalonService> getAllServices() {
 		List<SalonService> salonService = repository.findAll();
 		return salonService;
-		
 	}
 
 	@Override
@@ -69,11 +67,4 @@ public class ISalonServiceImpl implements ISalonService {
 		// TODO Auto-generated method stub
 		return appointmentRepository.getCountofAppointmentsOfService(id).size();
 	}
-
-	
-
-	
-
-	
-	
 }
