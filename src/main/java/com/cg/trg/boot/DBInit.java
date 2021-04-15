@@ -117,10 +117,10 @@ public class DBInit implements CommandLineRunner{
 
 		cardRepository.save(new Card("Visa","123456789",LocalDate.of(2025, 5, 20),420,null));
 		cardRepository.save(new Card("MasterCard","1601654314",LocalDate.of(2027, 7, 21),425,null));
-		cardRepository.save(new Card("RuPay","434524532453",LocalDate.of(2024, 6, 20),424,null));
+		cardRepository.save(new Card("RuPay","434524532453",LocalDate.of(2018, 6, 20),424,null));
 		cardRepository.save(new Card("Visa","43434873",LocalDate.of(2023, 4, 20),423,null));
 		cardRepository.save(new Card("MasterCard","12453439",LocalDate.of(2021, 12, 14),422,null));
-		cardRepository.save(new Card("RuPday","345345345",LocalDate.of(2022, 11, 2),421,null));
+		cardRepository.save(new Card("RuPay","345345345",LocalDate.of(2022, 11, 2),421,null));
 		logger.info("6 rows inserted in card table");
 		
 		
@@ -132,11 +132,11 @@ public class DBInit implements CommandLineRunner{
 		
 		logger.info("Data  Entry process initiated for Payment table");
 
-		paymentRepository.save(new Payment("card","Successfull",null));
+		paymentRepository.save(new Payment("card","success",null));
 		paymentRepository.save(new Payment("cash","pending",null));
 		paymentRepository.save(new Payment("card","pending",null));
-		paymentRepository.save(new Payment("cash","Successfull",null));
-		paymentRepository.save(new Payment("card","Successfull",null));
+		paymentRepository.save(new Payment("cash","success",null));
+		paymentRepository.save(new Payment("card","success",null));
 		paymentRepository.save(new Payment("cash","pending",null));
 		logger.info("6 rows inserted in payment table");
 

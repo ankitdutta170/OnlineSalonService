@@ -1,5 +1,8 @@
 package com.cg.trg.boot.salon.controllers;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +14,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.cg.trg.boot.salon.bean.Card;
+import com.cg.trg.boot.salon.bean.Payment;
 import com.cg.trg.boot.salon.exceptions.CardNotFoundException;
+import com.cg.trg.boot.salon.exceptions.PaymentNotFound;
 import com.cg.trg.boot.salon.service.CardImpl;
 
 
@@ -61,4 +66,14 @@ public class CardController {
 			}
 			return new ResponseEntity<Card>(check, HttpStatus.OK);
 		}
+		@GetMapping("/card/name/{name}")
+		public List<Card> getPaymentByStatus(@PathVariable("name") String cardName){
+			List<Card> card=repository.getCardByName(cardName);
+			if(card.size()==0)
+				throw new CardNotFoundException("Request", "Card not found");
+			else
+				return card;
+		}
+		
+		
 }

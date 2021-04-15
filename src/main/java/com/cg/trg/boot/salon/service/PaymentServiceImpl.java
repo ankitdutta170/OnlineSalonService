@@ -62,6 +62,20 @@ public class PaymentServiceImpl implements IPaymentService{
 			List<Payment> pay = repository.findAll();
 			return pay;
 		}
+
+
+		@Override
+		public List<Payment> getPaymentByType(String type) {
+			
+			return repository.getPaymentByType(type);
+		}
+
+
+		@Override
+		public List<Payment> getPaymentByStatus(String status) {
+			
+			return repository.getPaymentByStatus(status);
+		}
 	
 	
 }
