@@ -29,7 +29,7 @@ public class SalonServiceController {
     ISalonServiceImpl service;
 
 
-	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping
 	public String saveSalonService(SalonService salonservice) {
 		SalonService saveSalonService = service.addService(salonservice);
 		if(saveSalonService != null) {
