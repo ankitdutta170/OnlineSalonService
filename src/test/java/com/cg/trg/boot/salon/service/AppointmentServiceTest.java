@@ -99,7 +99,7 @@ class AppointmentServiceTest {
 		Billing billing = new Billing(100,500,LocalDate.now(),customer,payment,null);
 		
 		Appointment appointment = new Appointment("Whitefield","Salon",salonService,LocalDate.of(2021, 4, 20),LocalTime.of(16, 0),customer, address,billing);
-		when(appointmentRepository.save(appointment)).thenReturn(appointment);
+		Mockito.when(appointmentRepository.save(appointment)).thenReturn(appointment);
 		assertNotEquals(appointment, appointmentRepository.findById(appointment.getAppointmentId()));
 	}
 	
@@ -113,7 +113,7 @@ class AppointmentServiceTest {
 		Billing billing = new Billing(100,500,LocalDate.now(),customer,payment,null);
 		
 		Appointment appointment = new Appointment("Whitefield","Salon",salonService,LocalDate.of(2021, 4, 20),LocalTime.of(16, 0),customer, address,billing);
-		when(appointmentRepository.save(appointment)).thenReturn(appointment);
+		Mockito.when(appointmentRepository.save(appointment)).thenReturn(appointment);
 		appointment = new Appointment("Epip","Home",salonService,LocalDate.of(2021, 4, 20),LocalTime.of(16, 0),customer, address,billing);
 		 assertNotEquals(appointment, appointmentRepository.save(appointment));
 	}
