@@ -1,6 +1,7 @@
 package com.cg.trg.boot.salon.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -32,7 +33,7 @@ public class CardServiceTest {
 	@Test
 	@DisplayName("Test for adding Card")
 	public void addCardTest() {
-		when(cardRepository.save(card)).thenReturn(card);
+	Mockito.when(cardRepository.save(card)).thenReturn(card);
 		assertEquals(card, cardService.addCard(card));
 	}
 
@@ -42,18 +43,20 @@ public class CardServiceTest {
 		int cardId = 1;
 		cardService.removeCard(cardId);
 
-		verify(cardRepository, times(1)).deleteById((long) cardId);
+		Mockito.verify(cardRepository, times(1)).deleteById((long) cardId);
 	}
 
 	@Test
 	@DisplayName("Test for Updating Card")
 	public void updateCardTest() {
-		Optional<Card> card = cardRepository.findById(1L);
-		if (card.isPresent()) {
-			card.get().setCardName("Visa");
-			cardRepository.save(card.get());
-
+		Optional<Card> newCard = cardRepository.findById(1L);
+		
+		if (newCard.isPresent()) {
+			newCard.get().setCardName("Visa");
+			Mockito.doReturn(cardRepository.save(newCard.get()));
+			assertEquals(card, newCard);
 		}
+		
 	}
 
 	@Test

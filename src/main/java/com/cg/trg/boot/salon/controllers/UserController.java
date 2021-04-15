@@ -1,6 +1,7 @@
 package com.cg.trg.boot.salon.controllers;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -38,81 +39,78 @@ public class UserController {
 
 	@Autowired
 	IUserServiceImpl service;
-	
+
 	IUserRepository repository;
-	@GetMapping(value = "/welcome/signin")
-    public ResponseEntity<String> signIn(@RequestBody User user,HttpServletRequest request) {
-		HttpSession session=request.getSession(true);
-		
+
+	@GetMapping(value = "/signin")
+	public ResponseEntity<String> signIn(@RequestBody User user, HttpServletRequest request) {
+		HttpSession session = request.getSession(true);
+
 		session.setAttribute("userName", "Tom@gmailcom");
 		session.setAttribute("password", "Tom");
 		try {
-			
+
 			service.signIn(user);
 			return new ResponseEntity<String>("Login Successfull!", HttpStatus.OK);
-		}catch(UserNotFoundException ex) {
+		} catch (UserNotFoundException ex) {
 			System.out.println(ex.getMessage());
 		}
 		return new ResponseEntity<String>("Login Unsuccessfull!", HttpStatus.BAD_REQUEST);
-		
-			
-		}
-	
+
+	}
+
 	@GetMapping("/getUser/{uid}")
-	public ResponseEntity<?> getUser(@PathVariable("uid")long id){
+
+	public ResponseEntity<?> getUser(@PathVariable("uid") long id, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("userId");
+		String userName = (String) session.getAttribute("username");
+		System.out.println("*******************" + userName + "*************************");
+		System.out.println("*******************" + userId + "*************************");
+
 		User user = service.getUserById(id);
-		if(user == null) {
-			throw new UserNotFoundException("Appointment with appointment id:"+id+"not found");
+		if (user == null) {
+			throw new UserNotFoundException("Appointment with appointment id:" + id + "not found");
 		}
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("signout")
-    public ResponseEntity<String> signOut( HttpServletRequest request) {
-		HttpSession  session= request.getSession();
-		
-		
-			
-			session.invalidate();
-			return new ResponseEntity<String>("Logout Successfull!", HttpStatus.OK);
-			
-		
-	
-	
-		}	
+	public ResponseEntity<String> signOut(HttpServletRequest request) {
+		HttpSession session = request.getSession();
 
+		session.invalidate();
+		return new ResponseEntity<String>("Logout Successfull!", HttpStatus.OK);
 
-	 @PatchMapping(value = "{changedPassword}" )
-	    public String changePassword(long id,@PathVariable("changedPassword") String changedPassword) {
-		
-			if(service.changePassword(id, changedPassword) != null)
-				return "Password successfully changed.";
-			else
-				return "Unable to change password";
-			
-	    
-	 }
-		
-		
-		@PatchMapping("/{id}/{userName}/{password}")
-		public String updateCredentials(@PathVariable("id")long userId,@PathVariable("userName") String userName,@PathVariable("password") String password) {
-			User userToBeUpdated = service.getUserById(userId);
-			
-			
-			User updatedUser = service.updateCredentials(userToBeUpdated, userName, password);
-			if(updatedUser!=null) {
-				return "Credentials successfully updated";
-			}
-			else
-				return "Credentials failed to update";
-			
-			
-		}
-		
-		
 	}
-	 
-	 
 
+	@PatchMapping(value = "{changedPassword}")
+	public ResponseEntity<String> changePassword(long id, @PathVariable("changedPassword") String changedPassword,
+			HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("userId");
+		String userName = (String) session.getAttribute("username");
+		System.out.println("*******************" + userName + "*************************");
+		System.out.println("*******************" + userId + "*************************");
 
+		if (service.changePassword(id, changedPassword) != null)
+			return new ResponseEntity<String>("Password Changed successfully!", HttpStatus.OK);
+		else
+			return new ResponseEntity<String>("Unable to change password", HttpStatus.NOT_FOUND);
 
+	}
+
+	@PatchMapping("/{id}/{userName}/{password}")
+	public ResponseEntity<?> updateCredentials(@PathVariable("id") long userId, @PathVariable("userName") String userName,
+			@PathVariable("password") String password) {
+		User userToBeUpdated = service.getUserById(userId);
+
+		User updatedUser = service.updateCredentials(userToBeUpdated, userName, password);
+		if (updatedUser != null) {
+			return new ResponseEntity<String>("Credentials updated successfully", HttpStatus.OK);
+		} else
+			return new ResponseEntity<String>("Not able to update credentials", HttpStatus.NOT_FOUND);
+
+	}
+
+}

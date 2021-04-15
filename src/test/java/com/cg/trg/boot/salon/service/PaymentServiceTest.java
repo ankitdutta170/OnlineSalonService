@@ -2,6 +2,7 @@ package com.cg.trg.boot.salon.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -33,7 +34,7 @@ class PaymentServiceTest {
 	 @Test
 	 @DisplayName("Test for adding Payment")
 		public void addPaymentTest() {
-	    	when(paymentRepository.save(payment)).thenReturn(payment);
+	    	Mockito.when(paymentRepository.save(payment)).thenReturn(payment);
 			assertEquals(payment, paymentService.addPayment(payment));
 			}
 	 
@@ -43,7 +44,7 @@ class PaymentServiceTest {
  		int appointmentId = 1;
  		paymentService.removePayment(appointmentId);
  		
- 		verify(paymentRepository, times(1)).deleteById((long) appointmentId);
+ 		Mockito.verify(paymentRepository, times(1)).deleteById((long) appointmentId);
  	}
 	 @Test
 	 @DisplayName("Test for Updating Payment")
@@ -51,7 +52,7 @@ class PaymentServiceTest {
  		Optional<Payment> payment = paymentRepository.findById(1L);
  		if(payment.isPresent()) {
  			payment.get().setType("Cash");
- 			paymentRepository.save(payment.get());
+ 			Mockito.doReturn(paymentRepository.save(payment.get()));
  			
  		}
  		Optional<Payment> updatedpayment = paymentRepository.findById(1L);
@@ -74,9 +75,6 @@ class PaymentServiceTest {
     @Test
     @DisplayName("Test for retriving all Payement Details")
 	public void getAllPaymentDetails() {
-    	
-    	
-    	
 		Mockito.when(paymentRepository.findAll())
 		.thenReturn(Stream.of(new Payment(),new Payment()).collect(Collectors.toList()));
 		
