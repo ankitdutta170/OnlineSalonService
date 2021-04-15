@@ -1,6 +1,7 @@
 package com.cg.trg.boot.salon.controllers;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -40,7 +41,7 @@ public class UserController {
 	IUserServiceImpl service;
 	
 	IUserRepository repository;
-	@GetMapping(value = "/welcome/signin")
+	@GetMapping(value = "/signin")
     public ResponseEntity<String> signIn(@RequestBody User user,HttpServletRequest request) {
 		HttpSession session=request.getSession(true);
 		
@@ -59,8 +60,14 @@ public class UserController {
 		}
 	
 	@GetMapping("/getUser/{uid}")
-	public ResponseEntity<?> getUser(@PathVariable("uid")long id,HttpServletRequest request){
-		HttpSession session=request.getSession();
+
+	public ResponseEntity<?> getUser(@PathVariable("uid")long id, HttpServletRequest request){
+		HttpSession session= request.getSession();
+		String userId=(String)session.getAttribute("userId");
+		String userName=(String)session.getAttribute("username");
+		System.out.println("*******************" + userName+"*************************");
+		System.out.println("*******************" + userId+"*************************");
+
 		User user = service.getUserById(id);
 		if(user == null) {
 			throw new UserNotFoundException("Appointment with appointment id:"+id+"not found");
@@ -70,7 +77,7 @@ public class UserController {
 	
 	@GetMapping("signout")
     public ResponseEntity<String> signOut( HttpServletRequest request) {
-		HttpSession  session= request.getSession();
+		HttpSession session= request.getSession();
 		
 		
 			
