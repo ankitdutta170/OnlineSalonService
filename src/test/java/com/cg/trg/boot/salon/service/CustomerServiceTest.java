@@ -12,11 +12,19 @@ import org.mockito.Mockito;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import com.cg.trg.boot.salon.bean.Address;
+import com.cg.trg.boot.salon.bean.Appointment;
+import com.cg.trg.boot.salon.bean.Billing;
+import com.cg.trg.boot.salon.bean.Card;
 import com.cg.trg.boot.salon.bean.Customer;
+import com.cg.trg.boot.salon.bean.Payment;
+import com.cg.trg.boot.salon.bean.SalonService;
 import com.cg.trg.boot.salon.dao.ICustomerRepository;
 
 import com.cg.trg.boot.salon.service.ICustomerServiceImpl;
@@ -39,45 +47,58 @@ public class CustomerServiceTest {
 	@Test
 	@DisplayName("Test to ")
 	public void addCustomerService() {
-		Customer customerService = new Customer();
-		customerService.setUserId(100);
-		customerService.setName("Arun");
-		customerService.setEmail("abc@gmail.com");
-		customerService.setContactNo("500");
-		customerService.setDob(LocalDate.of(2021, 4, 15));
-		//customerService.setAddress("delhi");
+		Appointment appointment = new Appointment();
+		SalonService salonService = new SalonService(100,"Spa",500,0,"20");
+		Customer customerService1 = new Customer(100,"12345","12345","Customer",false);
+		Address address = new Address(100,"NW004","Lane1","Area1","Bangalore","Karnataka",101245,customerService1);
+		Card card = new Card(100,"Visa","123456",LocalDate.of(2026, 8, 25),356);
+		Payment payment = new Payment("Card","Paid",card);
+		Billing billing = new Billing(100,500,LocalDate.now(),customerService1,payment,appointment);
 		
-		when(customerserviceRepository.save(customerService)).thenReturn(customerService);
+		customerService1.setUserId(100);
+		customerService1.setName("Arun");
+		customerService1.setEmail("abc@gmail.com");
+		customerService1.setContactNo("500");
+		customerService1.setDob(LocalDate.of(2021, 4, 15));
+		
+		Mockito.when(customerserviceRepository.save(customerService1)).thenReturn(customerService1);
+		assertEquals(customerService1,customerservice.addCustomer(customerService1));
 		
 	}
 	
 	@Test
 	public void deleteCustomerservice() {
-		int UserId = 1;
-		customerservice.removeCustomer(UserId);
+		SalonService salonService = new SalonService(100,"Spa",500,0,"20");
+		Customer customer = new Customer(100,"12345","12345","Customer",false);
+		Address address = new Address(100,"NW004","Lane1","Area1","Bangalore","Karnataka",101245,customer);
+		Card card = new Card(100,"Visa","123456",LocalDate.of(2026, 8, 25),356);
+		Payment payment = new Payment("Card","Paid",card);
+		Billing billing = new Billing(100,500,LocalDate.now(),customer,payment,null);
 		
-		verify(customerserviceRepository, times(1)).deleteById((long) UserId);
+		Appointment appointment = new Appointment("Whitefield","Salon",salonService,LocalDate.of(2021, 4, 20),LocalTime.of(16, 0),customer, address,billing);
+
+		assertNotEquals(customer, customerservice.removeCustomer(31));
 	}
 
 	@Test
 	public void updateCustomerservice() {
-		Optional<Customer> CustomerService = customerserviceRepository.findById(1L);
-		if(CustomerService.isPresent()) {
-			CustomerService.get().setName("Spa");
-			customerserviceRepository.save(CustomerService.get());	
-		}
-		Optional<Customer> updatedcustomerservice = customerserviceRepository.findById(1L);
-		if(updatedcustomerservice.isPresent()) {
-			assertThat(updatedcustomerservice.get().getName().equals("Arun"));
-		}
+		Customer customer = new Customer(100,"12345","12345","Customer",false);
+		Card card = new Card(100,"Visa","123456",LocalDate.of(2026, 8, 25),356);
+		Payment payment = new Payment("Card","Paid",card);
+		Billing billing = new Billing(100,500,LocalDate.now(),customer,payment,null);
+		Mockito.when(customerserviceRepository.save(customer)).thenReturn(customer);
+	    customer = new Customer(100,"12345","12345","Customer",false);
+		assertNotEquals(customer, customerserviceRepository.save(customer));
 	}
 
 	@Test
 	public void getServiceById() {
-		Optional<Customer> customerservice = customerserviceRepository.findById(1L);;
-		if(customerservice.isPresent()) {
-			assertEquals(customerservice.get().getUserId(), 1L);
-		}
+		Customer customer = new Customer(100,"12345","12345","Customer",false);
+		Card card = new Card(100,"Visa","123456",LocalDate.of(2026, 8, 25),356);
+		Payment payment = new Payment("Card","Paid",card);
+		Billing billing = new Billing(100,500,LocalDate.now(),customer,payment,null);
+		Mockito.when(customerserviceRepository.save(customer)).thenReturn(customer);
+		assertNotEquals(customer, customerserviceRepository.findById(customer.getUserId()));
 	}
 
 	@Test
@@ -85,9 +106,7 @@ public class CustomerServiceTest {
 		Mockito.when(customerserviceRepository.findAll())
 		.thenReturn(java.util.stream.Stream.of(new Customer(),new Customer()).collect(Collectors.toList()));
 		
-		//assertEquals(2, Customer.getAllCustomers().size());
-		//verify(customerserviceRepository, times(1)).findAll();
-		
+		assertEquals(2, customerservice.getAllCustomers().size());
 	}
 
 }
