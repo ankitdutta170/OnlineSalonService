@@ -26,10 +26,15 @@ dependencies {
 	implementation 'io.springfox:springfox-swagger2:2.9.2'
 	implementation 'io.springfox:springfox-swagger-ui:2.9.2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	
+
+	implementation group: 'org.springframework.session', name: 'spring-session', version: '1.3.1.RELEASE'
+	
 	// https://mvnrepository.com/artifact/mysql/mysql-connector-java
 	//implementation 'mysql:mysql-connector-java:8.0.22'
 	
 	//implementation files('C:/oraclexe/app/oracle/product/11.2.0/server/jdbc/lib/ojdbc6.jar')
+	// https://mvnrepository.com/artifact/org.springframework.session/spring-session
 }
 
 test {

@@ -29,7 +29,7 @@ class AdressServiceTest {
 	@DisplayName("Test for adding Adress")
 	public void addAddress() {
 		Address adress = new Address();
-		Customer customer = new Customer(100,"12345","Customer",false);
+		Customer customer = new Customer(100,"12345","12345","customer",false);
 		Appointment appointment = new Appointment();		
 		adress.setDoorNo("15");
 		adress.setStreet("khaman");

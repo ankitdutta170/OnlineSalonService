@@ -7,4 +7,5 @@ public interface IUserService {
 	public User signOut(User user);
 	public User changePassword(long id, String changePassword);
 	public User updateCredentials(User user, String userName, String password);
+	public User getUserById(long id);
 }

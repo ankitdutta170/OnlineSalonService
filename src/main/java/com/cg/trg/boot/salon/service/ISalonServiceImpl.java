@@ -64,11 +64,11 @@ public class ISalonServiceImpl implements ISalonService {
 		
 	}
 
-	/*@Override
+	@Override
 	public int getCountOfAppointmentsOfServices(long id) {
 		// TODO Auto-generated method stub
 		return appointmentRepository.getCountofAppointmentsOfService(id).size();
-	}*/
+	}
 
 	
 

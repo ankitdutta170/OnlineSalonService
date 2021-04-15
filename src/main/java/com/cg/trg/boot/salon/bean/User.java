@@ -16,7 +16,7 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long userId;
-	protected String userName;
+	private String userName;
 	private String password;
 	private String role;
 	private boolean isLoggedIn;
@@ -25,24 +25,18 @@ public class User {
 		
 	}
 	
-	public User(long userId, String userName, String password, boolean isLoggedIn) {
+	public User(long userId, String userName, String password, String role, boolean isLoggedIn) {
 		super();
 		this.userId = userId;
-		this.userName = userName;
+		
 		this.password = password;
-		//this.role = role;
+		this.role = role;
 		this.isLoggedIn = isLoggedIn;
 	}
 	
 	
 	
 	
-	public long getUserId() {
-		return userId;
-	}
-	public void setUserId(long userId) {
-		this.userId = userId;
-	}
 	public String getUserName() {
 		return userName;
 	}
@@ -50,6 +44,14 @@ public class User {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+
+	public long getUserId() {
+		return userId;
+	}
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+	
 	public String getPassword() {
 		return password;
 	}
@@ -71,11 +73,13 @@ public class User {
 	public void setLoggedIn(boolean isLoggedIn) {
 		this.isLoggedIn = isLoggedIn;
 	}
+
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", userName=" + userName + ", password=" + password + ", role=" + role
 				+ ", isLoggedIn=" + isLoggedIn + "]";
 	}
+	
 	
 	
 	

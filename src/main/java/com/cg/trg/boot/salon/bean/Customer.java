@@ -42,8 +42,8 @@ public class Customer extends User {
 
 	
 
-	public Customer(long userId, String userName, String password, boolean isLoggedIn) {
-		super(userId, userName, password, isLoggedIn);
+	public Customer(long userId, String userName, String password, String role,boolean isLoggedIn) {
+		super(userId, userName, password, role, isLoggedIn);
 		// TODO Auto-generated constructor stub
 	}
 
