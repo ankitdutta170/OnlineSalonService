@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.trg.boot.salon.bean.SalonService;
+import com.cg.trg.boot.salon.dao.IAppointmentRepository;
 import com.cg.trg.boot.salon.dao.ISalonRepository;
 @Service
 public class ISalonServiceImpl implements ISalonService {
-	
+	@Autowired
+	IAppointmentRepository appointmentRepository;
 
 	@Autowired
 	ISalonRepository repository;
@@ -24,7 +26,12 @@ public class ISalonServiceImpl implements ISalonService {
 	public SalonService removeService(long id) {
 		Optional<SalonService> salonServiceToBeDeleted = repository.findById(id);
 		repository.deleteById(id);
-		return null;
+		if(salonServiceToBeDeleted.isPresent()) {
+			return salonServiceToBeDeleted.get();
+		}
+		else {
+			return null;
+		}
 	}
 
 	@Override
@@ -56,6 +63,12 @@ public class ISalonServiceImpl implements ISalonService {
 		return salonService;
 		
 	}
+
+	/*@Override
+	public int getCountOfAppointmentsOfServices(long id) {
+		// TODO Auto-generated method stub
+		return appointmentRepository.getCountofAppointmentsOfService(id).size();
+	}*/
 
 	
 

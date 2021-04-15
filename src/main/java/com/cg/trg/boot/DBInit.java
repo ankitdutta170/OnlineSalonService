@@ -2,6 +2,8 @@ package com.cg.trg.boot;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -21,8 +23,10 @@ import com.cg.trg.boot.salon.dao.IUserRepository;
 import com.cg.trg.boot.salon.dao.IAppointmentRepository;
 import com.cg.trg.boot.salon.service.ICustomerServiceImpl;
 import com.cg.trg.boot.salon.bean.Payment;
+import com.cg.trg.boot.salon.dao.IBillingRepository;
 import com.cg.trg.boot.salon.dao.ICardRepository;
 import com.cg.trg.boot.salon.dao.IPaymentRepository;
+import com.cg.trg.boot.salon.service.BillingServiceImpl;
 import com.cg.trg.boot.salon.service.CardImpl;
 import com.cg.trg.boot.salon.service.PaymentServiceImpl;
 
@@ -56,6 +60,8 @@ public class DBInit implements CommandLineRunner{
 	ICardRepository cardRepository;
 	
 	@Autowired
+	IBillingRepository billingRepository;
+	@Autowired
 	PaymentServiceImpl paymentService;
 	
 	@Autowired
@@ -63,6 +69,8 @@ public class DBInit implements CommandLineRunner{
 	
 	@Autowired 
 	ICustomerServiceImpl customerService;
+	@Autowired
+	BillingServiceImpl billingService;
 	
 	@Autowired
 	IUserRepository userRepository;
@@ -73,14 +81,19 @@ public class DBInit implements CommandLineRunner{
 	
 	@Override
 	public void run(String... args) throws Exception {
-		
+		logger.info("Data  Entry process initiated for Customer table");
+		customerRepository.save(new Customer("Ankit","abc@gmail.com","7903083839",LocalDate.of(1999, 4, 8),new ArrayList<Billing>(),new HashSet<Address>(),new ArrayList<Appointment>()));
+		customerRepository.save(new Customer("Sai","abcd@gmail.com","7903083838",LocalDate.of(1999, 4, 7),new ArrayList<Billing>(),new HashSet<Address>(),new ArrayList<Appointment>()));
+		customerRepository.save(new Customer("Om","abcde@gmail.com","7903083837",LocalDate.of(1999, 4, 6),new ArrayList<Billing>(),new HashSet<Address>(),new ArrayList<Appointment>()));
+		customerRepository.save(new Customer("Sulabh","abcdef@gmail.com","7903083836",LocalDate.of(1999, 4, 5),new ArrayList<Billing>(),new HashSet<Address>(),new ArrayList<Appointment>()));
+		customerRepository.save(new Customer("Siddharth","abcdefg@gmail.com","7903083835",LocalDate.of(1999, 4, 4),new ArrayList<Billing>(),new HashSet<Address>(),new ArrayList<Appointment>()));
+		customerRepository.save(new Customer("Kurshed","abcdefgh@gmail.com","7903083834",LocalDate.of(1999, 4, 3),new ArrayList<Billing>(),new HashSet<Address>(),new ArrayList<Appointment>()));
 
-
 		
-		
+		Customer customer1=customerService.getCustomer(1);
 		
 		logger.info("Data  Entry process initiated for Bill table");
-		bill.save(new Billing(500.00,LocalDate.of(1999, 4, 8),null,null,null));
+		bill.save(new Billing(500.00,LocalDate.of(1999, 4, 8),customer1,null,null));
 		bill.save(new Billing(100.00,LocalDate.of(1999, 4, 7),null,null,null));
 		bill.save(new Billing(700.00,LocalDate.of(1999, 4, 6),null,null,null));
 		bill.save(new Billing(300.00,LocalDate.of(1999, 4, 5),null,null,null));
@@ -101,6 +114,7 @@ public class DBInit implements CommandLineRunner{
 		
 	
 		logger.info("Data  Entry process initiated for Card table");
+
 		cardRepository.save(new Card("Visa","123456789",LocalDate.of(2025, 5, 20),420,null));
 		cardRepository.save(new Card("MasterCard","1601654314",LocalDate.of(2027, 7, 21),425,null));
 		cardRepository.save(new Card("RuPay","434524532453",LocalDate.of(2024, 6, 20),424,null));
@@ -111,7 +125,13 @@ public class DBInit implements CommandLineRunner{
 		
 		
 		
+		
+
+		
+		
+		
 		logger.info("Data  Entry process initiated for Payment table");
+
 		paymentRepository.save(new Payment("card","Successfull",null));
 		paymentRepository.save(new Payment("cash","pending",null));
 		paymentRepository.save(new Payment("card","pending",null));
@@ -119,6 +139,9 @@ public class DBInit implements CommandLineRunner{
 		paymentRepository.save(new Payment("card","Successfull",null));
 		paymentRepository.save(new Payment("cash","pending",null));
 		logger.info("6 rows inserted in payment table");
+
+		Billing billing=billingService.getBillDetails(1);
+		Card card=cardimpl.getCardDetails(3);
 		
 		
 
@@ -126,27 +149,28 @@ public class DBInit implements CommandLineRunner{
 		logger.info("Inserting data for Appointment");
 		Customer customer=customerService.getCustomer(1);
 		appointmentRepository.save(new Appointment("Whitefield", "Salon", null, LocalDate.of(2021, 4, 18), LocalTime.of(15, 0), customer, null, null));
+		appointmentRepository.save(new Appointment("ABC", "Salon", null, LocalDate.of(2021, 4, 19), LocalTime.of(16, 0), customer, null, null));
 
 	
 		logger.info("Data  Entry process initiated for Salon_Service table");
-		salonRepository.save(new SalonService("Hair",200.0, 0,"30 Minutes", null));
-		salonRepository.save(new SalonService("Facial",250.0, 0,"25 Minutes", null));
-		salonRepository.save(new SalonService("Hair Spa",300.0, 0,"45 Minutes", null));
-		salonRepository.save(new SalonService("Trimming",100.0, 0,"20 Minutes", null));
-		salonRepository.save(new SalonService("Groom Makeup",1500.0, 0,"1.5 Hours", null));
-		salonRepository.save(new SalonService("Bride Makeup",2000.0, 0,"2 Hours", null));
+		salonRepository.save(new SalonService("Hair",200.0, 0,"30 Minutes"));
+		salonRepository.save(new SalonService("Facial",250.0, 0,"25 Minutes"));
+		salonRepository.save(new SalonService("Hair Spa",300.0, 0,"45 Minutes"));
+		salonRepository.save(new SalonService("Trimming",100.0, 0,"20 Minutes"));
+		salonRepository.save(new SalonService("Groom Makeup",1500.0, 0,"1.5 Hours"));
+		salonRepository.save(new SalonService("Bride Makeup",2000.0, 0,"2 Hours"));
 
 		logger.info("6 rows inserted in salon_service table");
 
 		
-		logger.info("Inserting data for userId and Password");
-		userRepository.save(new User(1, "sid", "password", "customer",false));
-		userRepository.save(new User(2, "sai", "pass", "customer",false));
-		userRepository.save(new User(3, "ankit", "word", "customer",false));
-		userRepository.save(new User(4, "om", "omcapg", "customer",false));
-		userRepository.save(new User(5, "alam", "k.alam", "customer",false));
-		userRepository.save(new User(6, "sulabh", "s@password", "customer",false));
+		//logger.info("Inserting data for userId and Password");
+		//userRepository.save(new User(1, "sid", "password", false));
+		//userRepository.save(new User(2, "sai", "pass", false));
+		//userRepository.save(new User(3, "ankit", "word", false));
+		//userRepository.save(new User(4, "om", "omcapg", false));
+		//userRepository.save(new User(5, "alam", "k.alam", false));
+		//userRepository.save(new User(6, "sulabh", "s@password", false));
 		
-		logger.info("6 rows inserted in user_service table");
+		//logger.info("6 rows inserted in user_service table");
 	}
 }

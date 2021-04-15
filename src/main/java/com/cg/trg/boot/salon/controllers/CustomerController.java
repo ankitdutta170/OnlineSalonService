@@ -12,7 +12,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.cg.trg.boot.salon.bean.Appointment;
+import com.cg.trg.boot.salon.bean.Billing;
 import com.cg.trg.boot.salon.bean.Customer;
+import com.cg.trg.boot.salon.exceptions.AppointmentNotFoundException;
+import com.cg.trg.boot.salon.exceptions.BillNotFoundException;
 import com.cg.trg.boot.salon.exceptions.CustomerNotFoundException;
 import com.cg.trg.boot.salon.exceptions.EmptyDataException;
 import com.cg.trg.boot.salon.service.ICustomerServiceImpl;
@@ -66,6 +71,23 @@ public class CustomerController {
 			throw new EmptyDataException("No Customers saved in database");
 		}
 		return customers;
+	}
+	@GetMapping("/getAppointments/{cid}")
+	public List<Appointment> getAllAppointmentForCustomer(@PathVariable("cid")long id){
+		List<Appointment> appointments = service.getAllAppointmentsForCustomer(id);
+		if(appointments.size() == 0) {
+			throw new AppointmentNotFoundException("Appointment not found for customer "+id);
+		}
+		return appointments;
+	}
+	
+	@GetMapping("/getBills/{cid}")
+	public List<Billing> getAllBillsForCustomer(@PathVariable("cid") long id){
+		List<Billing> bills = service.getAllBillingForCustomer(id);
+		if(bills.size()== 0) {
+			throw new BillNotFoundException("Bills for the customer not found");
+		}
+		return bills;
 	}
 
 }

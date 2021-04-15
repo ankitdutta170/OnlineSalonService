@@ -29,7 +29,7 @@ public class CardController {
 			return "Card adding Failed";
 	}
 
-	@DeleteMapping("/card/{id}")
+	@DeleteMapping("/card/delete/{id}")
 	public ResponseEntity<?> removeCard(@PathVariable(value = "id") long cardId) {
 
 		Card cardDetails = repository.getCardDetails(cardId);
@@ -41,14 +41,14 @@ public class CardController {
 		}
 	}
 	@PutMapping("/card/update/{id}")
-	public String updateCard(@PathVariable(value = "id") long cardId, Card card) {
+	public String updateCard(@PathVariable(value = "id") long cardId, @RequestBody Card card) {
 		Card check = repository.getCardDetails(cardId);
 		if(check==null) {
 			throw new CardNotFoundException("Request", "Card with CardId id:" + cardId + "not found");
 		}
 		else {
 			repository.updateCard(cardId, card);
-			return "Payment Successfully Updated";
+			return "Card Successfully Updated";
 			
 		}
 		

@@ -22,7 +22,7 @@ public class PaymentController {
 	private PaymentServiceImpl repo;
 
 
-	@PostMapping("/addpayment")
+	@PostMapping(value ="/addpayment", consumes = {org.springframework.http.MediaType.APPLICATION_JSON_VALUE})
 	public String addPayment(@RequestBody Payment payment) {
 		Payment pay = repo.addPayment(payment);
 		if (pay != null) {
@@ -32,7 +32,7 @@ public class PaymentController {
 	}
 
 
-	@DeleteMapping("/payment/{id}")
+	@DeleteMapping("/payment/delete/{id}")
 	public ResponseEntity<?> removePayment(@PathVariable(value = "id") long paymentId) {
 
 		Payment payemntDetails = repo.getPaymentDetails(paymentId);
@@ -45,7 +45,7 @@ public class PaymentController {
 	}
 
 	@PutMapping("/payment/update/{id}")
-	public String updatePayment(@PathVariable(value = "id") long paymentId, Payment payment) {
+	public String updatePayment(@PathVariable(value = "id") long paymentId,@RequestBody Payment payment) {
 		Payment check = repo.getPaymentDetails(paymentId);
 		if(check==null) {
 			throw new PaymentNotFound("Request", "Payment with paymentId id:" + paymentId + "not found");

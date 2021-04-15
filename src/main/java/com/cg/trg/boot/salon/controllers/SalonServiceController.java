@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -55,8 +56,8 @@ public class SalonServiceController {
 		
 	}
     
-    @PutMapping
-	public String updateSalonService(long id, SalonService salonservice) {
+    @PutMapping("/update/{sid}")
+	public String updateSalonService(@PathVariable("sid")long id, @RequestBody SalonService salonservice) {
 		SalonService updatedSalonService = service.updateService(id, salonservice);
 		if(updatedSalonService != null) {
 			return "SalonService succesfully updated";
@@ -73,4 +74,9 @@ public class SalonServiceController {
 		else
 			return "SalonService failed to delete";
 	}
+   /* @GetMapping("/count/{id}")
+    public String getCountOfAppointmentsOfService(@PathVariable("id")long id) {
+    	SalonService salonService = service.getService(id);
+    	return "No of Appointments for "+salonService.getServiceName()+" is: "+service.getCountOfAppointmentsOfServices(id);
+    }*/
 }

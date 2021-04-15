@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.mockito.Mockito;
 
@@ -41,7 +42,7 @@ class AppointmentServiceTest {
 	@DisplayName("Test for adding appointment")
 	public void addAppointmentTest() {
 		Appointment appointment = new Appointment();
-		SalonService salonService = new SalonService(100,"Spa",500,0,"20",appointment);
+		//SalonService salonService = new SalonService(100,"Spa",500,0,"20",appointment);
 		Customer customer = new Customer(100,"12345","Customer",false);
 		Address address = new Address(100,"NW004","Lane1","Area1","Bangalore","Karnataka",101245,customer);
 		Card card = new Card(100,"Visa","123456",LocalDate.of(2026, 8, 25),356);
@@ -51,7 +52,7 @@ class AppointmentServiceTest {
 		appointment.setAppointmentId(100);
 		appointment.setLocation("Whitefield");
 		appointment.setVisitType("Salon");
-		appointment.setPreferredService(salonService);
+	//	appointment.setPreferredService(salonService);
 		appointment.setPreferredDate(LocalDate.of(2021, 4, 15));
 		appointment.setPreferredTime(LocalTime.of(16, 0));
 		appointment.setCustomer(customer);
@@ -74,10 +75,10 @@ class AppointmentServiceTest {
 	
 	@Test
 	public void deleteAppointmentTest() {
-		int appointmentId = 1;
-		appointmentService.removeAppointment(appointmentId);
+		Appointment deletedAppointment =
+		appointmentService.removeAppointment(1);
 		
-		verify(appointmentRepository, times(1)).deleteById((long) appointmentId);
+		verify(appointmentRepository, times(1)).deleteById((long) 1);
 	}
 	
 	

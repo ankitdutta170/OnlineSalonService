@@ -38,12 +38,18 @@ public class Customer extends User {
 		super();
 	}
 
-	public Customer(long userId, String password, String role, boolean isLoggedIn) {
-		super();
+	
+
+	
+
+	public Customer(long userId, String userName, String password, boolean isLoggedIn) {
+		super(userId, userName, password, isLoggedIn);
 		// TODO Auto-generated constructor stub
 	}
 
-	
+
+
+
 
 	public Customer(String name, String email, String contactNo, LocalDate dob, List<Billing> bills, Set<Address> addresses,
 			List<Appointment> appointments) {
