@@ -22,7 +22,7 @@ public class PaymentController {
 	private PaymentServiceImpl repo;
 
 
-	@PostMapping("/addpayment")
+	@PostMapping(value ="/addpayment", consumes = {org.springframework.http.MediaType.APPLICATION_JSON_VALUE})
 	public String addPayment(@RequestBody Payment payment) {
 		Payment pay = repo.addPayment(payment);
 		if (pay != null) {

@@ -28,6 +28,8 @@ public class Card {
     @OneToOne(mappedBy = "card", targetEntity = Payment.class,cascade = CascadeType.ALL)
     @JsonIgnore
 
+
+
     private Payment payment;
 	public Card() {
 		
