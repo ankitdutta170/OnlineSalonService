@@ -2,6 +2,9 @@ package com.cg.trg.boot.salon.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.trg.boot.salon.bean.Address;
+import com.cg.trg.boot.salon.bean.Appointment;
 import com.cg.trg.boot.salon.exceptions.BillNotFoundException;
 import com.cg.trg.boot.salon.exceptions.EmptyDataException;
 import com.cg.trg.boot.salon.service.AddressServiceImpl;
@@ -25,34 +29,54 @@ public class AddressController {
 	@Autowired
 	 AddressServiceImpl service;
 	@PostMapping
-	public String saveAddress(Address address) {
+	public ResponseEntity<String>saveAddress(Address address, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("userId");
+		String userName = (String) session.getAttribute("username");
+		System.out.println("*******************" + userName + "*************************");
+		System.out.println("*******************" + userId + "*************************");
 		Address addres = service.addAddress(address);
 		if(addres != null) {
-			return "Address successfully made";
+			return new ResponseEntity<String>("Address saved successfully", HttpStatus.OK);
 		}
 		else
-			return "Failed to give Address";
+			return new ResponseEntity<String>("Address failed to save", HttpStatus.NOT_FOUND);
 	}
 	@DeleteMapping("{aid}")
-	public String removeAddress(@PathVariable("aid") long id) {
+	public ResponseEntity<String> removeAddress(@PathVariable("aid") long id,HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("userId");
+		String userName = (String) session.getAttribute("username");
+		System.out.println("*******************" + userName + "*************************");
+		System.out.println("*******************" + userId + "*************************");
 		Address deleteAddress = service.removeAddress(id);
 		if(deleteAddress != null) {
-			return "Address successfully deleted";
+			return new ResponseEntity<String>("Address successfully deleted", HttpStatus.OK);
 		}
 		else
-			return "Address failed to delete";
+			return new ResponseEntity<String>("Address failed to delete", HttpStatus.BAD_REQUEST);
 	}
 	@PutMapping
-	public String updateAddress(long id, Address address) {
+	public ResponseEntity<String> updateAddress(long id, Address address,HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("userId");
+		String userName = (String) session.getAttribute("username");
+		System.out.println("*******************" + userName + "*************************");
+		System.out.println("*******************" + userId + "*************************");
 		Address updatedAddress = service.updateAddress(id, address);
 		if(updatedAddress != null) {
-			return "Address succesfully updated";
+			return new ResponseEntity<String>("Address successfully updated", HttpStatus.OK);
 		}
 		else
-			return "Address failed to update";
+			return new ResponseEntity<String>("Address failed to delete", HttpStatus.BAD_REQUEST);
 	}
 	@GetMapping("{aid}")
-	public ResponseEntity<?> getAddress(@PathVariable("aid")long id){
+	public ResponseEntity<?> getAddress(@PathVariable("aid")long id,HttpServletRequest request){
+		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("userId");
+		String userName = (String) session.getAttribute("username");
+		System.out.println("*******************" + userName + "*************************");
+		System.out.println("*******************" + userId + "*************************");
 		Address address = service.getAddressDetails(id);
 		if(address == null) {
 			throw new BillNotFoundException("Request", "Address with Adress id:"+id+"not found");
@@ -60,12 +84,19 @@ public class AddressController {
 		return new ResponseEntity<Address>(address, HttpStatus.OK);
 	}
 	@GetMapping
-	public List<Address> getAllAddress(){
+	public ResponseEntity<List<Address>> getAllAddress(HttpServletRequest request){
+		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("userId");
+		String userName = (String) session.getAttribute("username");
+		System.out.println("*******************" + userName + "*************************");
+		System.out.println("*******************" + userId + "*************************");
+		
 		List<Address> address = service.getAllAddress();
 		if(address.size() == 0) {
 			throw new EmptyDataException("No Address saved in database");
 		}
-		return address;
+		return new ResponseEntity<List<Address>>(address, HttpStatus.OK);
+
 		
 	}
 
