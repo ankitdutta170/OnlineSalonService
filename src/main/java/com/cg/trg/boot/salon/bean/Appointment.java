@@ -29,7 +29,7 @@ public class Appointment {
 	
 	private String visitType;
 	@JsonIgnore
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="salon_service_id_fk")
 	private SalonService preferredService;
 	
@@ -42,10 +42,10 @@ public class Appointment {
 	@JoinColumn(name="user_id_fk")
 	private Customer customer;
 	@JsonIgnore
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="address_id_fk")
 	private Address address;
-	@JsonIgnore
+	
 	@OneToOne(mappedBy = "appointment", targetEntity = Billing.class)
 	private Billing billing;
 	

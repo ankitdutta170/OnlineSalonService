@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,24 +19,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Card {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="card_id")
+	@Column(name = "card_id")
 	private long cardId;
 	private String cardName;
 	private String cardNumber;
-    private LocalDate cardExpiry;
-    private int cvv;
+	private LocalDate cardExpiry;
+	private int cvv;
 
-    @OneToOne(mappedBy = "card", targetEntity = Payment.class,cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "card", targetEntity = Payment.class,fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonIgnore
-
-
-
     private Payment payment;
 	public Card() {
-		
+
 	}
-	
-	
 
 	public Card(long cardId, String cardName, String cardNumber, LocalDate cardExpiry, int cvv, Payment payment) {
 		super();
@@ -53,19 +49,18 @@ public class Card {
 		this.cardNumber = cardNumber;
 		this.cardExpiry = cardExpiry;
 		this.cvv = cvv;
-		
+
 	}
-	
-	public Card(String cardName, String cardNumber, LocalDate cardExpiry, int cvv, Payment payment) {
+
+	public Card(String cardName, String cardNumber, LocalDate cardExpiry, int cvv) {
 		super();
-		
+
 		this.cardName = cardName;
 		this.cardNumber = cardNumber;
 		this.cardExpiry = cardExpiry;
 		this.cvv = cvv;
-		this.payment = payment;
+//		this.payment = payment;
 	}
-
 
 	public long getCardId() {
 		return cardId;
@@ -78,40 +73,48 @@ public class Card {
 	public String getCardName() {
 		return cardName;
 	}
+
 	public void setCardName(String cardName) {
 		this.cardName = cardName;
 	}
+
 	public String getCardNumber() {
 		return cardNumber;
 	}
+
 	public void setCardNumber(String cardNumber) {
 		this.cardNumber = cardNumber;
 	}
+
 	public LocalDate getCardExpiry() {
 		return cardExpiry;
 	}
+
 	public void setCardExpiry(LocalDate cardExpiry) {
 		this.cardExpiry = cardExpiry;
 	}
+
 	public int getCvv() {
 		return cvv;
 	}
+
 	public void setCvv(int cvv) {
 		this.cvv = cvv;
 	}
-	
-	
+
+//	@Override
+//	public String toString() {
+//		return "Card [cardId=" + cardId + ", cardName=" + cardName + ", cardNumber=" + cardNumber + ", cardExpiry="
+//				+ cardExpiry + ", cvv=" + cvv + "]";
+//	}
+
 	public Payment getPayment() {
 		return payment;
 	}
 
-
-
 	public void setPayment(Payment payment) {
 		this.payment = payment;
 	}
-
-
 
 	@Override
 	public String toString() {
@@ -120,10 +123,4 @@ public class Card {
 	}
 
 
-
-	
-
-	
-	
-    
 }

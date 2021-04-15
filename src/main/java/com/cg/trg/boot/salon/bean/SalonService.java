@@ -20,9 +20,9 @@ public class SalonService {
 	private double price;
 	private int discount;
 	private String duration;
-	//@OneToOne(mappedBy = "preferredService",targetEntity = Appointment.class)
-	//@JsonIgnore
-	//private Appointment appointment;
+	@OneToOne(mappedBy = "preferredService",targetEntity = Appointment.class)
+	@JsonIgnore
+	private Appointment appointment;
 	public SalonService() {
 		super();
 	}

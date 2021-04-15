@@ -28,11 +28,11 @@ public class Billing {
 	private Customer customer;
 	
 	@JsonIgnore
-	@OneToOne
+	@OneToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="payment_id_fk")
 	private Payment payment;
 	@JsonIgnore
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="appointment_id_fk")
 	private Appointment appointment;
 	public Billing() {

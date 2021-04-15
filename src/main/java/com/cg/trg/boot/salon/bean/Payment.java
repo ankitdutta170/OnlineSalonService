@@ -4,9 +4,6 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
-
-
 @Entity
 @Table(name = "Payment")
 public class Payment {
@@ -16,29 +13,22 @@ public class Payment {
 	private long paymentId;
 	private String type;
 	private String status;
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "card_id_fk")
 	private Card card;
-
-
+	@OneToOne(mappedBy = "payment", targetEntity = Billing.class,fetch = FetchType.LAZY, orphanRemoval = true)
+	private Billing bill;
 	public Payment() {
-		
+
 	}
-	
 
-	
-
-
-	public Payment( String type, String status, Card card) {
+	public Payment(String type, String status, Card card) {
 		super();
-		//this.paymentId = paymentId;
 		this.type = type;
 		this.status = status;
 		this.card = card;
-		
-	}
 
-	
+	}
 
 	public long getPaymentId() {
 		return paymentId;
@@ -71,25 +61,10 @@ public class Payment {
 	public void setCard(Card card) {
 		this.card = card;
 	}
-	
-	
-	
-
-
-
-
 
 	@Override
 	public String toString() {
-		return "Payment [paymentId=" + paymentId + ", type=" + type + ", status=" + status + ", card=" + card
-				+ "]";
+		return "Payment [paymentId=" + paymentId + ", type=" + type + ", status=" + status + ", card=" + card + "]";
 	}
-
-
-
-
-	
-
-	
 
 }

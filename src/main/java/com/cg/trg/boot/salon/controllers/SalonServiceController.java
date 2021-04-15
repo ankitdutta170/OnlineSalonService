@@ -38,7 +38,7 @@ public class SalonServiceController {
 			return "Failed to add service";
 	}
 	
-	@GetMapping("{aid}")
+	@GetMapping("salon/{aid}")
 	public ResponseEntity<?> getSalonService(@PathVariable("aid")long id){
 		SalonService service1 = service.getService(id);
 		if(service1 == null) {
