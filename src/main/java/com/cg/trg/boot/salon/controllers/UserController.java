@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cg.trg.boot.salon.bean.User;
@@ -38,9 +40,6 @@ public class UserController {
 			return "Sign In Successfull";
 		}catch(UserNotFoundException ex) {
 			System.out.println(ex.getMessage());
-		}catch(PasswordMismatchException ex) {
-			System.out.println(ex.getMessage());
-			
 		}
 		return "SignIn Unsuccessfull";
 		
@@ -103,6 +102,16 @@ public class UserController {
 		public String destroySession(HttpServletRequest request) {
 			request.getSession().invalidate();
 			return "redirect:/";
+		}
+		
+		@PutMapping("/{userName}/{password}")
+		public String updateCredentials(@RequestBody User user,@PathVariable("userName") String userName,@PathVariable("password") String password) {
+			User updatedUser = service.updateCredentials(user, userName, password);
+			if(updatedUser!=null) {
+				return "Credentials successfully updated";
+			}
+			else
+				return "Credentials failed to update";
 		}
 	}
 	 

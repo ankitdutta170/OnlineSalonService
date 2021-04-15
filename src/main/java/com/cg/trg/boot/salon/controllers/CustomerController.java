@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.trg.boot.salon.bean.Appointment;
+import com.cg.trg.boot.salon.bean.Billing;
 import com.cg.trg.boot.salon.bean.Customer;
 import com.cg.trg.boot.salon.exceptions.AppointmentNotFoundException;
+import com.cg.trg.boot.salon.exceptions.BillNotFoundException;
 import com.cg.trg.boot.salon.exceptions.CustomerNotFoundException;
 import com.cg.trg.boot.salon.exceptions.EmptyDataException;
 import com.cg.trg.boot.salon.service.ICustomerServiceImpl;
@@ -77,6 +79,14 @@ public class CustomerController {
 			throw new AppointmentNotFoundException("Appointment not found for customer "+id);
 		}
 		return appointments;
+	}
+	
+	public List<Billing> getAllBillsForCustomer(long id){
+		List<Billing> bills = service.getAllBillingForCustomer(id);
+		if(bills.size()== 0) {
+			throw new BillNotFoundException("Bills for the customer not found");
+		}
+		return bills;
 	}
 
 }

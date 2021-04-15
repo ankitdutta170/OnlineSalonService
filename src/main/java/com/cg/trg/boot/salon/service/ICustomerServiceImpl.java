@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.trg.boot.salon.bean.Appointment;
+import com.cg.trg.boot.salon.bean.Billing;
 import com.cg.trg.boot.salon.bean.Customer;
 import com.cg.trg.boot.salon.dao.IAppointmentRepository;
+import com.cg.trg.boot.salon.dao.IBillingRepository;
 import com.cg.trg.boot.salon.dao.ICustomerRepository;
 
 @Service
@@ -19,6 +21,8 @@ public class ICustomerServiceImpl implements ICustomerService{
     ICustomerRepository repository;
     @Autowired
     IAppointmentRepository appointmentRepository;
+    @Autowired
+    IBillingRepository billingRepository;
 
 	@Override
 	public Customer addCustomer(Customer customer) {
@@ -85,6 +89,14 @@ public class ICustomerServiceImpl implements ICustomerService{
 	public List<Appointment> getAllAppointmentsForCustomer(long userId) {
 		
 		return appointmentRepository.getAppointmentByCustomer(userId);
+	}
+
+
+
+	@Override
+	public List<Billing> getAllBillingForCustomer(long userId) {
+		
+		return billingRepository.getAllBillsForCustomer(userId);
 	}
 
 }

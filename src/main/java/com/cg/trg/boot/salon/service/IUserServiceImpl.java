@@ -16,20 +16,10 @@ public class IUserServiceImpl implements IUserService {
 	@Override
 	public User signIn(User user) {
 		// TODO Auto-generated method stub
-		if (repository.existsById(user.getUserId())) {
-
-			User userFromDBTable = repository.findById(user.getUserId()).get();
-			if (user.getPassword().equals(userFromDBTable.getPassword())) {
-				user.setLoggedIn(true);
-				return userFromDBTable;
-				
-			}
-			else {	
-			throw new PasswordMismatchException("Password doesn't match!Retry.");
-			}
-		} else {
-			throw new UserNotFoundException("User does not exist");
-		}
+		User loggedInUser = repository.getUserByUsernameAndPassword(user.getUserName(), user.getPassword());
+		if(loggedInUser != null)
+			return loggedInUser;
+		throw new UserNotFoundException("User not found in database");
 
 	}
 
@@ -61,6 +51,14 @@ public class IUserServiceImpl implements IUserService {
 		}
 			
 		
+	}
+
+	@Override
+	public User updateCredentials(User user,String userName, String password) {
+		user.setUserName(userName);
+		user.setPassword(password);
+		
+		return user;
 	}
 
 	
