@@ -2,6 +2,7 @@ package com.cg.trg.boot.salon.service;
 
 
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import static org.mockito.Mockito.when;
@@ -10,7 +11,7 @@ import org.mockito.Mockito;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.DisplayName;
@@ -105,17 +106,16 @@ class AppointmentServiceTest {
 	
 	@Test
 	public void updateAppointmentTest() {
-		SalonService salonService = new SalonService(100,"Spa",500,0,"20");
-		Customer customer = new Customer(100,"12345","12345","Customer",false);
-		Address address = new Address(100,"NW004","Lane1","Area1","Bangalore","Karnataka",101245,customer);
-		Card card = new Card(100,"Visa","123456",LocalDate.of(2026, 8, 25),356);
-		Payment payment = new Payment("Card","Paid",card);
-		Billing billing = new Billing(100,500,LocalDate.now(),customer,payment,null);
-		
-		Appointment appointment = new Appointment("Whitefield","Salon",salonService,LocalDate.of(2021, 4, 20),LocalTime.of(16, 0),customer, address,billing);
-		Mockito.when(appointmentRepository.save(appointment)).thenReturn(appointment);
-		appointment = new Appointment("Epip","Home",salonService,LocalDate.of(2021, 4, 20),LocalTime.of(16, 0),customer, address,billing);
-		 assertNotEquals(appointment, appointmentRepository.save(appointment));
+		Optional<Appointment> appointment = appointmentRepository.findById(1L);
+ 		if(appointment.isPresent()) {
+ 			appointment.get().setLocation("Whitefield");
+ 			Mockito.doReturn(appointmentRepository.save(appointment.get()));
+ 			
+ 		}
+ 		Optional<Appointment> updatedAppointment = appointmentRepository.findById(1L);
+		if(updatedAppointment.isPresent()) {
+			assertThat(updatedAppointment.get().getLocation().equals("Whitefield"));
+		}
 	}
 	
 	

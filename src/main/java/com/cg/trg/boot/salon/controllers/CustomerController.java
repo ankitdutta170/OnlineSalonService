@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,32 +31,32 @@ public class CustomerController {
 	ICustomerServiceImpl service;
 	
 	@PostMapping
-	public String saveCustomer(Customer customer) {
+	public ResponseEntity<String> saveCustomer(@RequestBody Customer customer) {
 		Customer saveCustomer = service.addCustomer(customer);
 		if(saveCustomer != null) {
-			return "Customer successfully made";
+			return new ResponseEntity<String>("Customer saved successfully", HttpStatus.OK);
 		}
 		else
-			return "Failed to give Customer";
+			return new ResponseEntity<String>("Failed to save customer", HttpStatus.BAD_REQUEST);
 	}
 	@DeleteMapping("{aid}")
-	public String removeCustomer(@PathVariable("aid") long custId) {
+	public ResponseEntity<String> removeCustomer(@PathVariable("aid") long custId) {
 		Customer deleteCustomer = service.removeCustomer(custId);
 		if(deleteCustomer != null) {
-			return "Customer successfully deleted";
+			return new ResponseEntity<String>("Customer deleted successfully", HttpStatus.OK);
 		}
 		else
-			return "Customer failed to delete";
+			return new ResponseEntity<String>("Failed to delete customer", HttpStatus.BAD_REQUEST);
 	}
 	
 	@PutMapping
-	public String updateCustomer(long custId, Customer customer) {
+	public ResponseEntity<String> updateCustomer(long custId, Customer customer) {
 		Customer updatedCustomer = service.updateCustomer(custId, customer);
 		if(updatedCustomer != null) {
-			return "Customer succesfully updated";
+			return new ResponseEntity<String>("Customer deleted successfully", HttpStatus.OK);
 		}
 		else
-			return "Customer failed to update";
+			return new ResponseEntity<String>("Customer failed to delete", HttpStatus.NOT_FOUND);
 	}
 	@GetMapping("{aid}")
 	public ResponseEntity<?> getCustomer(@PathVariable("aid")long custId){
@@ -66,29 +67,29 @@ public class CustomerController {
 		return new ResponseEntity<Customer>(customer, HttpStatus.OK);
 	}
 	@GetMapping
-	public List<Customer> getAllCustomers(){
+	public ResponseEntity<List<Customer>> getAllCustomers(){
 		List<Customer> customers = service.getAllCustomers();
 		if(customers.size() == 0) {
 			throw new EmptyDataException("No Customers saved in database");
 		}
-		return customers;
+		return new ResponseEntity<List<Customer>>(customers, HttpStatus.OK);
 	}
 	@GetMapping("/getAppointments/{cid}")
-	public List<Appointment> getAllAppointmentForCustomer(@PathVariable("cid")long id){
+	public ResponseEntity<List<Appointment>> getAllAppointmentForCustomer(@PathVariable("cid")long id){
 		List<Appointment> appointments = service.getAllAppointmentsForCustomer(id);
 		if(appointments.size() == 0) {
 			throw new AppointmentNotFoundException("Appointment not found for customer "+id);
 		}
-		return appointments;
+		return new ResponseEntity<List<Appointment>>(appointments, HttpStatus.OK);
 	}
 	
 	@GetMapping("/getBills/{cid}")
-	public List<Billing> getAllBillsForCustomer(@PathVariable("cid") long id){
+	public ResponseEntity<List<Billing>> getAllBillsForCustomer(@PathVariable("cid") long id){
 		List<Billing> bills = service.getAllBillingForCustomer(id);
 		if(bills.size()== 0) {
 			throw new BillNotFoundException("Bills for the customer not found");
 		}
-		return bills;
+		return new ResponseEntity<List<Billing>>(bills, HttpStatus.OK);
 	}
 
 }
