@@ -8,9 +8,9 @@ import com.cg.trg.boot.salon.bean.User;
 
 public interface IUserRepository extends JpaRepository<User, Long> {
 	
-	@Query("select user from User user where user.username = :userName and user.password=:password")
+	/*@Query("select user from User user where username = :userName and password=:password")
 	public User getUserByUsernameAndPassword(@Param("userName") String userName,@Param("password") String password);
-	
+	*/
 	
 	/*
 	 * public User signIn(User user); public User signOut(User user); public User

@@ -14,8 +14,8 @@ import com.cg.trg.boot.salon.bean.Appointment;
 public interface IAppointmentRepository extends JpaRepository<Appointment, Long> {
 	@Query("select appointment from Appointment appointment where user_id_fk = :userId")
 	public List<Appointment> getAppointmentByCustomer(@Param("userId")long userId);
-	@Query("select count(appointment) from appointment where salon_service_id_fk = :id")
-	public int getCountofAppointmentsOfService(@Param("id")long id);
+	/*@Query("select appointment from appointment where salon_service_id_fk= :id")
+	public List<Appointment> getCountofAppointmentsOfService(@Param("id")long id);*/
 
 	/*
 	 * public Appointment addAppointment(Appointment appointment); public

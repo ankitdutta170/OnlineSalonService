@@ -74,9 +74,9 @@ public class SalonServiceController {
 		else
 			return "SalonService failed to delete";
 	}
-    @GetMapping("/count/{id}")
+   /* @GetMapping("/count/{id}")
     public String getCountOfAppointmentsOfService(@PathVariable("id")long id) {
     	SalonService salonService = service.getService(id);
     	return "No of Appointments for "+salonService.getServiceName()+" is: "+service.getCountOfAppointmentsOfServices(id);
-    }
+    }*/
 }
