@@ -38,8 +38,8 @@ public class DBInit implements CommandLineRunner{
 	ICustomerRepository customerRepository;
 	
 	
-	@Autowired
-	IBillingRepository bill;
+//	@Autowired
+//	IBillingRepository bill;
 	@Autowired
 	IAddressRepository address;
 	@Autowired
@@ -87,12 +87,12 @@ public class DBInit implements CommandLineRunner{
 		
 		
 		logger.info("Data  Entry process initiated for Bill table");
-		bill.save(new Billing(500.00,LocalDate.of(1999, 4, 8),null,null,null));
-		bill.save(new Billing(100.00,LocalDate.of(1999, 4, 7),null,null,null));
-		bill.save(new Billing(700.00,LocalDate.of(1999, 4, 6),null,null,null));
-		bill.save(new Billing(300.00,LocalDate.of(1999, 4, 5),null,null,null));
-		bill.save(new Billing(250.00,LocalDate.of(1999, 4, 4),null,null,null));
-		bill.save(new Billing(500.00,LocalDate.of(1999, 4, 3),null,null,null));
+//		bill.save(new Billing(500.00,LocalDate.of(1999, 4, 8),null,null,null));
+//		bill.save(new Billing(100.00,LocalDate.of(1999, 4, 7),null,null,null));
+//		bill.save(new Billing(700.00,LocalDate.of(1999, 4, 6),null,null,null));
+//		bill.save(new Billing(300.00,LocalDate.of(1999, 4, 5),null,null,null));
+//		bill.save(new Billing(250.00,LocalDate.of(1999, 4, 4),null,null,null));
+//		bill.save(new Billing(500.00,LocalDate.of(1999, 4, 3),null,null,null));
 
 		logger.info("6 rows inserted in bill table");
 		
