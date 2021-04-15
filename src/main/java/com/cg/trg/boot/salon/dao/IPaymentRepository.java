@@ -19,11 +19,13 @@ public interface IPaymentRepository extends JpaRepository<Payment, Long> {
 //	public List<Payment> getPaymentByCash(@Param("type")String type);
 //	@Query("select payment from Payment payment where type = :'card'")
 //	public List<Payment> getPaymentByCard(@Param("type")String type);
+//	
+//	
 //	@Query("select payment from Payment payment where status = :'success'")
 //	public List<Payment> getPaymentBySuccess(@Param("type")String status);
 //	@Query("select payment from Payment payment where type = :'pending'")
 //	public List<Payment> getPaymentByPending(@Param("type")String status);
-//	
+	
 
 }
 	

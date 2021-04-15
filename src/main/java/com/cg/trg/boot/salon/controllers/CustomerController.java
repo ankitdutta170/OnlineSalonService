@@ -81,7 +81,8 @@ public class CustomerController {
 		return appointments;
 	}
 	
-	public List<Billing> getAllBillsForCustomer(long id){
+	@GetMapping("/getBills/{cid}")
+	public List<Billing> getAllBillsForCustomer(@PathVariable("cid") long id){
 		List<Billing> bills = service.getAllBillingForCustomer(id);
 		if(bills.size()== 0) {
 			throw new BillNotFoundException("Bills for the customer not found");
