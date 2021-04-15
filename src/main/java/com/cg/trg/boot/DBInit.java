@@ -22,6 +22,7 @@ import com.cg.trg.boot.salon.dao.ISalonRepository;
 import com.cg.trg.boot.salon.dao.IUserRepository;
 import com.cg.trg.boot.salon.dao.IAppointmentRepository;
 import com.cg.trg.boot.salon.service.ICustomerServiceImpl;
+import com.cg.trg.boot.salon.service.ISalonServiceImpl;
 import com.cg.trg.boot.salon.bean.Payment;
 import com.cg.trg.boot.salon.dao.IBillingRepository;
 import com.cg.trg.boot.salon.dao.ICardRepository;
@@ -58,7 +59,8 @@ public class DBInit implements CommandLineRunner{
 	
 	@Autowired
 	ICardRepository cardRepository;
-	
+	@Autowired
+	ISalonServiceImpl salonServiceImpl;
 	@Autowired
 	IBillingRepository billingRepository;
 	@Autowired
@@ -117,10 +119,10 @@ public class DBInit implements CommandLineRunner{
 
 		cardRepository.save(new Card("Visa","123456789",LocalDate.of(2025, 5, 20),420,null));
 		cardRepository.save(new Card("MasterCard","1601654314",LocalDate.of(2027, 7, 21),425,null));
-		cardRepository.save(new Card("RuPay","434524532453",LocalDate.of(2024, 6, 20),424,null));
+		cardRepository.save(new Card("RuPay","434524532453",LocalDate.of(2018, 6, 20),424,null));
 		cardRepository.save(new Card("Visa","43434873",LocalDate.of(2023, 4, 20),423,null));
 		cardRepository.save(new Card("MasterCard","12453439",LocalDate.of(2021, 12, 14),422,null));
-		cardRepository.save(new Card("RuPday","345345345",LocalDate.of(2022, 11, 2),421,null));
+		cardRepository.save(new Card("RuPay","345345345",LocalDate.of(2022, 11, 2),421,null));
 		logger.info("6 rows inserted in card table");
 		
 		
@@ -132,11 +134,11 @@ public class DBInit implements CommandLineRunner{
 		
 		logger.info("Data  Entry process initiated for Payment table");
 
-		paymentRepository.save(new Payment("card","Successfull",null));
+		paymentRepository.save(new Payment("card","success",null));
 		paymentRepository.save(new Payment("cash","pending",null));
 		paymentRepository.save(new Payment("card","pending",null));
-		paymentRepository.save(new Payment("cash","Successfull",null));
-		paymentRepository.save(new Payment("card","Successfull",null));
+		paymentRepository.save(new Payment("cash","success",null));
+		paymentRepository.save(new Payment("card","success",null));
 		paymentRepository.save(new Payment("cash","pending",null));
 		logger.info("6 rows inserted in payment table");
 
@@ -146,11 +148,7 @@ public class DBInit implements CommandLineRunner{
 		
 
 		
-		logger.info("Inserting data for Appointment");
-		Customer customer=customerService.getCustomer(1);
-		appointmentRepository.save(new Appointment("Whitefield", "Salon", null, LocalDate.of(2021, 4, 18), LocalTime.of(15, 0), customer, null, null));
-		appointmentRepository.save(new Appointment("ABC", "Salon", null, LocalDate.of(2021, 4, 19), LocalTime.of(16, 0), customer, null, null));
-
+		
 	
 		logger.info("Data  Entry process initiated for Salon_Service table");
 		salonRepository.save(new SalonService("Hair",200.0, 0,"30 Minutes"));
@@ -162,7 +160,12 @@ public class DBInit implements CommandLineRunner{
 
 		logger.info("6 rows inserted in salon_service table");
 
-		
+		logger.info("Inserting data for Appointment");
+		Customer customer=customerService.getCustomer(1);
+		SalonService salonService = salonServiceImpl.getService(34);
+		appointmentRepository.save(new Appointment("Whitefield", "Salon", salonService, LocalDate.of(2021, 4, 18), LocalTime.of(15, 0), customer, null, null));
+		appointmentRepository.save(new Appointment("ABC", "Salon", salonService, LocalDate.of(2021, 4, 19), LocalTime.of(16, 0), customer, null, null));
+
 		//logger.info("Inserting data for userId and Password");
 		//userRepository.save(new User(1, "sid", "password", false));
 		//userRepository.save(new User(2, "sai", "pass", false));

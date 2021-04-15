@@ -1,5 +1,8 @@
 package com.cg.trg.boot.salon.service;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,4 +49,10 @@ public class CardImpl implements ICardService {
 		return null;
 		}
 	}
+	@Override
+	public List<Card> getCardByName(String cardName) {
+		
+		return repository.getCardByName(cardName);
+	}
+	
 }

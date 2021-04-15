@@ -75,6 +75,24 @@ public class PaymentController {
 		}
 		return payment;
 	}
+	@GetMapping("/payment/type/{type}")
+	public List<Payment> getPaymentByType(@PathVariable("type") String type){
+		List<Payment> payment=repo.getPaymentByType(type);
+		if(payment.size()==0)
+			throw new PaymentNotFound("Request", "Payment not found");
+		else
+			return payment;
+	}
+	
+	@GetMapping("/payment/status/{status}")
+	public List<Payment> getPaymentByStatus(@PathVariable("status") String status){
+		List<Payment> payment=repo.getPaymentByStatus(status);
+		if(payment.size()==0)
+			throw new PaymentNotFound("Request", "Payment not found");
+		else
+			return payment;
+	}
+	
 	}
 	
 	
