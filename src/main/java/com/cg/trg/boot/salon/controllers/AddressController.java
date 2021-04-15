@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.trg.boot.salon.bean.Address;
-import com.cg.trg.boot.salon.bean.Appointment;
 import com.cg.trg.boot.salon.exceptions.BillNotFoundException;
 import com.cg.trg.boot.salon.exceptions.EmptyDataException;
 import com.cg.trg.boot.salon.service.AddressServiceImpl;

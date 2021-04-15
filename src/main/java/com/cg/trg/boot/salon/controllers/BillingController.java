@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cg.trg.boot.salon.bean.Address;
 import com.cg.trg.boot.salon.bean.Billing;
 import com.cg.trg.boot.salon.exceptions.BillNotFoundException;
 import com.cg.trg.boot.salon.exceptions.EmptyDataException;
@@ -36,7 +35,8 @@ public class BillingController {
 		String userName = (String) session.getAttribute("username");
 		System.out.println("*******************" + userName + "*************************");
 		System.out.println("*******************" + userId + "*************************");
-		Billing saveBill = service1.addBill(bill);
+		
+		Billing saveBill= service1.addBill(bill);
 		if(saveBill != null) {
 			return new ResponseEntity<String>("Bill successfully made", HttpStatus.OK);
 			

@@ -6,7 +6,6 @@ import static org.mockito.Mockito.verify;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.DisplayName;
@@ -46,8 +45,6 @@ class AdressServiceTest {
 		address.setAddressId(01);
 		Mockito.when(addressRepository.save(address)).thenReturn(address);
 		assertEquals(address, addressService.addAddress(address));
-		
-	
 	}
 	@Test
 	public void getAllAddressTest() {
@@ -67,35 +64,24 @@ class AdressServiceTest {
 		Card card = new Card(100,"Visa","123456",LocalDate.of(2026, 8, 25),356);
 		Payment payment = new Payment("Card","Paid",card);
 		Billing billing = new Billing(100,500,LocalDate.now(),customer,payment,null);
-		
 		Appointment appointment = new Appointment("Whitefield","Salon",salonService,LocalDate.of(2021, 4, 20),LocalTime.of(16, 0),customer, address,billing);
-
 		assertNotEquals(appointment, addressService.removeAddress(100));
 	}
 	@Test
 	public void getAdressById() {
-		SalonService salonService = new SalonService(100,"Spa",500,0,"20");
 		Customer customer = new Customer(100,"12345","12345","Customer",false);
 		Address address = new Address(100,"NW004","Lane1","Area1","Bangalore","Karnataka",101245,customer);
-		Card card = new Card(100,"Visa","123456",LocalDate.of(2026, 8, 25),356);
-		Payment payment = new Payment("Card","Paid",card);
-		Billing billing = new Billing(100,500,LocalDate.now(),customer,payment,null);
 				
 		Mockito.when(addressRepository.save(address)).thenReturn(address);
 		assertNotEquals(address, addressRepository.findById(address.getAddressId()));
 	}
 	@Test
 	public void updateAdressTest() {
-		SalonService salonService = new SalonService(100,"Spa",500,0,"20");
 		Customer customer = new Customer(100,"12345","12345","Customer",false);
-		
-		Card card = new Card(100,"Visa","123456",LocalDate.of(2026, 8, 25),356);
-		Payment payment = new Payment("Card","Paid",card);
-		Billing billing = new Billing(100,500,LocalDate.now(),customer,payment,null);
 		Address address = new Address(100,"NW004","Lane1","Area1","Bangalore","Karnataka",101245,customer);
 		Mockito.when(addressRepository.save(address)).thenReturn(address);
 	    address = new Address(100,"NW004","Lane1","Area1","Bangalore","Karnataka",101245,customer);
-		 assertNotEquals(address, addressRepository.save(address));
+		assertNotEquals(address, addressRepository.save(address));
 	}
 
 }
