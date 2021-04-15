@@ -1,8 +1,11 @@
 package com.cg.trg.boot.salon.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cg.trg.boot.salon.bean.Appointment;
 import com.cg.trg.boot.salon.bean.User;
 import com.cg.trg.boot.salon.dao.IUserRepository;
 import com.cg.trg.boot.salon.exceptions.PasswordMismatchException;
@@ -16,12 +19,12 @@ public class IUserServiceImpl implements IUserService {
 	@Override
 	public User signIn(User user) {
 		// TODO Auto-generated method stub
-		/*User loggedInUser = repository.getUserByUsernameAndPassword(user.getUserName(), user.getPassword());
+		User loggedInUser = repository.getUserByUsernameAndPassword(user.getUserName(), user.getPassword());
 		if(loggedInUser != null)
 			return loggedInUser;
 		throw new UserNotFoundException("User not found in database");
-	*/
-		return null;
+	
+		
 	}
 
 	@Override
@@ -58,8 +61,19 @@ public class IUserServiceImpl implements IUserService {
 	public User updateCredentials(User user,String userName, String password) {
 		user.setUserName(userName);
 		user.setPassword(password);
-		
+		repository.save(user);
 		return user;
+	}
+
+	@Override
+	public User getUserById(long id) {
+		Optional<User> user = repository.findById(id);
+		if(user.isPresent()) {
+			return user.get();
+		}
+		else {
+			return null;
+		}
 	}
 
 	
