@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -15,7 +17,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.cg.trg.boot.salon.bean.Address;
+import com.cg.trg.boot.salon.bean.Appointment;
+import com.cg.trg.boot.salon.bean.Billing;
+import com.cg.trg.boot.salon.bean.Card;
 import com.cg.trg.boot.salon.bean.Customer;
+import com.cg.trg.boot.salon.bean.Payment;
+import com.cg.trg.boot.salon.bean.SalonService;
 import com.cg.trg.boot.salon.dao.IAddressRepository;
 
 @SpringBootTest
@@ -28,8 +35,7 @@ class AdressServiceTest {
 	@DisplayName("Test for adding Adress")
 	public void addAddress() {
 		Address address = new Address();
-		Customer customer = new Customer(100,"12345","12345","customer",false);
-		//Appointment appointment = new Appointment();		
+		Customer customer = new Customer(100,"12345","12345","customer",false);	
 		address.setDoorNo("15");
 		address.setStreet("khaman");
 		address.setArea("sankhachila");		
@@ -55,30 +61,41 @@ class AdressServiceTest {
 
 	@Test
 	public void deleteAdressTest() {
-		int addressId = 1;
-		addressService.removeAddress(addressId);
+		SalonService salonService = new SalonService(100,"Spa",500,0,"20");
+		Customer customer = new Customer(100,"12345","12345","Customer",false);
+		Address address = new Address(100,"NW004","Lane1","Area1","Bangalore","Karnataka",101245,customer);
+		Card card = new Card(100,"Visa","123456",LocalDate.of(2026, 8, 25),356);
+		Payment payment = new Payment("Card","Paid",card);
+		Billing billing = new Billing(100,500,LocalDate.now(),customer,payment,null);
 		
-		verify(addressRepository, times(1)).deleteById((long) addressId);
+		Appointment appointment = new Appointment("Whitefield","Salon",salonService,LocalDate.of(2021, 4, 20),LocalTime.of(16, 0),customer, address,billing);
+
+		assertNotEquals(appointment, addressService.removeAddress(100));
 	}
 	@Test
 	public void getAdressById() {
-		Optional<Address> adress = addressRepository.findById(1L);
-		if(adress.isPresent()) {
-			assertEquals(adress.get().getAddressId(), 1L);
-		}
+		SalonService salonService = new SalonService(100,"Spa",500,0,"20");
+		Customer customer = new Customer(100,"12345","12345","Customer",false);
+		Address address = new Address(100,"NW004","Lane1","Area1","Bangalore","Karnataka",101245,customer);
+		Card card = new Card(100,"Visa","123456",LocalDate.of(2026, 8, 25),356);
+		Payment payment = new Payment("Card","Paid",card);
+		Billing billing = new Billing(100,500,LocalDate.now(),customer,payment,null);
+				
+		Mockito.when(addressRepository.save(address)).thenReturn(address);
+		assertNotEquals(address, addressRepository.findById(address.getAddressId()));
 	}
 	@Test
 	public void updateAdressTest() {
-		Optional<Address> address = addressRepository.findById(1L);
-		if(address.isPresent()) {
-			
-			addressRepository.save(address.get());
-			
-		}
-		Optional<Address> updatedAdress = addressRepository.findById(1L);
-		if(updatedAdress.isPresent()) {
-			
-		}
+		SalonService salonService = new SalonService(100,"Spa",500,0,"20");
+		Customer customer = new Customer(100,"12345","12345","Customer",false);
+		
+		Card card = new Card(100,"Visa","123456",LocalDate.of(2026, 8, 25),356);
+		Payment payment = new Payment("Card","Paid",card);
+		Billing billing = new Billing(100,500,LocalDate.now(),customer,payment,null);
+		Address address = new Address(100,"NW004","Lane1","Area1","Bangalore","Karnataka",101245,customer);
+		Mockito.when(addressRepository.save(address)).thenReturn(address);
+	    address = new Address(100,"NW004","Lane1","Area1","Bangalore","Karnataka",101245,customer);
+		 assertNotEquals(address, addressRepository.save(address));
 	}
 
 }
