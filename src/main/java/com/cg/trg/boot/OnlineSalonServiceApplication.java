@@ -16,6 +16,7 @@ public class OnlineSalonServiceApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(OnlineSalonServiceApplication.class, args);
+		
 	}
 	@Bean
     public Docket api() { 

@@ -140,12 +140,12 @@ public class DBInit implements CommandLineRunner{
 
 		
 		logger.info("Inserting data for userId and Password");
-		userRepository.save(new User(1, "sid", "password", false));
-		userRepository.save(new User(2, "sai", "pass", false));
-		userRepository.save(new User(3, "ankit", "word", false));
-		userRepository.save(new User(4, "om", "omcapg", false));
-		userRepository.save(new User(5, "alam", "k.alam", false));
-		userRepository.save(new User(6, "sulabh", "s@password", false));
+		userRepository.save(new User(1, "sid", "password", "customer",false));
+		userRepository.save(new User(2, "sai", "pass", "customer",false));
+		userRepository.save(new User(3, "ankit", "word", "customer",false));
+		userRepository.save(new User(4, "om", "omcapg", "customer",false));
+		userRepository.save(new User(5, "alam", "k.alam", "customer",false));
+		userRepository.save(new User(6, "sulabh", "s@password", "customer",false));
 		
 		logger.info("6 rows inserted in user_service table");
 	}

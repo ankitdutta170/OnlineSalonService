@@ -39,7 +39,7 @@ public class Customer extends User {
 	}
 
 	public Customer(long userId, String password, String role, boolean isLoggedIn) {
-		super(userId, password, role, isLoggedIn);
+		super();
 		// TODO Auto-generated constructor stub
 	}
 

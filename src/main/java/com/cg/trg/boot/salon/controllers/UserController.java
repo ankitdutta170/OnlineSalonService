@@ -73,37 +73,32 @@ public class UserController {
 	    
 	 }
 	 
-	 @GetMapping("/")
-		public String process(Model model, HttpSession session) {
-			@SuppressWarnings("unchecked")
-			List<String> messages = (List<String>) session.getAttribute("MY_SESSION_MESSAGES");
-
-			if (messages == null) {
-				messages = new ArrayList<>();
-			}
-			model.addAttribute("sessionMessages", messages);
-
-			return "index";
-		}
-
-		@PostMapping("/persistMessage")
-		public String persistMessage(@RequestParam("msg") String msg, HttpServletRequest request) {
-			@SuppressWarnings("unchecked")
-			List<String> messages = (List<String>) request.getSession().getAttribute("MY_SESSION_MESSAGES");
-			if (messages == null) {
-				messages = new ArrayList<>();
-				request.getSession().setAttribute("MY_SESSION_MESSAGES", messages);
-			}
-			messages.add(msg);
-			request.getSession().setAttribute("MY_SESSION_MESSAGES", messages);
-			return "redirect:/";
-		}
-
-		@PostMapping("/destroy")
-		public String destroySession(HttpServletRequest request) {
-			request.getSession().invalidate();
-			return "redirect:/";
-		}
+	 @PostMapping("/addNote")
+	    public String addNote(@RequestParam("note") String note, HttpServletRequest request) {
+	        //get the notes from request session
+	        List<String> notes = (List<String>) request.getSession().getAttribute("NOTES_SESSION");
+	        //check if notes is present in session or not
+	        if (notes == null) {
+	            notes = new ArrayList<>();
+	            // if notes object is not present in session, set notes in the request session
+	            request.getSession().setAttribute("NOTES_SESSION", notes);
+	        }
+	        notes.add(note);
+	        request.getSession().setAttribute("NOTES_SESSION", notes);
+	        return "redirect:/home";
+	    }
+	    @GetMapping("/home")
+	    public String home(Model model, HttpSession session) {
+	        List<String> notes = (List<String>) session.getAttribute("NOTES_SESSION");
+	        model.addAttribute("notesSession", notes!=null? notes:new ArrayList<>());
+	        return "home";
+	    }
+	    @PostMapping("/invalidate/session")
+	    public String destroySession(HttpServletRequest request) {
+	        //invalidate the session , this will clear the data from configured database (Mysql/redis/hazelcast)
+	        request.getSession().invalidate();
+	        return "redirect:/home";
+	    }
 	}
 	 
 	 
