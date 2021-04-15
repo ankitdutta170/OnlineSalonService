@@ -40,10 +40,6 @@ public class Billing {
 	}
 
 	
-	
-
-
-
 	public Billing(long billId, double amount, LocalDate billingDate, Customer customer, Payment payment,
 			Appointment appointment) {
 		super();
@@ -65,11 +61,6 @@ public class Billing {
 		this.payment = payment;
 		this.appointment = appointment;
 	}
-
-
-
-
-
 
 	public long getBillId() {
 		return billId;
@@ -118,36 +109,14 @@ public class Billing {
 		return appointment;
 	}
 
-
-
-
-
-
 	public void setAppointment(Appointment appointment) {
 		this.appointment = appointment;
 	}
-
-
-
-
-
-
 	@Override
 	public String toString() {
 		return "Billing [billId=" + billId + ", amount=" + amount + ", billingDate=" + billingDate + ", customer="
 				+ customer + ", payment=" + payment + ", appointment=" + appointment + "]";
 	}
-
-
-
-
-
-
-	
-
-
-	
-	
 	
 
 }
