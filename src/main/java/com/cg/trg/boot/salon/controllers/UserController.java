@@ -60,12 +60,14 @@ public class UserController {
 		}
 	
 	@GetMapping("/getUser/{uid}")
+
 	public ResponseEntity<?> getUser(@PathVariable("uid")long id, HttpServletRequest request){
 		HttpSession session= request.getSession();
 		String userId=(String)session.getAttribute("userId");
 		String userName=(String)session.getAttribute("username");
 		System.out.println("*******************" + userName+"*************************");
 		System.out.println("*******************" + userId+"*************************");
+
 		User user = service.getUserById(id);
 		if(user == null) {
 			throw new UserNotFoundException("Appointment with appointment id:"+id+"not found");

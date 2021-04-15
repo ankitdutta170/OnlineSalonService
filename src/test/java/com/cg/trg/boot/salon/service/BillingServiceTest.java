@@ -23,7 +23,7 @@ import com.cg.trg.boot.salon.dao.IBillingRepository;
 @SpringBootTest
 class BillingServiceTest {
 	@Autowired
-	BillingServiceImpl appointmentService;
+	BillingServiceImpl billService;
 	
 	@MockBean
 	IBillingRepository billRepository;
@@ -41,6 +41,8 @@ class BillingServiceTest {
 		bill.setBillingDate(LocalDate.of(2021, 4, 15));		
 		bill.setCustomer(customer);
 		bill.setPayment(payment);
+		Mockito.when(billRepository.save(bill)).thenReturn(bill);
+		assertEquals(bill, billService.addBill(bill));
 	
 	}
 	@Test
@@ -48,7 +50,7 @@ class BillingServiceTest {
 		Mockito.when(billRepository.findAll())
 		.thenReturn(java.util.stream.Stream.of(new Billing(),new Billing()).collect(Collectors.toList()));
 		
-		assertEquals(2, appointmentService.getAllBills().size());
+		assertEquals(2, billService.getAllBills().size());
 		verify(billRepository, times(1)).findAll();
 		
 	}
@@ -56,7 +58,7 @@ class BillingServiceTest {
 	@Test
 	public void deleteAppointmentTest() {
 		int appointmentId = 1;
-		appointmentService.removeBill(appointmentId);
+		billService.removeBill(appointmentId);
 		
 		verify(billRepository, times(1)).deleteById((long) appointmentId);
 	}
