@@ -72,21 +72,6 @@ public class UserController {
 
 	}
 
-	@PatchMapping(value = "{id}/{changedPassword}")
-	public ResponseEntity<String> changePassword(@PathVariable("id")long id,@PathVariable("changedPassword") String changedPassword,
-			HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		String userName = (String) session.getAttribute("username");
-		System.out.println("*******************" + userName + "*************************");
-		System.out.println("*******************" + userId + "*************************");
-
-		if (service.changePassword(id, changedPassword) != null)
-			return new ResponseEntity<String>("Password Changed successfully!", HttpStatus.OK);
-		else
-			return new ResponseEntity<String>("Unable to change password", HttpStatus.NOT_FOUND);
-
-	}
 
 	@PatchMapping("/{id}/{userName}/{password}")
 	public ResponseEntity<?> updateCredentials(@PathVariable("id") long userId, @PathVariable("userName") String userName,
