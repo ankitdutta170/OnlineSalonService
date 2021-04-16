@@ -1,13 +1,9 @@
 package com.cg.trg.boot.salon.controllers;
 
-import java.util.ArrayList;
 
-import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,17 +13,9 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import com.cg.trg.boot.salon.bean.Appointment;
 import com.cg.trg.boot.salon.bean.User;
 import com.cg.trg.boot.salon.dao.IUserRepository;
-import com.cg.trg.boot.salon.exceptions.AppointmentNotFoundException;
-import com.cg.trg.boot.salon.exceptions.PasswordMismatchException;
 import com.cg.trg.boot.salon.exceptions.UserNotFoundException;
 import com.cg.trg.boot.salon.service.IUserServiceImpl;
 
@@ -84,8 +72,8 @@ public class UserController {
 
 	}
 
-	@PatchMapping(value = "{changedPassword}")
-	public ResponseEntity<String> changePassword(long id, @PathVariable("changedPassword") String changedPassword,
+	@PatchMapping(value = "{id}/{changedPassword}")
+	public ResponseEntity<String> changePassword(@PathVariable("id")long id,@PathVariable("changedPassword") String changedPassword,
 			HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");
