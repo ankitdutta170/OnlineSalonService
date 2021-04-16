@@ -15,7 +15,6 @@ public class BillingServiceImpl implements IBillingService {
 
 	@Override
 	public Billing addBill(Billing bill) {
-		// TODO Auto-generated method stub
 		repository.save(bill);
 		return bill;
 		
@@ -23,7 +22,6 @@ public class BillingServiceImpl implements IBillingService {
 
 	@Override
 	public Billing removeBill(long id) {
-		// TODO Auto-generated method stub
 		Optional<Billing> billToBeDeleted = repository.findById(id);
 		repository.deleteById(id);
 		
@@ -37,7 +35,6 @@ public class BillingServiceImpl implements IBillingService {
 
 	@Override
 	public Billing updateBill(long id, Billing bill) {
-		// TODO Auto-generated method stub
 		if(repository.existsById(id)) {
 			Billing billToBeUpdated = repository.findById(id).get();
 			repository.save(bill);
@@ -48,7 +45,6 @@ public class BillingServiceImpl implements IBillingService {
 
 	@Override
 	public Billing getBillDetails(long id) {
-		// TODO Auto-generated method stub
 		Optional<Billing> bill= repository.findById(id);
 		if(bill.isPresent()) {
 			return bill.get();
@@ -60,7 +56,6 @@ public class BillingServiceImpl implements IBillingService {
 
 	@Override
 	public List<Billing> getAllBills() {
-		// TODO Auto-generated method stub
 		List<Billing> bill = repository.findAll();
 		return bill;
 		
