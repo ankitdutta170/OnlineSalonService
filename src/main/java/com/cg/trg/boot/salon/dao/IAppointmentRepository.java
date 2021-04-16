@@ -1,6 +1,7 @@
 package com.cg.trg.boot.salon.dao;
 
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,7 +17,8 @@ public interface IAppointmentRepository extends JpaRepository<Appointment, Long>
 	public List<Appointment> getAppointmentByCustomer(@Param("userId")long userId);
 	@Query("select appointment from Appointment appointment where salon_service_id_fk= :id")
 	public List<Appointment> getCountofAppointmentsOfService(@Param("id")long id);
-
+	//@Query("select appointment from Appointment appointment where appointment.preferred_date:date")
+	public List<Appointment> findByPreferredDate(LocalDate date);
 	/*
 	 * public Appointment addAppointment(Appointment appointment); public
 	 * Appointment removeAppointment(long id); public Appointment

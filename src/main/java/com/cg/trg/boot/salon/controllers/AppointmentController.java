@@ -1,5 +1,6 @@
 package com.cg.trg.boot.salon.controllers;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -104,6 +105,15 @@ public class AppointmentController {
 		}
 		return new ResponseEntity<List<Appointment>>(appointments, HttpStatus.OK);
 		
+	}
+	@GetMapping("{year}/{month}/{day}")
+	public ResponseEntity<List<Appointment>> getAppointmentByDate(@PathVariable("year")int year, @PathVariable("month")int month,@PathVariable("day")int day){
+		
+		List<Appointment> appointments = service.getAppointmentByDate(LocalDate.of(year, month, day));
+		if(appointments.size() == 0) {
+			throw new EmptyDataException("No Appointments saved in database");
+		}
+		return new ResponseEntity<List<Appointment>>(appointments, HttpStatus.OK);
 	}
 	
 	

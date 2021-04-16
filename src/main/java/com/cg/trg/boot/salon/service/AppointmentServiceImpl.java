@@ -1,5 +1,6 @@
 package com.cg.trg.boot.salon.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,11 +71,11 @@ public class AppointmentServiceImpl implements IAppointmentService {
 		return appointments;
 	}
 
+
 	@Override
-	public List<Appointment> getOpenAppointments() {
-		List<Appointment> appointments = repository.findAll();
-		return appointments;
-		
+	public List<Appointment> getAppointmentByDate(LocalDate date) {
+		// TODO Auto-generated method stub
+		return repository.findByPreferredDate(date);
 	}
 	
 	
