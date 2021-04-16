@@ -26,10 +26,10 @@ public class Customer extends User {
 	//private List<Card> cards=new ArrayList<>();
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "customer", targetEntity = Billing.class)
+	@OneToMany(mappedBy = "customer", targetEntity = Billing.class,fetch = FetchType.LAZY, orphanRemoval = true)
 	private List<Billing> bills = new ArrayList<>();
 	@JsonIgnore
-	@OneToMany(mappedBy = "customer", targetEntity = Address.class)
+	@OneToMany(mappedBy = "customer", targetEntity = Address.class,fetch = FetchType.LAZY, orphanRemoval = true)
 	private Set<Address> addresses = new HashSet<>();
 	@JsonIgnore
 	@OneToMany(mappedBy = "customer", targetEntity = Appointment.class,fetch = FetchType.LAZY, orphanRemoval = true)

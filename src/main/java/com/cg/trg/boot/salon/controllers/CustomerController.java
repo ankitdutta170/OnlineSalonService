@@ -58,17 +58,17 @@ public class CustomerController {
 			return new ResponseEntity<String>("Failed to delete customer", HttpStatus.BAD_REQUEST);
 	}
 	
-	@PutMapping
-	public ResponseEntity<String> updateCustomer(long custId, Customer customer, HttpServletRequest request) {
+	@PutMapping("{id}")
+	public ResponseEntity<String> updateCustomer(@PathVariable("id")long custId, Customer customer, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");
 		String userName = (String) session.getAttribute("username");
 		Customer updatedCustomer = service.updateCustomer(custId, customer);
 		if(updatedCustomer != null) {
-			return new ResponseEntity<String>("Customer deleted successfully", HttpStatus.OK);
+			return new ResponseEntity<String>("Customer updated successfully", HttpStatus.OK);
 		}
 		else
-			return new ResponseEntity<String>("Customer failed to delete", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>("Customer failed to update", HttpStatus.NOT_FOUND);
 	}
 	@GetMapping("{aid}")
 	public ResponseEntity<?> getCustomer(@PathVariable("aid")long custId, HttpServletRequest request){
