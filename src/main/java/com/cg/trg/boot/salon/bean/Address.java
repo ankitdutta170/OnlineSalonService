@@ -1,11 +1,13 @@
 package com.cg.trg.boot.salon.bean;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -28,8 +30,8 @@ public class Address {
 	@ManyToOne
 	@JoinColumn(name="user_id_fk")
 	private Customer customer;
-	
-	
+	@OneToOne(mappedBy = "address", targetEntity = Appointment.class,fetch = FetchType.LAZY, orphanRemoval = true)
+	private Appointment appointment;
 	public Address() {
 		
 	}

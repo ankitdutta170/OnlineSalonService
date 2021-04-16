@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -46,7 +47,7 @@ public class Appointment {
 	@JoinColumn(name="address_id_fk")
 	private Address address;
 	
-	@OneToOne(mappedBy = "appointment", targetEntity = Billing.class)
+	@OneToOne(mappedBy = "appointment", targetEntity = Billing.class,fetch = FetchType.LAZY, orphanRemoval = true)
 	private Billing billing;
 	
 	public Appointment() {

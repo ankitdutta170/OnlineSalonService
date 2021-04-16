@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
-
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
 
@@ -32,7 +32,7 @@ public class Customer extends User {
 	@OneToMany(mappedBy = "customer", targetEntity = Address.class)
 	private Set<Address> addresses = new HashSet<>();
 	@JsonIgnore
-	@OneToMany(mappedBy = "customer", targetEntity = Appointment.class)
+	@OneToMany(mappedBy = "customer", targetEntity = Appointment.class,fetch = FetchType.LAZY, orphanRemoval = true)
 	private List<Appointment> appointments= new ArrayList<>();
 	public Customer() {
 		super();
