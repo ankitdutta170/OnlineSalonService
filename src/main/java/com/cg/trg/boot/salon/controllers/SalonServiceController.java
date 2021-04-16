@@ -74,7 +74,7 @@ public class SalonServiceController {
 	}
     
     @PutMapping("/update/{sid}")
-    public ResponseEntity<String> updateSalonService(@PathVariable("id")long id, @RequestBody SalonService salonservice,HttpServletRequest request) {
+    public ResponseEntity<String> updateSalonService(@PathVariable("sid")long id, @RequestBody SalonService salonservice,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");
 		String userName = (String) session.getAttribute("username");
