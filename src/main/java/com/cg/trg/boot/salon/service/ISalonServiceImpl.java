@@ -17,12 +17,14 @@ public class ISalonServiceImpl implements ISalonService {
 	@Autowired
 	ISalonRepository repository;
 	
+	//1-For adding a salonservice
 	@Override
 	public SalonService addService(SalonService salonService) {
 	repository.save(salonService);
 		return salonService;
 	}
 
+	//2-For removing a salonservice
 	@Override
 	public SalonService removeService(long id) {
 		Optional<SalonService> salonServiceToBeDeleted = repository.findById(id);
@@ -35,6 +37,7 @@ public class ISalonServiceImpl implements ISalonService {
 		}
 	}
 
+	//3-For updating a salonservice
 	@Override
 	public SalonService updateService(long id, SalonService salonService) {
 		if(repository.existsById(id)) {
@@ -45,6 +48,7 @@ public class ISalonServiceImpl implements ISalonService {
 		return null;
 	}
 
+	//4-For getting data of a salonservice
 	@Override
 	public SalonService getService(long id) {
 		Optional<SalonService> salonService= repository.findById(id);
@@ -56,12 +60,14 @@ public class ISalonServiceImpl implements ISalonService {
 		}
 	}
 
+	//5-For getting data of all salonservices
 	@Override
 	public List<SalonService> getAllServices() {
 		List<SalonService> salonService = repository.findAll();
 		return salonService;
 	}
 
+	//6-For getting count of appointments for a particular service(implemented as Business Method)
 	@Override
 	public int getCountOfAppointmentsOfServices(long id) {
 		// TODO Auto-generated method stub
