@@ -104,6 +104,7 @@ public class CustomerController {
 		return new ResponseEntity<List<Appointment>>(appointments, HttpStatus.OK);
 	}
 	
+	
 	@GetMapping("/getBills/{cid}")
 	public ResponseEntity<List<Billing>> getAllBillsForCustomer(@PathVariable("cid") long id, HttpServletRequest request){
 		HttpSession session = request.getSession();
