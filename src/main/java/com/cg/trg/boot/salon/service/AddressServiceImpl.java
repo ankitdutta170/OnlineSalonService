@@ -16,7 +16,6 @@ public class AddressServiceImpl implements IAddressService {
 	IAddressRepository repository;
 	@Override
 	public Address addAddress(Address address) {
-		// TODO Auto-generated method stub
 		repository.save(address);
 		return address;
 		
@@ -24,7 +23,6 @@ public class AddressServiceImpl implements IAddressService {
 
 	@Override
 	public Address removeAddress(long id) {
-		// TODO Auto-generated method stub
 		Optional<Address> addressToBeDeleted = repository.findById(id);
 		repository.deleteById(id);
 		
@@ -38,7 +36,6 @@ public class AddressServiceImpl implements IAddressService {
 
 	@Override
 	public Address  updateAddress(long id, Address address) {
-		// TODO Auto-generated method stub
 		if(repository.existsById(id)) {
 			Address addressToBeUpdated = repository.findById(id).get();
 			repository.save(address);
@@ -49,7 +46,6 @@ public class AddressServiceImpl implements IAddressService {
 
 	@Override
 	public Address  getAddressDetails(long id) {
-		// TODO Auto-generated method stub
 		Optional<Address> address= repository.findById(id);
 		if(address.isPresent()) {
 			return address.get();
@@ -61,7 +57,6 @@ public class AddressServiceImpl implements IAddressService {
 
 	@Override
 	public List<Address> getAllAddress() {
-		// TODO Auto-generated method stub
 		List<Address> address = repository.findAll();
 		return address;
 		

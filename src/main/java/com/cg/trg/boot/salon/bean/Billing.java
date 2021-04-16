@@ -112,6 +112,7 @@ public class Billing {
 	public void setAppointment(Appointment appointment) {
 		this.appointment = appointment;
 	}
+	
 	@Override
 	public String toString() {
 		return "Billing [billId=" + billId + ", amount=" + amount + ", billingDate=" + billingDate + ", customer="

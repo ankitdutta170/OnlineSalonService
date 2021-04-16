@@ -52,6 +52,7 @@ public class BillingController {
 		String userName = (String) session.getAttribute("username");
 		System.out.println("*******************" + userName + "*************************");
 		System.out.println("*******************" + userId + "*************************");
+		
 		Billing deleteBill = service1.removeBill(id);
 		if(deleteBill != null) {
 			return new ResponseEntity<String>("Bill successfully deleted", HttpStatus.OK);
@@ -68,6 +69,7 @@ public class BillingController {
 		String userName = (String) session.getAttribute("username");
 		System.out.println("*******************" + userName + "*************************");
 		System.out.println("*******************" + userId + "*************************");
+		
 		Billing updatedBill = service1.updateBill(id, bill);
 		if(updatedBill != null) {
 			return new ResponseEntity<String>("Bill succesfully updated", HttpStatus.OK);
@@ -84,6 +86,7 @@ public class BillingController {
 		String userName = (String) session.getAttribute("username");
 		System.out.println("*******************" + userName + "*************************");
 		System.out.println("*******************" + userId + "*************************");
+		
 		Billing bill = service1.getBillDetails(id);
 		if(bill == null) {
 			throw new BillNotFoundException("Request", "Bill with Bill id:"+id+"not found");

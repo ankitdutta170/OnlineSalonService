@@ -34,6 +34,7 @@ public class AddressController {
 		String userName = (String) session.getAttribute("username");
 		System.out.println("*******************" + userName + "*************************");
 		System.out.println("*******************" + userId + "*************************");
+		
 		Address addres = service.addAddress(address);
 		if(addres != null) {
 			return new ResponseEntity<String>("Address saved successfully", HttpStatus.OK);
@@ -48,6 +49,7 @@ public class AddressController {
 		String userName = (String) session.getAttribute("username");
 		System.out.println("*******************" + userName + "*************************");
 		System.out.println("*******************" + userId + "*************************");
+		
 		Address deleteAddress = service.removeAddress(id);
 		if(deleteAddress != null) {
 			return new ResponseEntity<String>("Address successfully deleted", HttpStatus.OK);
@@ -62,6 +64,7 @@ public class AddressController {
 		String userName = (String) session.getAttribute("username");
 		System.out.println("*******************" + userName + "*************************");
 		System.out.println("*******************" + userId + "*************************");
+		
 		Address updatedAddress = service.updateAddress(id, address);
 		if(updatedAddress != null) {
 			return new ResponseEntity<String>("Address successfully updated", HttpStatus.OK);
@@ -76,6 +79,7 @@ public class AddressController {
 		String userName = (String) session.getAttribute("username");
 		System.out.println("*******************" + userName + "*************************");
 		System.out.println("*******************" + userId + "*************************");
+		
 		Address address = service.getAddressDetails(id);
 		if(address == null) {
 			throw new BillNotFoundException("Request", "Address with Adress id:"+id+"not found");

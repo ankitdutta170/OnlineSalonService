@@ -113,20 +113,11 @@ public class Address {
 	}
 	
 	
-
-
 	@Override
 	public String toString() {
 		return "Address [addressId=" + addressId + ", doorNo=" + doorNo + ", street=" + street + ", area=" + area
 				+ ", city=" + city + ", state=" + state + ", pincode=" + pincode + ", customer=" + customer
 				+  "]";
 	}
-
-
-	
-	
-	
-	
-	
 	
 }
