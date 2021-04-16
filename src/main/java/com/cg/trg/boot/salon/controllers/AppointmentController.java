@@ -107,8 +107,10 @@ public class AppointmentController {
 		
 	}
 	@GetMapping("{year}/{month}/{day}")
-	public ResponseEntity<List<Appointment>> getAppointmentByDate(@PathVariable("year")int year, @PathVariable("month")int month,@PathVariable("day")int day){
-		
+	public ResponseEntity<List<Appointment>> getAppointmentByDate(@PathVariable("year")int year, @PathVariable("month")int month,@PathVariable("day")int day,HttpServletRequest request){
+		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("userId");
+		String userName = (String) session.getAttribute("username");
 		List<Appointment> appointments = service.getAppointmentByDate(LocalDate.of(year, month, day));
 		if(appointments.size() == 0) {
 			throw new EmptyDataException("No Appointments saved in database");
