@@ -4,7 +4,7 @@ package com.cg.trg.boot.salon.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
-
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.mockito.Mockito;
@@ -72,7 +72,7 @@ class AppointmentServiceTest {
 		
 		assertEquals(2, appointmentService.getAllAppointments().size());
 		
-		
+		verify(appointmentRepository).findAll();
 	}
 	
 	@Test
@@ -124,6 +124,7 @@ class AppointmentServiceTest {
 		.thenReturn(java.util.stream.Stream.of(new Appointment(),new Appointment()).collect(Collectors.toList()));
 		
 		assertEquals(2, appointmentService.getAppointmentByDate(LocalDate.of(2021, 4, 18)).size());
+		verify(appointmentRepository).findByPreferredDate(LocalDate.of(2021, 4, 18));
 		
 	}
 	
