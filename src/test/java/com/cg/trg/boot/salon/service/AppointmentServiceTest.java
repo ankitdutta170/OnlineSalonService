@@ -118,8 +118,14 @@ class AppointmentServiceTest {
 		}
 	}
 	
-	
-	
+	@Test
+	public void getAppointmentByDateTest() {
+		Mockito.when(appointmentRepository.findByPreferredDate(LocalDate.of(2021, 4, 18)))
+		.thenReturn(java.util.stream.Stream.of(new Appointment(),new Appointment()).collect(Collectors.toList()));
+		
+		assertEquals(2, appointmentService.getAppointmentByDate(LocalDate.of(2021, 4, 18)).size());
+		
+	}
 	
 
 }
