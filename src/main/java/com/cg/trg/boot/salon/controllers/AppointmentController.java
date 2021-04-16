@@ -2,13 +2,10 @@ package com.cg.trg.boot.salon.controllers;
 
 import java.time.LocalDate;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,7 +16,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.cg.trg.boot.salon.bean.Appointment;
 import com.cg.trg.boot.salon.exceptions.AppointmentNotFoundException;
 import com.cg.trg.boot.salon.exceptions.EmptyDataException;
@@ -111,6 +107,8 @@ public class AppointmentController {
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");
 		String userName = (String) session.getAttribute("username");
+		System.out.println("*******************" + userName + "*************************");
+		System.out.println("*******************" + userId + "*************************");
 		List<Appointment> appointments = service.getAppointmentByDate(LocalDate.of(year, month, day));
 		if(appointments.size() == 0) {
 			throw new EmptyDataException("No Appointments saved in database");
