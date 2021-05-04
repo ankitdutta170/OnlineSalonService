@@ -30,8 +30,7 @@ public class Address {
 	@ManyToOne
 	@JoinColumn(name="user_id_fk")
 	private Customer customer;
-	@OneToOne(mappedBy = "address", targetEntity = Appointment.class,fetch = FetchType.LAZY, orphanRemoval = true)
-	private Appointment appointment;
+	
 	public Address() {
 		
 	}

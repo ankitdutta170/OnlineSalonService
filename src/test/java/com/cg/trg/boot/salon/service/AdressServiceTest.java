@@ -64,7 +64,7 @@ class AdressServiceTest {
 		Card card = new Card(100,"Visa","123456",LocalDate.of(2026, 8, 25),356);
 		Payment payment = new Payment("Card","Paid",card);
 		Billing billing = new Billing(100,500,LocalDate.now(),customer,payment,null);
-		Appointment appointment = new Appointment("Whitefield","Salon",salonService,LocalDate.of(2021, 4, 20),LocalTime.of(16, 0),customer, address,billing);
+		Appointment appointment = new Appointment("Whitefield","Salon",salonService,LocalDate.of(2021, 4, 20),LocalTime.of(16, 0),customer,billing);
 		assertNotEquals(appointment, addressService.removeAddress(100));
 	}
 	@Test

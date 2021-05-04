@@ -58,7 +58,7 @@ class AppointmentServiceTest {
 		appointment.setPreferredDate(LocalDate.of(2021, 4, 15));
 		appointment.setPreferredTime(LocalTime.of(16, 0));
 		appointment.setCustomer(customer);
-		appointment.setAddress(address);
+		
 		appointment.setBilling(billing);
 		
 		Mockito.when(appointmentRepository.save(appointment)).thenReturn(appointment);
@@ -84,7 +84,7 @@ class AppointmentServiceTest {
 		Payment payment = new Payment("Card","Paid",card);
 		Billing billing = new Billing(100,500,LocalDate.now(),customer,payment,null);
 		
-		Appointment appointment = new Appointment("Whitefield","Salon",salonService,LocalDate.of(2021, 4, 20),LocalTime.of(16, 0),customer, address,billing);
+		Appointment appointment = new Appointment("Whitefield","Salon",salonService,LocalDate.of(2021, 4, 20),LocalTime.of(16, 0),customer,billing);
 
 		assertNotEquals(appointment, appointmentService.removeAppointment(31));
 	}
@@ -99,7 +99,7 @@ class AppointmentServiceTest {
 		Payment payment = new Payment("Card","Paid",card);
 		Billing billing = new Billing(100,500,LocalDate.now(),customer,payment,null);
 		
-		Appointment appointment = new Appointment("Whitefield","Salon",salonService,LocalDate.of(2021, 4, 20),LocalTime.of(16, 0),customer, address,billing);
+		Appointment appointment = new Appointment("Whitefield","Salon",salonService,LocalDate.of(2021, 4, 20),LocalTime.of(16, 0),customer,billing);
 		Mockito.when(appointmentRepository.save(appointment)).thenReturn(appointment);
 		assertNotEquals(appointment, appointmentRepository.findById(appointment.getAppointmentId()));
 	}

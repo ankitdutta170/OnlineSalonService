@@ -43,9 +43,8 @@ public class Appointment {
 	@JoinColumn(name="user_id_fk")
 	private Customer customer;
 	@JsonIgnore
-	@OneToOne(cascade = CascadeType.MERGE)
-	@JoinColumn(name="address_id_fk")
-	private Address address;
+	
+	
 	
 	@OneToOne(mappedBy = "appointment", targetEntity = Billing.class,fetch = FetchType.LAZY, orphanRemoval = true)
 	private Billing billing;
@@ -57,7 +56,7 @@ public class Appointment {
 	
 
 	public Appointment(long appointmentId, String location, String visitType, SalonService preferredService,
-			LocalDate preferredDate, LocalTime preferredTime, Customer customer, Address address, Billing billing) {
+			LocalDate preferredDate, LocalTime preferredTime, Customer customer, Billing billing) {
 		super();
 		this.appointmentId = appointmentId;
 		this.location = location;
@@ -66,11 +65,11 @@ public class Appointment {
 		this.preferredDate = preferredDate;
 		this.preferredTime = preferredTime;
 		this.customer = customer;
-		this.address = address;
+		
 		this.billing = billing;
 	}
 	public Appointment(String location, String visitType, SalonService preferredService,
-			LocalDate preferredDate, LocalTime preferredTime, Customer customer, Address address, Billing billing) {
+			LocalDate preferredDate, LocalTime preferredTime, Customer customer, Billing billing) {
 		super();
 		
 		this.location = location;
@@ -79,7 +78,7 @@ public class Appointment {
 		this.preferredDate = preferredDate;
 		this.preferredTime = preferredTime;
 		this.customer = customer;
-		this.address = address;
+		
 		this.billing = billing;
 	}
 
@@ -141,13 +140,7 @@ public class Appointment {
 		this.customer = customer;
 	}
 
-	public Address getAddress() {
-		return address;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
-	}
+	
 	
 	public Billing getBilling() {
 		return billing;
@@ -161,7 +154,7 @@ public class Appointment {
 	public String toString() {
 		return "Appointment [appointmentId=" + appointmentId + ", location=" + location + ", visitType=" + visitType
 				+ ", preferredService=" + preferredService + ", preferredDate=" + preferredDate + ", preferredTime="
-				+ preferredTime + ", customer=" + customer + ", address=" + address + " ]";
+				+ preferredTime + ", customer=" + customer +  " ]";
 	}
 	
 

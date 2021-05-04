@@ -179,17 +179,17 @@ public class DBInit implements CommandLineRunner {
 		Address address6 = addressService.getAddressDetails(30);
 
 		appointmentRepository.save(new Appointment("Bangalore", "Salon", salonService1, LocalDate.of(2021, 4, 18),
-				LocalTime.of(14, 0), customer1, address1, null));
+				LocalTime.of(14, 0), customer1,  null));
 		appointmentRepository.save(new Appointment("Kolkata", "Home", salonService2, LocalDate.of(2022, 4, 19),
-				LocalTime.of(15, 0), customer2, address2, null));
+				LocalTime.of(15, 0), customer2,  null));
 		appointmentRepository.save(new Appointment("Mumbai", "Salon", salonService3, LocalDate.of(2021, 5, 17),
-				LocalTime.of(16, 0), customer3, address3, null));
+				LocalTime.of(16, 0), customer3,  null));
 		appointmentRepository.save(new Appointment("Chennai", "Home", salonService4, LocalDate.of(2021, 7, 20),
-				LocalTime.of(17, 0), customer4, address4, null));
+				LocalTime.of(17, 0), customer4,  null));
 		appointmentRepository.save(new Appointment("Pune", "Salon", salonService5, LocalDate.of(2021, 8, 15),
-				LocalTime.of(18, 0), customer5, address5, null));
+				LocalTime.of(18, 0), customer5,  null));
 		appointmentRepository.save(new Appointment("Delhi", "Home", salonService6, LocalDate.of(2021, 7, 10),
-				LocalTime.of(19, 0), customer6, address6, null));
+				LocalTime.of(19, 0), customer6,  null));
 
 		logger.info("6 rows inserted in Appoinment table");
 

@@ -75,7 +75,7 @@ public class CustomerServiceTest {
 		Payment payment = new Payment("Card","Paid",card);
 		Billing billing = new Billing(100,500,LocalDate.now(),customer,payment,null);
 		
-		Appointment appointment = new Appointment("Whitefield","Salon",salonService,LocalDate.of(2021, 4, 20),LocalTime.of(16, 0),customer, address,billing);
+		Appointment appointment = new Appointment("Whitefield","Salon",salonService,LocalDate.of(2021, 4, 20),LocalTime.of(16, 0),customer,billing);
 
 		assertNotEquals(customer, customerservice.removeCustomer(31));
 	}
