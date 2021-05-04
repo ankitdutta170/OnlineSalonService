@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
 import com.cg.trg.boot.salon.bean.User;
 import com.cg.trg.boot.salon.dao.IUserRepository;
+import com.cg.trg.boot.salon.exceptions.InvalidUserException;
 import com.cg.trg.boot.salon.exceptions.UserNotFoundException;
 import com.cg.trg.boot.salon.service.IUserServiceImpl;
 
@@ -75,7 +76,11 @@ public class UserController {
 
 	@PatchMapping("/{id}/{userName}/{password}")
 	public ResponseEntity<?> updateCredentials(@PathVariable("id") long userId, @PathVariable("userName") String userName,
-			@PathVariable("password") String password) {
+			@PathVariable("password") String password,HttpServletRequest request) {
+		User user = checkUserLoggedIn(request);
+		if(!user.getRole().equals("admin"))
+			throw new InvalidUserException("Invalid Operation");
+		
 		User userToBeUpdated = service.getUserById(userId);
 
 		User updatedUser = service.updateCredentials(userToBeUpdated, userName, password);
@@ -84,6 +89,17 @@ public class UserController {
 		} else
 			return new ResponseEntity<String>("Not able to update credentials", HttpStatus.NOT_FOUND);
 
+	}
+	
+	public User checkUserLoggedIn(HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		if(session == null) {
+			throw new InvalidUserException("You should login first");
+		}
+		String userName = (String) session.getAttribute("name");
+		User user = repository.findByUserName(userName);
+		return user;
+				
 	}
 
 }

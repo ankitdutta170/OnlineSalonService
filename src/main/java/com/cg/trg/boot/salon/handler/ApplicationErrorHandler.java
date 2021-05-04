@@ -15,6 +15,7 @@ import com.cg.trg.boot.salon.exceptions.DuplicateAppointmentException;
 
 import com.cg.trg.boot.salon.exceptions.AppointmentNotFoundException;
 import com.cg.trg.boot.salon.exceptions.EmptyDataException;
+import com.cg.trg.boot.salon.exceptions.InvalidUserException;
 
 
 @ControllerAdvice
@@ -40,6 +41,15 @@ public class ApplicationErrorHandler {
 		errorBody.put("details", ex.getMessage());
 		
 		return new ResponseEntity<>(errorBody, HttpStatus.NOT_FOUND);
+	}
+	@ExceptionHandler(InvalidUserException.class)
+	public ResponseEntity<?> handleInvalidUser(EmptyDataException ex) {
+		Map<String, Object> errorBody = new LinkedHashMap<>();
+		errorBody.put("error", "Invalid User");
+		errorBody.put("timestamp", LocalDate.now());
+		errorBody.put("details", ex.getMessage());
+		
+		return new ResponseEntity<>(errorBody, HttpStatus.BAD_REQUEST);
 	}
 	
 	@ExceptionHandler(AppointmentNotFoundException.class)
