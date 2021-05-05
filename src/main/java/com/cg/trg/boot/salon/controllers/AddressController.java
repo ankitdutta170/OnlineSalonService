@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,7 +29,7 @@ public class AddressController {
 	@Autowired
 	 AddressServiceImpl service;
 	@PostMapping
-	public ResponseEntity<String>saveAddress(Address address, HttpServletRequest request) {
+	public ResponseEntity<String>saveAddress(@RequestBody Address address, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");
 		String userName = (String) session.getAttribute("username");
@@ -57,8 +58,8 @@ public class AddressController {
 		else
 			return new ResponseEntity<String>("Address failed to delete", HttpStatus.BAD_REQUEST);
 	}
-	@PutMapping
-	public ResponseEntity<String> updateAddress(long id, Address address,HttpServletRequest request) {
+	@PutMapping("{aid}")
+	public ResponseEntity<String> updateAddress(@PathVariable("aid") long id,@RequestBody Address address,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");
 		String userName = (String) session.getAttribute("username");

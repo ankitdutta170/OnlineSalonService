@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,8 +29,8 @@ import com.cg.trg.boot.salon.service.BillingServiceImpl;
 public class BillingController { 
 	@Autowired
 	BillingServiceImpl service1;
-	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String>saveBill(Billing bill,HttpServletRequest request) {
+	@PostMapping
+	public ResponseEntity<String>saveBill(@RequestBody Billing bill,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");
 		String userName = (String) session.getAttribute("username");
@@ -62,8 +63,8 @@ public class BillingController {
 			return new ResponseEntity<String>("Bill failed to delete", HttpStatus.BAD_REQUEST);
 			
 	}
-	@PutMapping
-	public ResponseEntity<String> updateBill(long id, Billing bill,HttpServletRequest request) {
+	@PutMapping("{bid}")
+	public ResponseEntity<String> updateBill(@PathVariable("bid") long id,@RequestBody Billing bill,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");
 		String userName = (String) session.getAttribute("username");
