@@ -20,9 +20,10 @@ import com.cg.trg.boot.salon.bean.Appointment;
 import com.cg.trg.boot.salon.exceptions.AppointmentNotFoundException;
 import com.cg.trg.boot.salon.exceptions.EmptyDataException;
 import com.cg.trg.boot.salon.service.AppointmentServiceImpl;
-@CrossOrigin
+
 @RestController
 @RequestMapping("appointments")
+@CrossOrigin(origins = "http://localhost:4200")
 public class AppointmentController {
 	
 	@Autowired
@@ -44,11 +45,7 @@ public class AppointmentController {
 	}
 	@DeleteMapping("{aid}")
 	public ResponseEntity<String> removeAppointment(@PathVariable("aid") long id,HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		String userName = (String) session.getAttribute("username");
-		System.out.println("*******************" + userName + "*************************");
-		System.out.println("*******************" + userId + "*************************");
+		
 		Appointment deleteAppointment = service.removeAppointment(id);
 		if(deleteAppointment != null) {
 			return new ResponseEntity<String>("Appointment successfully deleted", HttpStatus.OK);
@@ -73,18 +70,14 @@ public class AppointmentController {
 	}
 	
 	@GetMapping("{aid}")
-	public ResponseEntity<?> getAppointment(@PathVariable("aid")long id,HttpServletRequest request){
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		String userName = (String) session.getAttribute("username");
-		System.out.println("*******************" + userName + "*************************");
-		System.out.println("*******************" + userId + "*************************");
+	public Appointment getAppointment(@PathVariable("aid")long id,HttpServletRequest request){
+		
 		
 		Appointment appointment = service.getAppointment(id);
 		if(appointment == null) {
 			throw new AppointmentNotFoundException("Request", "Appointment with appointment id:"+id+"not found");
 		}
-		return new ResponseEntity<Appointment>(appointment, HttpStatus.OK);
+		return appointment;
 	}
 	@GetMapping
 	public ResponseEntity<List<Appointment>> getAllAppointments(HttpServletRequest request){
