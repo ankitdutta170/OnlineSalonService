@@ -20,9 +20,9 @@ import com.cg.trg.boot.salon.exceptions.NoDataException;
 import com.cg.trg.boot.salon.exceptions.SalonServiceNotFoundException;
 import com.cg.trg.boot.salon.service.ISalonServiceImpl;
 
-@CrossOrigin
 @RestController
 @RequestMapping("salonservices")
+@CrossOrigin(origins = "http://localhost:4200")
 public class SalonServiceController {
 
 	@Autowired
