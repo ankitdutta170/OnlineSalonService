@@ -54,7 +54,7 @@ public class AppointmentController {
 			return new ResponseEntity<String>("Appoitment failed to delete", HttpStatus.BAD_REQUEST);
 	}
 	
-	@PutMapping("/update/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<String> updateAppointment(@PathVariable("id")long id, @RequestBody Appointment appointment,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");
@@ -69,6 +69,15 @@ public class AppointmentController {
 			return new ResponseEntity<String>("Appointment failed to delete", HttpStatus.BAD_REQUEST);
 	}
 	
+	@PutMapping
+	public String updatemployee( @RequestBody Appointment appointment,HttpServletRequest request) {
+		//validateToken(request);
+		if (service.update(appointment))
+			return "Appointment data successfully updated";
+		else
+			throw new AppointmentNotFoundException("Update", "Appointment with Id " + appointment.getAppointmentId() + " to update not found");
+	}
+	
 	@GetMapping("{aid}")
 	public Appointment getAppointment(@PathVariable("aid")long id,HttpServletRequest request){
 		
@@ -80,7 +89,7 @@ public class AppointmentController {
 		return appointment;
 	}
 	@GetMapping
-	public ResponseEntity<List<Appointment>> getAllAppointments(HttpServletRequest request){
+	public List<Appointment> getAllAppointments(HttpServletRequest request){
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");
 		String userName = (String) session.getAttribute("username");
@@ -92,7 +101,7 @@ public class AppointmentController {
 		if(appointments.size() == 0) {
 			throw new EmptyDataException("No Appointments saved in database");
 		}
-		return new ResponseEntity<List<Appointment>>(appointments, HttpStatus.OK);
+		return appointments;
 		
 	}
 	@GetMapping("{year}/{month}/{day}")

@@ -58,7 +58,7 @@ public class CustomerController {
 			return new ResponseEntity<String>("Failed to delete customer", HttpStatus.BAD_REQUEST);
 	}
 	
-	@PutMapping("{id}")
+	@PutMapping("/update/{id}")
 	public ResponseEntity<String> updateCustomer(@PathVariable("id")long custId, Customer customer, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");

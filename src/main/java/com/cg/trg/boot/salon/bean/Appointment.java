@@ -17,6 +17,8 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 @JsonIgnoreProperties({"hibernateLazyInitilizer","handler"})
 @Entity
 @Table(name = "Appointment")
@@ -29,7 +31,8 @@ public class Appointment {
 	private String location;
 	
 	private String visitType;
-	@JsonIgnore
+	//@JsonIgnore
+	@JsonProperty(access = Access.READ_ONLY)
 	@OneToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="salon_service_id_fk")
 	private SalonService preferredService;
@@ -43,9 +46,7 @@ public class Appointment {
 	@JoinColumn(name="user_id_fk")
 	private Customer customer;
 	@JsonIgnore
-	
-	
-	
+
 	@OneToOne(mappedBy = "appointment", targetEntity = Billing.class,fetch = FetchType.LAZY, orphanRemoval = true)
 	private Billing billing;
 	

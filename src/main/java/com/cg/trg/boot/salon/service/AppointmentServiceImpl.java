@@ -77,6 +77,15 @@ public class AppointmentServiceImpl implements IAppointmentService {
 		// TODO Auto-generated method stub
 		return repository.findByPreferredDate(date);
 	}
+
+	@Override
+	public boolean update(Appointment appointment) {
+		if (repository.existsById(appointment.getAppointmentId())) {
+			repository.save(appointment);
+			return true;
+		}
+		return false;
+	}
 	
 	
 
