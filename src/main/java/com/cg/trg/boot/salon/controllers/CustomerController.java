@@ -26,7 +26,7 @@ import com.cg.trg.boot.salon.exceptions.BillNotFoundException;
 import com.cg.trg.boot.salon.exceptions.CustomerNotFoundException;
 import com.cg.trg.boot.salon.exceptions.EmptyDataException;
 import com.cg.trg.boot.salon.service.ICustomerServiceImpl;
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("customer")
 public class CustomerController {
