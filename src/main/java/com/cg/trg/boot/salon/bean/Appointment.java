@@ -33,7 +33,7 @@ public class Appointment {
 	private String visitType;
 	//@JsonIgnore
 	@JsonProperty(access = Access.READ_ONLY)
-	@OneToOne(cascade = CascadeType.MERGE)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="salon_service_id_fk")
 	private SalonService preferredService;
 	

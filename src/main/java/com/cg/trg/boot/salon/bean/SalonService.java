@@ -1,9 +1,12 @@
 package com.cg.trg.boot.salon.bean;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -19,9 +22,9 @@ public class SalonService {
 	private int discount;
 	private String duration;
 	
-	@OneToOne(mappedBy = "preferredService",targetEntity = Appointment.class)
+	@OneToMany(mappedBy = "preferredService",targetEntity = Appointment.class)
 	@JsonIgnore
-	private Appointment appointment;
+	private List<Appointment> appointments;
 	public SalonService() {
 		super();
 	}
@@ -94,6 +97,14 @@ public class SalonService {
 	public String toString() {
 		return "SalonService [serviceId=" + serviceId + ", serviceName=" + serviceName + ", price=" + price
 				+ ", discount=" + discount + ", duration=" + duration + "]";
+	}
+
+	public List<Appointment> getAppointments() {
+		return appointments;
+	}
+
+	public void setAppointments(List<Appointment> appointments) {
+		this.appointments = appointments;
 	}
 	
 }

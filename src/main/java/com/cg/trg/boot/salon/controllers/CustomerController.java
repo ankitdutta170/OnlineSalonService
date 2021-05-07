@@ -70,6 +70,14 @@ public class CustomerController {
 		else
 			return new ResponseEntity<String>("Customer failed to update", HttpStatus.NOT_FOUND);
 	}
+	@PutMapping
+	public String updatemployee( @RequestBody Customer customer,HttpServletRequest request) {
+		//validateToken(request);
+		if (service.update(customer))
+			return "Customer data successfully updated";
+		else
+			throw new AppointmentNotFoundException("Update", "Customer with Id " + customer.getUserId() + " to update not found");
+	}
 	@GetMapping("{aid}")
 	public ResponseEntity<?> getCustomer(@PathVariable("aid")long custId, HttpServletRequest request){
 		HttpSession session = request.getSession();
