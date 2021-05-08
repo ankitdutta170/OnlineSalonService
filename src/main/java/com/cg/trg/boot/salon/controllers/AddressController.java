@@ -22,12 +22,14 @@ import com.cg.trg.boot.salon.bean.Address;
 import com.cg.trg.boot.salon.exceptions.BillNotFoundException;
 import com.cg.trg.boot.salon.exceptions.EmptyDataException;
 import com.cg.trg.boot.salon.service.AddressServiceImpl;
-@CrossOrigin
+
 @RestController
 @RequestMapping("address")
+@CrossOrigin(origins = "http://localhost:4200")
 public class AddressController {
 	@Autowired
 	 AddressServiceImpl service;
+	
 	@PostMapping
 	public ResponseEntity<String>saveAddress(@RequestBody Address address, HttpServletRequest request) {
 		HttpSession session = request.getSession();
