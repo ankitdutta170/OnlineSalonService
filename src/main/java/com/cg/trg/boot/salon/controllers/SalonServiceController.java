@@ -86,11 +86,7 @@ public class SalonServiceController {
 			throw new SalonServiceNotFoundException("Update", "Salon Service with Id " + salonservice.getServiceId() + " to update not found");
 	}
 	
-	 @GetMapping("/count/{id}")
-	    public ResponseEntity<String> getCountOfAppointmentsOfService(@PathVariable("id")long id,HttpServletRequest request) {
-	    	SalonService salonService = service.getService(id);
-	    	return new ResponseEntity<String>("No of Appointments for "+salonService.getServiceName()+" is: "+service.getCountOfAppointmentsOfServices(id),HttpStatus.OK);
-	    }
+	
 	 
 	@GetMapping("{aid}")
 	public ResponseEntity<?> getSalonService(@PathVariable("aid")long id,HttpServletRequest request){
@@ -120,4 +116,13 @@ public class SalonServiceController {
 		return new ResponseEntity<List<SalonService>>(services, HttpStatus.OK);
 		
 	}
+
+    
+    @GetMapping("/count/{id}")
+    public ResponseEntity<String> getCountOfAppointmentsOfService(@PathVariable("id")long id,HttpServletRequest request) {
+    	SalonService salonService = service.getService(id);
+    	return new ResponseEntity<String>("No of Appointments for "+salonService.getServiceName()+" is: "+service.getCountOfAppointmentsOfServices(id),HttpStatus.OK);
+    }
+    
+
 }
