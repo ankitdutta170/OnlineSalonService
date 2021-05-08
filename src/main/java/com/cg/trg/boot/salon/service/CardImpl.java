@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cg.trg.boot.salon.bean.Address;
 import com.cg.trg.boot.salon.bean.Card;
 import com.cg.trg.boot.salon.dao.ICardRepository;
 
@@ -54,5 +55,11 @@ public class CardImpl implements ICardService {
 		
 		return repository.getCardByName(cardName);
 	}
+	@Override
+	public List<Card> getAllCard() {
 	
+		List<Card> card = repository.findAll();
+		return card;
+		
+	}
 }

@@ -17,14 +17,14 @@ public class ISalonServiceImpl implements ISalonService {
 	@Autowired
 	ISalonRepository repository;
 	
-	//1-For adding a salonservice
+	//1-For adding a salon service
 	@Override
 	public SalonService addService(SalonService salonService) {
 	repository.save(salonService);
 		return salonService;
 	}
 
-	//2-For removing a salonservice
+	//2-For removing a salon service
 	@Override
 	public SalonService removeService(long id) {
 		Optional<SalonService> salonServiceToBeDeleted = repository.findById(id);
@@ -37,7 +37,7 @@ public class ISalonServiceImpl implements ISalonService {
 		}
 	}
 
-	//3-For updating a salonservice
+	//3-For updating a salon service
 	@Override
 	public SalonService updateService(long id, SalonService salonService) {
 		if(repository.existsById(id)) {
@@ -48,7 +48,7 @@ public class ISalonServiceImpl implements ISalonService {
 		return null;
 	}
 
-	//4-For getting data of a salonservice
+	//4-For getting data of a salon service
 	@Override
 	public SalonService getService(long id) {
 		Optional<SalonService> salonService= repository.findById(id);
@@ -60,7 +60,7 @@ public class ISalonServiceImpl implements ISalonService {
 		}
 	}
 
-	//5-For getting data of all salonservices
+	//5-For getting data of all salon services
 	@Override
 	public List<SalonService> getAllServices() {
 		List<SalonService> salonService = repository.findAll();
@@ -74,9 +74,20 @@ public class ISalonServiceImpl implements ISalonService {
 		return appointmentRepository.getCountofAppointmentsOfService(id).size();
 	}
 
+
 	@Override
 	public SalonService getSalonServiceByName(String name) {
 		// TODO Auto-generated method stub
 		return repository.findByServiceName(name);
+
+	
+	@Override
+	public boolean update(SalonService salonservice) {
+		if (repository.existsById(salonservice.getServiceId())) {
+			repository.save(salonservice);
+			return true;
+		}
+		return false;
+
 	}
 }

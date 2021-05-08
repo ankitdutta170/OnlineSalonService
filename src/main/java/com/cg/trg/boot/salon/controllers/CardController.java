@@ -13,24 +13,27 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.cg.trg.boot.salon.bean.Appointment;
 import com.cg.trg.boot.salon.bean.Card;
 import com.cg.trg.boot.salon.exceptions.CardNotFoundException;
+import com.cg.trg.boot.salon.exceptions.EmptyDataException;
 import com.cg.trg.boot.salon.service.CardImpl;
 
-@CrossOrigin
 @RestController
+@RequestMapping("/cards")
+@CrossOrigin(origins = "http://localhost:4200")
 public class CardController {
 	@Autowired
 	private CardImpl repository;
 	
-	@PostMapping("/addcard")
+	@PostMapping
 	public ResponseEntity<String> addCard(@RequestBody Card card,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");
 		String userName = (String) session.getAttribute("username");
-		System.out.println("*******************" + userName + "*************************");
-		System.out.println("*******************" + userId + "*************************");
 		Card no = repository.addCard(card);
 		if (no != null) {
 			return new ResponseEntity<String>("Card added successfull",HttpStatus.OK);
@@ -38,7 +41,7 @@ public class CardController {
 			return new ResponseEntity<String>("Card adding Faild successfull",HttpStatus.BAD_REQUEST);
 	}
 
-	@DeleteMapping("/card/delete/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<?> removeCard(@PathVariable(value = "id") long cardId,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");
@@ -54,7 +57,7 @@ public class CardController {
 			return new ResponseEntity<Card>(cardDetails, HttpStatus.OK);
 		}
 	}
-	@PutMapping("/card/update/{id}")
+	@PutMapping("update/{id}")
 	public ResponseEntity<String> updateCard(@PathVariable(value = "id") long cardId, @RequestBody Card card,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");
@@ -72,7 +75,7 @@ public class CardController {
 		}
 		
 	}
-		@GetMapping("/card/details/{id}")
+		@GetMapping("/{id}")
 		public ResponseEntity<?> getCardDetails(@PathVariable(value = "id") long cardId,HttpServletRequest request) {
 			HttpSession session = request.getSession();
 			String userId = (String) session.getAttribute("userId");
@@ -85,18 +88,30 @@ public class CardController {
 			}
 			return new ResponseEntity<Card>(check, HttpStatus.OK);
 		}
-		@GetMapping("/card/name/{name}")
-		public List<Card> getPaymentByStatus(@PathVariable("name") String cardName,HttpServletRequest request){
-			HttpSession session = request.getSession();
-			String userId = (String) session.getAttribute("userId");
-			String userName = (String) session.getAttribute("username");
-			System.out.println("*******************" + userName + "*************************");
-			System.out.println("*******************" + userId + "*************************");
-			List<Card> card=repository.getCardByName(cardName);
-			if(card.size()==0)
-				throw new CardNotFoundException("Request", "Card not found");
-			else
-				return card;
+//		@GetMapping("/{name}")
+//		public List<Card> getPaymentByStatus(@PathVariable("name") String cardName,HttpServletRequest request){
+//			HttpSession session = request.getSession();
+//			String userId = (String) session.getAttribute("userId");
+//			String userName = (String) session.getAttribute("username");
+//			System.out.println("*******************" + userName + "*************************");
+//			System.out.println("*******************" + userId + "*************************");
+//			List<Card> card=repository.getCardByName(cardName);
+//			if(card.size()==0)
+//				throw new CardNotFoundException("Request", "Card not found");
+//			else
+//				return card;
+//		}
+		@GetMapping
+		public ResponseEntity<List<Card>> getAllCards(HttpServletRequest request){
+			
+			System.out.println("Sontroller is called");
+			List<Card> cards = repository.getAllCard();
+		
+			if(cards.size() == 0) {
+				throw new EmptyDataException("No Cards saved in database");
+			}
+			return new ResponseEntity<List<Card>>(cards, HttpStatus.OK);
+			
 		}
 		
 		
