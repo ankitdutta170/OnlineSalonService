@@ -23,12 +23,14 @@ import com.cg.trg.boot.salon.bean.Billing;
 import com.cg.trg.boot.salon.exceptions.BillNotFoundException;
 import com.cg.trg.boot.salon.exceptions.EmptyDataException;
 import com.cg.trg.boot.salon.service.BillingServiceImpl;
-@CrossOrigin
+
 @RestController
 @RequestMapping("bill")
+@CrossOrigin(origins = "http://localhost:4200")
 public class BillingController { 
 	@Autowired
 	BillingServiceImpl service1;
+	
 	@PostMapping
 	public ResponseEntity<String>saveBill(@RequestBody Billing bill,HttpServletRequest request) {
 		HttpSession session = request.getSession();
