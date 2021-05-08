@@ -15,19 +15,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.cg.trg.boot.salon.bean.Payment;
 import com.cg.trg.boot.salon.exceptions.EmptyDataException;
 import com.cg.trg.boot.salon.exceptions.PaymentNotFound;
 import com.cg.trg.boot.salon.service.PaymentServiceImpl;
 
-@CrossOrigin
 @RestController
+@RequestMapping("payments")
+@CrossOrigin(origins = "http://localhost:4200")
 public class PaymentController {
 	@Autowired
 	private PaymentServiceImpl repo;
 
-	@PostMapping(value = "/addpayment", consumes = { org.springframework.http.MediaType.APPLICATION_JSON_VALUE })
+	@PostMapping
 	public ResponseEntity<String> addPayment(@RequestBody Payment payment, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");
@@ -41,7 +43,7 @@ public class PaymentController {
 			return new ResponseEntity<String>("Payment Failed", HttpStatus.BAD_REQUEST);
 	}
 
-	@DeleteMapping("/payment/delete/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<?> removePayment(@PathVariable(value = "id") long paymentId, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");
@@ -58,7 +60,7 @@ public class PaymentController {
 		}
 	}
 
-	@PutMapping("/payment/update/{id}")
+	@PutMapping("/update/{id}")
 	public ResponseEntity<String> updatePayment(@PathVariable(value = "id") long paymentId,
 			@RequestBody Payment payment, HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -77,7 +79,7 @@ public class PaymentController {
 
 	}
 
-	@GetMapping("/payment/details/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<?> getPaymentDetails(@PathVariable(value = "id") long paymentId, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");
@@ -90,14 +92,12 @@ public class PaymentController {
 		}
 		return new ResponseEntity<Payment>(pay, HttpStatus.OK);
 	}
-
-	@GetMapping("/payment/all")
-	public ResponseEntity<List<Payment>> getAllPaymentDetails(HttpServletRequest request) {
+	
+	@GetMapping
+	public ResponseEntity<List<Payment>> getAllPayments(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");
 		String userName = (String) session.getAttribute("username");
-		System.out.println("*******************" + userName + "*************************");
-		System.out.println("*******************" + userId + "*************************");
 		List<Payment> payment = repo.getAllPaymentDetails();
 		if (payment.size() == 0) {
 			throw new EmptyDataException("No Appointments saved in database");
@@ -105,34 +105,34 @@ public class PaymentController {
 		return new ResponseEntity<List<Payment>>(payment, HttpStatus.OK);
 	}
 
-	@GetMapping("/payment/type/{type}")
-	public ResponseEntity<List<Payment>> getPaymentByType(@PathVariable("type") String type,
-			HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		String userName = (String) session.getAttribute("username");
-		System.out.println("*******************" + userName + "*************************");
-		System.out.println("*******************" + userId + "*************************");
-		List<Payment> payment = repo.getPaymentByType(type);
-		if (payment.size() == 0)
-			throw new PaymentNotFound("Request", "Payment not found");
-		else
-			return new ResponseEntity<List<Payment>>(payment, HttpStatus.OK);
-	}
-
-	@GetMapping("/payment/status/{status}")
-	public ResponseEntity<List<Payment>> getPaymentByStatus(@PathVariable("status") String status,
-			HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		String userName = (String) session.getAttribute("username");
-		System.out.println("*******************" + userName + "*************************");
-		System.out.println("*******************" + userId + "*************************");
-		List<Payment> payment = repo.getPaymentByStatus(status);
-		if (payment.size() == 0)
-			throw new PaymentNotFound("Request", "Payment not found");
-		else
-			return new ResponseEntity<List<Payment>>(payment, HttpStatus.OK);
-	}
+//	@GetMapping("/{type}")
+//	public ResponseEntity<List<Payment>> getPaymentByType(@PathVariable("type") String type,
+//			HttpServletRequest request) {
+//		HttpSession session = request.getSession();
+//		String userId = (String) session.getAttribute("userId");
+//		String userName = (String) session.getAttribute("username");
+//		System.out.println("*******************" + userName + "*************************");
+//		System.out.println("*******************" + userId + "*************************");
+//		List<Payment> payment = repo.getPaymentByType(type);
+//		if (payment.size() == 0)
+//			throw new PaymentNotFound("Request", "Payment not found");
+//		else
+//			return new ResponseEntity<List<Payment>>(payment, HttpStatus.OK);
+//	}
+//
+//	@GetMapping("/{status}")
+//	public ResponseEntity<List<Payment>> getPaymentByStatus(@PathVariable("status") String status,
+//			HttpServletRequest request) {
+//		HttpSession session = request.getSession();
+//		String userId = (String) session.getAttribute("userId");
+//		String userName = (String) session.getAttribute("username");
+//		System.out.println("*******************" + userName + "*************************");
+//		System.out.println("*******************" + userId + "*************************");
+//		List<Payment> payment = repo.getPaymentByStatus(status);
+//		if (payment.size() == 0)
+//			throw new PaymentNotFound("Request", "Payment not found");
+//		else
+//			return new ResponseEntity<List<Payment>>(payment, HttpStatus.OK);
+//	}
 
 }
