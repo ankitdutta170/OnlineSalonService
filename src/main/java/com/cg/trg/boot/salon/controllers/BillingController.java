@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cg.trg.boot.salon.bean.Appointment;
 import com.cg.trg.boot.salon.bean.Billing;
+import com.cg.trg.boot.salon.exceptions.AppointmentNotFoundException;
 import com.cg.trg.boot.salon.exceptions.BillNotFoundException;
 import com.cg.trg.boot.salon.exceptions.EmptyDataException;
 import com.cg.trg.boot.salon.service.BillingServiceImpl;
@@ -78,6 +80,14 @@ public class BillingController {
 		else
 			return new ResponseEntity<String>("Bill failed to update", HttpStatus.BAD_REQUEST);
 			
+	}
+	@PutMapping
+	public String updateBill( @RequestBody Billing bill,HttpServletRequest request) {
+		//validateToken(request);
+		if (service1.update(bill))
+			return "Bill data successfully updated";
+		else
+			throw new AppointmentNotFoundException("Update", "Appointment with Id " + bill.getBillId() + " to update not found");
 	}
 	@GetMapping("{aid}")
 	public ResponseEntity<?> getBill(@PathVariable("aid")long id,HttpServletRequest request){

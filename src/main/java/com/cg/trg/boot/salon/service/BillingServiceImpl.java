@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cg.trg.boot.salon.bean.Appointment;
 import com.cg.trg.boot.salon.bean.Billing;
 import com.cg.trg.boot.salon.dao.IBillingRepository;
 @Service
@@ -59,6 +60,14 @@ public class BillingServiceImpl implements IBillingService {
 		List<Billing> bill = repository.findAll();
 		return bill;
 		
+	}
+	@Override
+	public boolean update(Billing bill) {
+		if (repository.existsById(bill.getBillId())) {
+			repository.save(bill);
+			return true;
+		}
+		return false;
 	}
 
 	
