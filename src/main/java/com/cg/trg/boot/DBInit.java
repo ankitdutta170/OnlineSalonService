@@ -165,11 +165,11 @@ public class DBInit implements CommandLineRunner {
 		logger.info("Inserting data for Appointment");
 
 		SalonService salonService1 = salonService.getService(1);
-		SalonService salonService2 = salonService.getService(38);
-		SalonService salonService3 = salonService.getService(39);
-		SalonService salonService4 = salonService.getService(40);
-		SalonService salonService5 = salonService.getService(41);
-		SalonService salonService6 = salonService.getService(42);
+		SalonService salonService2 = salonService.getService(2);
+		SalonService salonService3 = salonService.getService(3);
+		SalonService salonService4 = salonService.getService(4);
+		SalonService salonService5 = salonService.getService(4);
+		SalonService salonService6 = salonService.getService(5);
 
 		Address address1 = addressService.getAddressDetails(25);
 		Address address2 = addressService.getAddressDetails(26);
