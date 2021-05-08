@@ -108,4 +108,9 @@ public class SalonServiceController {
     	SalonService salonService = service.getService(id);
     	return new ResponseEntity<String>("No of Appointments for "+salonService.getServiceName()+" is: "+service.getCountOfAppointmentsOfServices(id),HttpStatus.OK);
     }
+    @GetMapping("/name/{serviceName}")
+    public ResponseEntity<SalonService> getServiceByName(@PathVariable("serviceName")String serviceName,HttpServletRequest request) {
+    	SalonService salonService = service.getSalonServiceByName(serviceName);
+    	return new ResponseEntity<SalonService>(salonService,HttpStatus.OK);
+    }
 }

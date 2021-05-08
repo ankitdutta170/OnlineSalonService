@@ -12,4 +12,5 @@ public interface ISalonRepository extends JpaRepository<SalonService, Long> {
 	 * public List<SalonService> getAllServices(); public List<SalonService>
 	 * getServiceByDuration();
 	 */
+	public SalonService findByServiceName(String name);
 }

@@ -32,9 +32,9 @@ public class Appointment {
 	
 	private String visitType;
 	//@JsonIgnore
-	@JsonProperty(access = Access.READ_ONLY)
-	@ManyToOne(cascade = CascadeType.MERGE)
-	@JoinColumn(name="salon_service_id_fk")
+	@JsonProperty(access = Access.READ_WRITE)
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "salon_service_id_fk")
 	private SalonService preferredService;
 	
 	
@@ -42,7 +42,7 @@ public class Appointment {
 	
 	private LocalTime preferredTime;
 	@JsonIgnore
-	@ManyToOne
+	@ManyToOne()
 	@JoinColumn(name="user_id_fk")
 	private Customer customer;
 	@JsonIgnore

@@ -23,4 +23,6 @@ public interface ISalonService {
 	//6-For getting count of appointments for a particular service(implemented as Business Method)
 	public int getCountOfAppointmentsOfServices(long id);
 	
+	public SalonService getSalonServiceByName(String name);
+	
 }

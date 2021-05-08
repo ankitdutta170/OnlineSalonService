@@ -73,4 +73,10 @@ public class ISalonServiceImpl implements ISalonService {
 		// TODO Auto-generated method stub
 		return appointmentRepository.getCountofAppointmentsOfService(id).size();
 	}
+
+	@Override
+	public SalonService getSalonServiceByName(String name) {
+		// TODO Auto-generated method stub
+		return repository.findByServiceName(name);
+	}
 }
