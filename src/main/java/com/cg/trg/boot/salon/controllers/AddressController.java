@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.trg.boot.salon.bean.Address;
+import com.cg.trg.boot.salon.bean.Billing;
 import com.cg.trg.boot.salon.exceptions.AddressNotFoundException;
+import com.cg.trg.boot.salon.exceptions.AppointmentNotFoundException;
 import com.cg.trg.boot.salon.exceptions.BillNotFoundException;
 import com.cg.trg.boot.salon.exceptions.EmptyDataException;
 import com.cg.trg.boot.salon.service.AddressServiceImpl;
@@ -75,6 +77,14 @@ public class AddressController {
 		}
 		else
 			return new ResponseEntity<String>("Address failed to delete", HttpStatus.BAD_REQUEST);
+	}
+	@PutMapping
+	public String updateAddress( @RequestBody Address address,HttpServletRequest request) {
+		//validateToken(request);
+		if (service.update(address))
+			return "Bill data successfully updated";
+		else
+			throw new AppointmentNotFoundException("Update", "Appointment with Id " + address.getAddressId() + " to update not found");
 	}
 	@GetMapping("/{aid}")
 	public ResponseEntity<?> getAddress(@PathVariable("aid")long id,HttpServletRequest request){
