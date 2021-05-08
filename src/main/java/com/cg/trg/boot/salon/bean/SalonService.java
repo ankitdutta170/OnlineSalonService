@@ -1,4 +1,5 @@
 package com.cg.trg.boot.salon.bean;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -11,6 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -24,10 +28,9 @@ public class SalonService {
 	private int discount;
 	private String duration;
 	
-	@OneToMany(cascade = CascadeType.ALL,orphanRemoval = true,mappedBy = "preferredService",fetch = FetchType.EAGER)
+	@OneToMany(orphanRemoval = true,mappedBy = "preferredService",fetch = FetchType.LAZY)
 	@JsonIgnore
-	
-	private List<Appointment> appointments;
+	private List<Appointment> appointments = new ArrayList<>();
 	public SalonService() {
 		super();
 	}
@@ -107,7 +110,57 @@ public class SalonService {
 	}
 
 	public void setAppointments(List<Appointment> appointments) {
-		this.appointments = appointments;
+		this.appointments.clear();
+		this.appointments.addAll(appointments);
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((appointments == null) ? 0 : appointments.hashCode());
+		result = prime * result + discount;
+		result = prime * result + ((duration == null) ? 0 : duration.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(price);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + (int) (serviceId ^ (serviceId >>> 32));
+		result = prime * result + ((serviceName == null) ? 0 : serviceName.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SalonService other = (SalonService) obj;
+		if (appointments == null) {
+			if (other.appointments != null)
+				return false;
+		} else if (!appointments.equals(other.appointments))
+			return false;
+		if (discount != other.discount)
+			return false;
+		if (duration == null) {
+			if (other.duration != null)
+				return false;
+		} else if (!duration.equals(other.duration))
+			return false;
+		if (Double.doubleToLongBits(price) != Double.doubleToLongBits(other.price))
+			return false;
+		if (serviceId != other.serviceId)
+			return false;
+		if (serviceName == null) {
+			if (other.serviceName != null)
+				return false;
+		} else if (!serviceName.equals(other.serviceName))
+			return false;
+		return true;
+	}
+	
 	
 }

@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -33,7 +35,7 @@ public class Appointment {
 	private String visitType;
 	//@JsonIgnore
 	@JsonProperty(access = Access.READ_WRITE)
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name = "salon_service_id_fk")
 	private SalonService preferredService;
 	
@@ -156,6 +158,74 @@ public class Appointment {
 		return "Appointment [appointmentId=" + appointmentId + ", location=" + location + ", visitType=" + visitType
 				+ ", preferredService=" + preferredService + ", preferredDate=" + preferredDate + ", preferredTime="
 				+ preferredTime + ", customer=" + customer +  " ]";
+	}
+
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (appointmentId ^ (appointmentId >>> 32));
+		result = prime * result + ((billing == null) ? 0 : billing.hashCode());
+		result = prime * result + ((customer == null) ? 0 : customer.hashCode());
+		result = prime * result + ((location == null) ? 0 : location.hashCode());
+		result = prime * result + ((preferredDate == null) ? 0 : preferredDate.hashCode());
+		result = prime * result + ((preferredService == null) ? 0 : preferredService.hashCode());
+		result = prime * result + ((preferredTime == null) ? 0 : preferredTime.hashCode());
+		result = prime * result + ((visitType == null) ? 0 : visitType.hashCode());
+		return result;
+	}
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Appointment other = (Appointment) obj;
+		if (appointmentId != other.appointmentId)
+			return false;
+		if (billing == null) {
+			if (other.billing != null)
+				return false;
+		} else if (!billing.equals(other.billing))
+			return false;
+		if (customer == null) {
+			if (other.customer != null)
+				return false;
+		} else if (!customer.equals(other.customer))
+			return false;
+		if (location == null) {
+			if (other.location != null)
+				return false;
+		} else if (!location.equals(other.location))
+			return false;
+		if (preferredDate == null) {
+			if (other.preferredDate != null)
+				return false;
+		} else if (!preferredDate.equals(other.preferredDate))
+			return false;
+		if (preferredService == null) {
+			if (other.preferredService != null)
+				return false;
+		} else if (!preferredService.equals(other.preferredService))
+			return false;
+		if (preferredTime == null) {
+			if (other.preferredTime != null)
+				return false;
+		} else if (!preferredTime.equals(other.preferredTime))
+			return false;
+		if (visitType == null) {
+			if (other.visitType != null)
+				return false;
+		} else if (!visitType.equals(other.visitType))
+			return false;
+		return true;
 	}
 	
 

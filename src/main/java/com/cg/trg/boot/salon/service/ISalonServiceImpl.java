@@ -75,10 +75,7 @@ public class ISalonServiceImpl implements ISalonService {
 	}
 
 
-	@Override
-	public SalonService getSalonServiceByName(String name) {
-		// TODO Auto-generated method stub
-		return repository.findByServiceName(name);
+
 
 	
 	@Override
@@ -90,4 +87,6 @@ public class ISalonServiceImpl implements ISalonService {
 		return false;
 
 	}
+
+	
 }
