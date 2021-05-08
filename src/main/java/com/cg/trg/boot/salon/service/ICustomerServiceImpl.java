@@ -99,4 +99,15 @@ public class ICustomerServiceImpl implements ICustomerService{
 		return billingRepository.getAllBillsForCustomer(userId);
 	}
 
+
+
+	@Override
+	public boolean update(Customer customer) {
+		if (repository.existsById(customer.getUserId())) {
+			repository.save(customer);
+			return true;
+		}
+		return false;
+	}
+
 }

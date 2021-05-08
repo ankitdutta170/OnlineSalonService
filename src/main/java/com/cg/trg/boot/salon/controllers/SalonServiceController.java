@@ -15,14 +15,17 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.cg.trg.boot.salon.bean.Appointment;
 import com.cg.trg.boot.salon.bean.SalonService;
+import com.cg.trg.boot.salon.exceptions.AppointmentNotFoundException;
 import com.cg.trg.boot.salon.exceptions.NoDataException;
 import com.cg.trg.boot.salon.exceptions.SalonServiceNotFoundException;
 import com.cg.trg.boot.salon.service.ISalonServiceImpl;
 
-@CrossOrigin
 @RestController
 @RequestMapping("salonservices")
+@CrossOrigin(origins = "http://localhost:4200")
 public class SalonServiceController {
 
 	@Autowired
@@ -44,7 +47,52 @@ public class SalonServiceController {
 			return new ResponseEntity<String>("SalonService failed to save", HttpStatus.NOT_FOUND);
 	}
 	
-	@GetMapping("salon/{aid}")
+	@DeleteMapping("{aid}")
+    public ResponseEntity<String> removeSalonService(@PathVariable("aid") long id,HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("userId");
+		String userName = (String) session.getAttribute("username");
+		System.out.println("*******************" + userName + "*************************");
+		System.out.println("*******************" + userId + "*************************");
+		SalonService deleteSalonService = service.removeService(id);
+		if(deleteSalonService != null) {
+			return new ResponseEntity<String>("SalonService successfully deleted", HttpStatus.OK);
+		}
+		else
+			return new ResponseEntity<String>("SalonService failed to delete", HttpStatus.BAD_REQUEST);
+	}
+	
+	@PutMapping("/update/{sid}")
+    public ResponseEntity<String> updateSalonService(@PathVariable("sid")long id, @RequestBody SalonService salonservice,HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("userId");
+		String userName = (String) session.getAttribute("username");
+		System.out.println("*******************" + userName + "*************************");
+		System.out.println("*******************" + userId + "*************************");
+		SalonService updatedSalonService = service.updateService(id, salonservice);
+		if(updatedSalonService != null) {
+			return new ResponseEntity<String>("SalonService successfully updated", HttpStatus.OK);
+		}
+		else
+			return new ResponseEntity<String>("SalonService failed to delete", HttpStatus.BAD_REQUEST);
+	}
+	
+	@PutMapping
+	public String updatemployee( @RequestBody SalonService salonservice,HttpServletRequest request) {
+		//validateToken(request);
+		if (service.update(salonservice))
+			return "Salon Service data successfully updated";
+		else
+			throw new SalonServiceNotFoundException("Update", "Salon Service with Id " + salonservice.getServiceId() + " to update not found");
+	}
+	
+	 @GetMapping("/count/{id}")
+	    public ResponseEntity<String> getCountOfAppointmentsOfService(@PathVariable("id")long id,HttpServletRequest request) {
+	    	SalonService salonService = service.getService(id);
+	    	return new ResponseEntity<String>("No of Appointments for "+salonService.getServiceName()+" is: "+service.getCountOfAppointmentsOfServices(id),HttpStatus.OK);
+	    }
+	 
+	@GetMapping("{aid}")
 	public ResponseEntity<?> getSalonService(@PathVariable("aid")long id,HttpServletRequest request){
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");
@@ -72,40 +120,4 @@ public class SalonServiceController {
 		return new ResponseEntity<List<SalonService>>(services, HttpStatus.OK);
 		
 	}
-    
-    @PutMapping("/update/{sid}")
-    public ResponseEntity<String> updateSalonService(@PathVariable("sid")long id, @RequestBody SalonService salonservice,HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		String userName = (String) session.getAttribute("username");
-		System.out.println("*******************" + userName + "*************************");
-		System.out.println("*******************" + userId + "*************************");
-		SalonService updatedSalonService = service.updateService(id, salonservice);
-		if(updatedSalonService != null) {
-			return new ResponseEntity<String>("SalonService successfully updated", HttpStatus.OK);
-		}
-		else
-			return new ResponseEntity<String>("SalonService failed to delete", HttpStatus.BAD_REQUEST);
-	}
-    
-    @DeleteMapping("{aid}")
-    public ResponseEntity<String> removeSalonService(@PathVariable("aid") long id,HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		String userName = (String) session.getAttribute("username");
-		System.out.println("*******************" + userName + "*************************");
-		System.out.println("*******************" + userId + "*************************");
-		SalonService deleteSalonService = service.removeService(id);
-		if(deleteSalonService != null) {
-			return new ResponseEntity<String>("SalonService successfully deleted", HttpStatus.OK);
-		}
-		else
-			return new ResponseEntity<String>("SalonService failed to delete", HttpStatus.BAD_REQUEST);
-	}
-    
-    @GetMapping("/count/{id}")
-    public ResponseEntity<String> getCountOfAppointmentsOfService(@PathVariable("id")long id,HttpServletRequest request) {
-    	SalonService salonService = service.getService(id);
-    	return new ResponseEntity<String>("No of Appointments for "+salonService.getServiceName()+" is: "+service.getCountOfAppointmentsOfServices(id),HttpStatus.OK);
-    }
 }
