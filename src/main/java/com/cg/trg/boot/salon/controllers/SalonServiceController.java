@@ -95,7 +95,7 @@ public class SalonServiceController {
 	
 	@GetMapping
 		public ResponseEntity<List<SalonService>> getAllSalonServices(HttpServletRequest request){
-		login.validateToken(request,"admin");
+		
 		List<SalonService>services = service.getAllServices();
 		if(services.size() == 0) {
 			throw new NoDataException("No SalonServices saved in database");

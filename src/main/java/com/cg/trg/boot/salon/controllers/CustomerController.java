@@ -91,7 +91,7 @@ public class CustomerController {
 	}
 	@GetMapping
 	public ResponseEntity<List<Customer>> getAllCustomers(HttpServletRequest request){
-		login.validateToken(request,"admin");
+		//login.validateToken(request,"admin");
 		List<Customer> customers = service.getAllCustomers();
 		if(customers.size() == 0) {
 			throw new EmptyDataException("No Customers saved in database");
