@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.trg.boot.salon.bean.Address;
+import com.cg.trg.boot.salon.bean.Appointment;
 import com.cg.trg.boot.salon.bean.Card;
 import com.cg.trg.boot.salon.dao.ICardRepository;
 
@@ -61,5 +62,13 @@ public class CardImpl implements ICardService {
 		List<Card> card = repository.findAll();
 		return card;
 		
+	}
+	@Override
+	public boolean update(Card card) {
+		if (repository.existsById(card.getCardId())) {
+			repository.save(card);
+			return true;
+		}
+		return false;
 	}
 }

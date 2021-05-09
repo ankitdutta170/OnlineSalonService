@@ -13,4 +13,5 @@ public interface IPaymentService {
 	public List<Payment> getAllPaymentDetails();
 	public List<Payment> getPaymentByType(String type);
 	public List<Payment> getPaymentByStatus(String status);
+	boolean update(Payment payment);
 }

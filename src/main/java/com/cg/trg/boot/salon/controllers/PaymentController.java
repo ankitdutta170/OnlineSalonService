@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.cg.trg.boot.salon.bean.Card;
 import com.cg.trg.boot.salon.bean.Payment;
+import com.cg.trg.boot.salon.exceptions.CardNotFoundException;
 import com.cg.trg.boot.salon.exceptions.EmptyDataException;
 import com.cg.trg.boot.salon.exceptions.PaymentNotFound;
 import com.cg.trg.boot.salon.service.PaymentServiceImpl;
@@ -31,11 +34,7 @@ public class PaymentController {
 
 	@PostMapping
 	public ResponseEntity<String> addPayment(@RequestBody Payment payment, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		String userName = (String) session.getAttribute("username");
-		System.out.println("*******************" + userName + "*************************");
-		System.out.println("*******************" + userId + "*************************");
+		
 		Payment pay = repo.addPayment(payment);
 		if (pay != null) {
 			return new ResponseEntity<String>("Payment successfull", HttpStatus.OK);
@@ -45,11 +44,7 @@ public class PaymentController {
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> removePayment(@PathVariable(value = "id") long paymentId, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		String userName = (String) session.getAttribute("username");
-		System.out.println("*******************" + userName + "*************************");
-		System.out.println("*******************" + userId + "*************************");
+		
 
 		Payment payemntDetails = repo.getPaymentDetails(paymentId);
 		if (payemntDetails == null) {
@@ -60,14 +55,10 @@ public class PaymentController {
 		}
 	}
 
-	@PutMapping("/update/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<String> updatePayment(@PathVariable(value = "id") long paymentId,
 			@RequestBody Payment payment, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		String userName = (String) session.getAttribute("username");
-		System.out.println("*******************" + userName + "*************************");
-		System.out.println("*******************" + userId + "*************************");
+		
 		Payment check = repo.getPaymentDetails(paymentId);
 		if (check == null) {
 			throw new PaymentNotFound("Request", "Payment with paymentId id:" + paymentId + "not found");
@@ -78,14 +69,18 @@ public class PaymentController {
 		}
 
 	}
+	@PutMapping
+	public String updatemployee( @RequestBody Payment payment,HttpServletRequest request) {
+		//validateToken(request);
+		if (repo.update(payment))
+			return "Payemnt data successfully updated";
+		else
+			throw new CardNotFoundException("Update", "Customer with CardId " + payment.getPaymentId() + " to update not found");
+	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getPaymentDetails(@PathVariable(value = "id") long paymentId, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		String userName = (String) session.getAttribute("username");
-		System.out.println("*******************" + userName + "*************************");
-		System.out.println("*******************" + userId + "*************************");
+		
 		Payment pay = repo.getPaymentDetails(paymentId);
 		if (pay == null) {
 			throw new PaymentNotFound("Request", "Payment with payment id:" + paymentId + "not found");
@@ -95,9 +90,7 @@ public class PaymentController {
 	
 	@GetMapping
 	public ResponseEntity<List<Payment>> getAllPayments(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		String userName = (String) session.getAttribute("username");
+		
 		List<Payment> payment = repo.getAllPaymentDetails();
 		if (payment.size() == 0) {
 			throw new EmptyDataException("No Appointments saved in database");
@@ -108,11 +101,7 @@ public class PaymentController {
 //	@GetMapping("/{type}")
 //	public ResponseEntity<List<Payment>> getPaymentByType(@PathVariable("type") String type,
 //			HttpServletRequest request) {
-//		HttpSession session = request.getSession();
-//		String userId = (String) session.getAttribute("userId");
-//		String userName = (String) session.getAttribute("username");
-//		System.out.println("*******************" + userName + "*************************");
-//		System.out.println("*******************" + userId + "*************************");
+
 //		List<Payment> payment = repo.getPaymentByType(type);
 //		if (payment.size() == 0)
 //			throw new PaymentNotFound("Request", "Payment not found");
@@ -123,11 +112,7 @@ public class PaymentController {
 //	@GetMapping("/{status}")
 //	public ResponseEntity<List<Payment>> getPaymentByStatus(@PathVariable("status") String status,
 //			HttpServletRequest request) {
-//		HttpSession session = request.getSession();
-//		String userId = (String) session.getAttribute("userId");
-//		String userName = (String) session.getAttribute("username");
-//		System.out.println("*******************" + userName + "*************************");
-//		System.out.println("*******************" + userId + "*************************");
+
 //		List<Payment> payment = repo.getPaymentByStatus(status);
 //		if (payment.size() == 0)
 //			throw new PaymentNotFound("Request", "Payment not found");

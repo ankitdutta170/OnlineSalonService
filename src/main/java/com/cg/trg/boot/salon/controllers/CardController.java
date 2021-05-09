@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.trg.boot.salon.bean.Appointment;
 import com.cg.trg.boot.salon.bean.Card;
+import com.cg.trg.boot.salon.bean.Customer;
+import com.cg.trg.boot.salon.exceptions.AppointmentNotFoundException;
 import com.cg.trg.boot.salon.exceptions.CardNotFoundException;
 import com.cg.trg.boot.salon.exceptions.EmptyDataException;
 import com.cg.trg.boot.salon.service.CardImpl;
@@ -31,9 +33,7 @@ public class CardController {
 	
 	@PostMapping
 	public ResponseEntity<String> addCard(@RequestBody Card card,HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		String userName = (String) session.getAttribute("username");
+		
 		Card no = repository.addCard(card);
 		if (no != null) {
 			return new ResponseEntity<String>("Card added successfull",HttpStatus.OK);
@@ -43,11 +43,7 @@ public class CardController {
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> removeCard(@PathVariable(value = "id") long cardId,HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		String userName = (String) session.getAttribute("username");
-		System.out.println("*******************" + userName + "*************************");
-		System.out.println("*******************" + userId + "*************************");
+		
 
 		Card cardDetails = repository.getCardDetails(cardId);
 		if (cardDetails == null) {
@@ -57,13 +53,9 @@ public class CardController {
 			return new ResponseEntity<Card>(cardDetails, HttpStatus.OK);
 		}
 	}
-	@PutMapping("update/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<String> updateCard(@PathVariable(value = "id") long cardId, @RequestBody Card card,HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		String userName = (String) session.getAttribute("username");
-		System.out.println("*******************" + userName + "*************************");
-		System.out.println("*******************" + userId + "*************************");
+		
 		Card check = repository.getCardDetails(cardId);
 		if(check==null) {
 			throw new CardNotFoundException("Request", "Card with CardId id:" + cardId + "not found");
@@ -75,13 +67,17 @@ public class CardController {
 		}
 		
 	}
+	@PutMapping
+	public String updatemployee( @RequestBody Card card,HttpServletRequest request) {
+		//validateToken(request);
+		if (repository.update(card))
+			return "Card data successfully updated";
+		else
+			throw new CardNotFoundException("Update", "Customer with CardId " + card.getCardId() + " to update not found");
+	}
 		@GetMapping("/{id}")
 		public ResponseEntity<?> getCardDetails(@PathVariable(value = "id") long cardId,HttpServletRequest request) {
-			HttpSession session = request.getSession();
-			String userId = (String) session.getAttribute("userId");
-			String userName = (String) session.getAttribute("username");
-			System.out.println("*******************" + userName + "*************************");
-			System.out.println("*******************" + userId + "*************************");
+			
 			Card check = repository.getCardDetails(cardId);
 			if (check==null) {
 				throw new CardNotFoundException("Request", "Card with payment id: " + cardId + " not found");
@@ -90,11 +86,7 @@ public class CardController {
 		}
 //		@GetMapping("/{name}")
 //		public List<Card> getPaymentByStatus(@PathVariable("name") String cardName,HttpServletRequest request){
-//			HttpSession session = request.getSession();
-//			String userId = (String) session.getAttribute("userId");
-//			String userName = (String) session.getAttribute("username");
-//			System.out.println("*******************" + userName + "*************************");
-//			System.out.println("*******************" + userId + "*************************");
+//			
 //			List<Card> card=repository.getCardByName(cardName);
 //			if(card.size()==0)
 //				throw new CardNotFoundException("Request", "Card not found");

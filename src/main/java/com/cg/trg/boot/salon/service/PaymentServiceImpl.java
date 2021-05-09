@@ -76,6 +76,16 @@ public class PaymentServiceImpl implements IPaymentService{
 			
 			return repository.getPaymentByStatus(status);
 		}
+
+		@Override
+		public boolean update(Payment payment) {
+			if (repository.existsById(payment.getPaymentId())) {
+				repository.save(payment);
+				return true;
+			}
+			return false;
+		
+		}
 	
 	
 }

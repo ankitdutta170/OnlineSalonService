@@ -31,11 +31,7 @@ public class AppointmentController {
 	
 	@PostMapping
 	public ResponseEntity<String> saveAppointment(@RequestBody Appointment appointment,HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		String userName = (String) session.getAttribute("username");
-		System.out.println("*******************" + userName + "*************************");
-		System.out.println("*******************" + userId + "*************************");
+		
 		Appointment saveAppointment = service.addAppointment(appointment);
 		if(saveAppointment != null) {
 			return new ResponseEntity<String>("Appointment saved successfully", HttpStatus.OK);
@@ -56,11 +52,7 @@ public class AppointmentController {
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<String> updateAppointment(@PathVariable("id")long id, @RequestBody Appointment appointment,HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		String userName = (String) session.getAttribute("username");
-		System.out.println("*******************" + userName + "*************************");
-		System.out.println("*******************" + userId + "*************************");
+		
 		Appointment updatedAppointment = service.updateAppointment(id, appointment);
 		if(updatedAppointment != null) {
 			return new ResponseEntity<String>("Appointment successfully updated", HttpStatus.OK);
@@ -90,12 +82,6 @@ public class AppointmentController {
 	}
 	@GetMapping
 	public List<Appointment> getAllAppointments(HttpServletRequest request){
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		String userName = (String) session.getAttribute("username");
-		System.out.println("*******************" + userName + "*************************");
-		System.out.println("*******************" + userId + "*************************");
-		
 		
 		List<Appointment> appointments = service.getAllAppointments();
 		if(appointments.size() == 0) {
@@ -106,11 +92,7 @@ public class AppointmentController {
 	}
 	@GetMapping("{year}/{month}/{day}")
 	public ResponseEntity<List<Appointment>> getAppointmentByDate(@PathVariable("year")int year, @PathVariable("month")int month,@PathVariable("day")int day,HttpServletRequest request){
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		String userName = (String) session.getAttribute("username");
-		System.out.println("*******************" + userName + "*************************");
-		System.out.println("*******************" + userId + "*************************");
+		
 		List<Appointment> appointments = service.getAppointmentByDate(LocalDate.of(year, month, day));
 		if(appointments.size() == 0) {
 			throw new EmptyDataException("No Appointments saved in database");

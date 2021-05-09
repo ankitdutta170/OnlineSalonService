@@ -14,4 +14,5 @@ public interface ICardService {
 	public Card getCardDetails(long cardId);
 	public List<Card> getCardByName(String cardName);
 	public List<Card> getAllCard();
+	public boolean update(Card card);
 	}
