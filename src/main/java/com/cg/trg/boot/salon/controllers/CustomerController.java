@@ -25,7 +25,11 @@ import com.cg.trg.boot.salon.exceptions.AppointmentNotFoundException;
 import com.cg.trg.boot.salon.exceptions.BillNotFoundException;
 import com.cg.trg.boot.salon.exceptions.CustomerNotFoundException;
 import com.cg.trg.boot.salon.exceptions.EmptyDataException;
+import com.cg.trg.boot.salon.exceptions.InvalidUserException;
+import com.cg.trg.boot.salon.jwt.JwtTokenUtil;
 import com.cg.trg.boot.salon.service.ICustomerServiceImpl;
+
+import io.jsonwebtoken.SignatureException;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("customer")
@@ -33,11 +37,12 @@ public class CustomerController {
 	@Autowired
 	ICustomerServiceImpl service;
 	
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
+	
 	@PostMapping
 	public ResponseEntity<String> saveCustomer(@RequestBody Customer customer, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		String userName = (String) session.getAttribute("username");
+		validateToken(request);
 		Customer saveCustomer = service.addCustomer(customer);
 		if(saveCustomer != null) {
 			return new ResponseEntity<String>("Customer saved successfully", HttpStatus.OK);
@@ -47,9 +52,7 @@ public class CustomerController {
 	}
 	@DeleteMapping("{aid}")
 	public ResponseEntity<String> removeCustomer(@PathVariable("aid") long custId, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		String userName = (String) session.getAttribute("username");
+		validateToken(request);
 		Customer deleteCustomer = service.removeCustomer(custId);
 		if(deleteCustomer != null) {
 			return new ResponseEntity<String>("Customer deleted successfully", HttpStatus.OK);
@@ -60,9 +63,7 @@ public class CustomerController {
 	
 	@PutMapping("/update/{id}")
 	public ResponseEntity<String> updateCustomer(@PathVariable("id")long custId, Customer customer, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		String userName = (String) session.getAttribute("username");
+		validateToken(request);
 		Customer updatedCustomer = service.updateCustomer(custId, customer);
 		if(updatedCustomer != null) {
 			return new ResponseEntity<String>("Customer updated successfully", HttpStatus.OK);
@@ -72,7 +73,7 @@ public class CustomerController {
 	}
 	@PutMapping
 	public String updatemployee( @RequestBody Customer customer,HttpServletRequest request) {
-		//validateToken(request);
+		validateToken(request);
 		if (service.update(customer))
 			return "Customer data successfully updated";
 		else
@@ -80,9 +81,7 @@ public class CustomerController {
 	}
 	@GetMapping("{aid}")
 	public ResponseEntity<?> getCustomer(@PathVariable("aid")long custId, HttpServletRequest request){
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		String userName = (String) session.getAttribute("username");
+		validateToken(request);
 		Customer customer = service.getCustomer(custId);
 		if(customer == null) {
 			throw new CustomerNotFoundException("Request", "Customer with customer custId:"+custId+"not found");
@@ -91,9 +90,7 @@ public class CustomerController {
 	}
 	@GetMapping
 	public ResponseEntity<List<Customer>> getAllCustomers(HttpServletRequest request){
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		String userName = (String) session.getAttribute("username");
+		validateToken(request);
 		List<Customer> customers = service.getAllCustomers();
 		if(customers.size() == 0) {
 			throw new EmptyDataException("No Customers saved in database");
@@ -102,9 +99,7 @@ public class CustomerController {
 	}
 	@GetMapping("/getAppointments/{cid}")
 	public ResponseEntity<List<Appointment>> getAllAppointmentForCustomer(@PathVariable("cid")long id, HttpServletRequest request){
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		String userName = (String) session.getAttribute("username");
+		validateToken(request);
 		List<Appointment> appointments = service.getAllAppointmentsForCustomer(id);
 		if(appointments.size() == 0) {
 			throw new AppointmentNotFoundException("Appointment not found for customer "+id);
@@ -115,14 +110,33 @@ public class CustomerController {
 	
 	@GetMapping("/getBills/{cid}")
 	public ResponseEntity<List<Billing>> getAllBillsForCustomer(@PathVariable("cid") long id, HttpServletRequest request){
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		String userName = (String) session.getAttribute("username");
+		validateToken(request);
 		List<Billing> bills = service.getAllBillingForCustomer(id);
 		if(bills.size()== 0) {
 			throw new BillNotFoundException("Bills for the customer not found");
 		}
 		return new ResponseEntity<List<Billing>>(bills, HttpStatus.OK);
+	}
+	
+	public void validateToken(HttpServletRequest request) {
+		final String tokenHeader = request.getHeader("Authorization");
+
+		String jwtToken = null;
+
+		if (tokenHeader == null)
+			throw new InvalidUserException("User Not Logged In or token not included");
+		// JWT Token is in the form "Bearer token". Remove Bearer word
+		if (!tokenHeader.startsWith("Bearer "))
+			throw new InvalidUserException("Invalid Token");
+
+		jwtToken = tokenHeader.substring(7);
+		try {
+			if (!(jwtTokenUtil.validateToken(jwtToken)))
+				throw new InvalidUserException("Token Expired. Need Relogin");
+
+		} catch (SignatureException ex) {
+			throw new InvalidUserException("Invalid Token");
+		}
 	}
 
 }

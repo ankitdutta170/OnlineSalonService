@@ -45,7 +45,7 @@ class AppointmentServiceTest {
 	public void addAppointmentTest() {
 		Appointment appointment = new Appointment();
 		SalonService salonService = new SalonService(100,"Spa",500,0,"20");
-		Customer customer = new Customer(100,"12345","12345","Customer",false);
+		Customer customer = new Customer("ankit","12345","customer");
 		Address address = new Address(100,"NW004","Lane1","Area1","Bangalore","Karnataka",101245,customer);
 		Card card = new Card(100,"Visa","123456",LocalDate.of(2026, 8, 25),356);
 		Payment payment = new Payment("Card","Paid",card);
@@ -78,7 +78,7 @@ class AppointmentServiceTest {
 	@Test
 	public void deleteAppointmentTest() {
 		SalonService salonService = new SalonService(100,"Spa",500,0,"20");
-		Customer customer = new Customer(100,"12345","12345","Customer",false);
+		Customer customer = new Customer("ankit","12345","customer");
 		Address address = new Address(100,"NW004","Lane1","Area1","Bangalore","Karnataka",101245,customer);
 		Card card = new Card(100,"Visa","123456",LocalDate.of(2026, 8, 25),356);
 		Payment payment = new Payment("Card","Paid",card);
@@ -93,7 +93,7 @@ class AppointmentServiceTest {
 	@Test
 	public void getAppointmentById() {
 		SalonService salonService = new SalonService(100,"Spa",500,0,"20");
-		Customer customer = new Customer(100,"12345","12345","Customer",false);
+		Customer customer = new Customer("ankit","12345","customer");
 		Address address = new Address(100,"NW004","Lane1","Area1","Bangalore","Karnataka",101245,customer);
 		Card card = new Card(100,"Visa","123456",LocalDate.of(2026, 8, 25),356);
 		Payment payment = new Payment("Card","Paid",card);

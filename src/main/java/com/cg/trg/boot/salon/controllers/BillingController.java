@@ -24,7 +24,11 @@ import com.cg.trg.boot.salon.bean.Billing;
 import com.cg.trg.boot.salon.exceptions.AppointmentNotFoundException;
 import com.cg.trg.boot.salon.exceptions.BillNotFoundException;
 import com.cg.trg.boot.salon.exceptions.EmptyDataException;
+import com.cg.trg.boot.salon.exceptions.InvalidUserException;
+import com.cg.trg.boot.salon.jwt.JwtTokenUtil;
 import com.cg.trg.boot.salon.service.BillingServiceImpl;
+
+import io.jsonwebtoken.SignatureException;
 
 @RestController
 @RequestMapping("bill")
@@ -33,14 +37,13 @@ public class BillingController {
 	@Autowired
 	BillingServiceImpl service1;
 	
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
+	
 	@PostMapping
 	public ResponseEntity<String>saveBill(@RequestBody Billing bill,HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		String userName = (String) session.getAttribute("username");
-		System.out.println("*******************" + userName + "*************************");
-		System.out.println("*******************" + userId + "*************************");
 		
+		validateToken(request);
 		Billing saveBill= service1.addBill(bill);
 		if(saveBill != null) {
 			return new ResponseEntity<String>("Bill successfully made", HttpStatus.OK);			
@@ -51,12 +54,7 @@ public class BillingController {
 	}
 	@DeleteMapping("{aid}")
 	public ResponseEntity<String> removeBill(@PathVariable("aid") long id,HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		String userName = (String) session.getAttribute("username");
-		System.out.println("*******************" + userName + "*************************");
-		System.out.println("*******************" + userId + "*************************");
-		
+		validateToken(request);
 		Billing deleteBill = service1.removeBill(id);
 		if(deleteBill != null) {
 			return new ResponseEntity<String>("Bill successfully deleted", HttpStatus.OK);		
@@ -67,12 +65,7 @@ public class BillingController {
 	}
 	@PutMapping("{bid}")
 	public ResponseEntity<String> updateBill(@PathVariable("bid") long id,@RequestBody Billing bill,HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		String userName = (String) session.getAttribute("username");
-		System.out.println("*******************" + userName + "*************************");
-		System.out.println("*******************" + userId + "*************************");
-		
+		validateToken(request);
 		Billing updatedBill = service1.updateBill(id, bill);
 		if(updatedBill != null) {
 			return new ResponseEntity<String>("Bill succesfully updated", HttpStatus.OK);			
@@ -83,7 +76,7 @@ public class BillingController {
 	}
 	@PutMapping
 	public String updateBill( @RequestBody Billing bill,HttpServletRequest request) {
-		//validateToken(request);
+		validateToken(request);
 		if (service1.update(bill))
 			return "Bill data successfully updated";
 		else
@@ -91,12 +84,7 @@ public class BillingController {
 	}
 	@GetMapping("{aid}")
 	public ResponseEntity<?> getBill(@PathVariable("aid")long id,HttpServletRequest request){
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		String userName = (String) session.getAttribute("username");
-		System.out.println("*******************" + userName + "*************************");
-		System.out.println("*******************" + userId + "*************************");
-		
+		validateToken(request);
 		Billing bill = service1.getBillDetails(id);
 		if(bill == null) {
 			throw new BillNotFoundException("Request", "Bill with Bill id:"+id+"not found");
@@ -106,12 +94,7 @@ public class BillingController {
 	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping
 	public ResponseEntity<List<Billing>> getAllBills(HttpServletRequest request){
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		String userName = (String) session.getAttribute("username");
-		System.out.println("*******************" + userName + "*************************");
-		System.out.println("*******************" + userId + "*************************");
-		
+		validateToken(request);
 		List<Billing> bills = service1.getAllBills();
 		if(bills.size() == 0) {
 			throw new EmptyDataException("No Bill saved in database");
@@ -119,6 +102,27 @@ public class BillingController {
 		return new ResponseEntity<List<Billing>>(bills, HttpStatus.OK);
 		
 		
+	}
+	
+	public void validateToken(HttpServletRequest request) {
+		final String tokenHeader = request.getHeader("Authorization");
+
+		String jwtToken = null;
+
+		if (tokenHeader == null)
+			throw new InvalidUserException("User Not Logged In or token not included");
+		// JWT Token is in the form "Bearer token". Remove Bearer word
+		if (!tokenHeader.startsWith("Bearer "))
+			throw new InvalidUserException("Invalid Token");
+
+		jwtToken = tokenHeader.substring(7);
+		try {
+			if (!(jwtTokenUtil.validateToken(jwtToken)))
+				throw new InvalidUserException("Token Expired. Need Relogin");
+
+		} catch (SignatureException ex) {
+			throw new InvalidUserException("Invalid Token");
+		}
 	}
 	
 	

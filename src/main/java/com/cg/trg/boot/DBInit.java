@@ -123,17 +123,17 @@ public class DBInit implements CommandLineRunner {
 
 		logger.info("Data  Entry process initiated for Customer table");
 
-		customerRepository.save(new Customer("Ankit", "abc@gmail.com", "7903083839", LocalDate.of(1999, 4, 8),
+		customerRepository.save(new Customer("ankitdutta170","ankitdutta","customer","Ankit", "abc@gmail.com", "7903083839", LocalDate.of(1999, 4, 8),
 				new ArrayList<Billing>(), new HashSet<Address>(), new ArrayList<Appointment>()));
-		customerRepository.save(new Customer("Sai", "abcd@gmail.com", "7903083838", LocalDate.of(1999, 4, 7),
+		customerRepository.save(new Customer("saipraveen","saipraveen","customer","Sai", "abcd@gmail.com", "7903083838", LocalDate.of(1999, 4, 7),
 				new ArrayList<Billing>(), new HashSet<Address>(), new ArrayList<Appointment>()));
-		customerRepository.save(new Customer("Om", "abcde@gmail.com", "7903083837", LocalDate.of(1999, 4, 6),
+		customerRepository.save(new Customer("omsahoo","omsahoo","customer","Om", "abcde@gmail.com", "7903083837", LocalDate.of(1999, 4, 6),
 				new ArrayList<Billing>(), new HashSet<Address>(), new ArrayList<Appointment>()));
-		customerRepository.save(new Customer("Sulabh", "abcdef@gmail.com", "7903083836", LocalDate.of(1999, 4, 5),
+		customerRepository.save(new Customer("sulabhmajumdar","sulabhmajumdar","customer","Sulabh", "abcdef@gmail.com", "7903083836", LocalDate.of(1999, 4, 5),
 				new ArrayList<Billing>(), new HashSet<Address>(), new ArrayList<Appointment>()));
-		customerRepository.save(new Customer("Siddharth", "abcdefg@gmail.com", "7903083835", LocalDate.of(1999, 4, 4),
+		customerRepository.save(new Customer("siddharth","siddharth","customer","Siddharth", "abcdefg@gmail.com", "7903083835", LocalDate.of(1999, 4, 4),
 				new ArrayList<Billing>(), new HashSet<Address>(), new ArrayList<Appointment>()));
-		customerRepository.save(new Customer("Kurshed", "abcdefgh@gmail.com", "7903083834", LocalDate.of(1999, 4, 3),
+		customerRepository.save(new Customer("kurshed","kurshed","customer","Kurshed", "abcdefgh@gmail.com", "7903083834", LocalDate.of(1999, 4, 3),
 				new ArrayList<Billing>(), new HashSet<Address>(), new ArrayList<Appointment>()));
 
 		logger.info("6 rows inserted in Customer table");

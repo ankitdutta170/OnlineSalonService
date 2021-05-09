@@ -30,32 +30,7 @@ public class UserServiceTest {
 	@MockBean
 	IUserRepository userRepository;
 	
-	@Test
-	@DisplayName("Test signin of User")
-	public void signIn(){
-		
-		Optional<User> user = userRepository.findById(1L);
- 		if(user.isPresent()) {
- 			user.get().setLoggedIn(true);
- 			userRepository.save(user.get());
- 			
- 		}
- 		Optional<User> updatedUser = userRepository.findById(1l);
-		if(updatedUser.isPresent()) {
-			assertThat(updatedUser.get().isLoggedIn()==true);
-		}
-		
-		
-}
-	@Test
-	 @DisplayName("Test for signout of User")
-		public void signOut() {
-		User user = new User();
-		user.setLoggedIn(true);
-		
-	    	when(userRepository.save(user)).thenReturn(user);
-			assertEquals(false, userService.signOut(user).isLoggedIn());
-			}
+	
 	
 	@Test
 	@DisplayName("Test for change password of User")

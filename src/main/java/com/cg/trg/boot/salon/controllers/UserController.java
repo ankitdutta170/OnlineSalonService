@@ -33,10 +33,7 @@ public class UserController {
 
 	@GetMapping(value = "/signin")
 	public ResponseEntity<String> signIn(@RequestBody User user, HttpServletRequest request) {
-		HttpSession session = request.getSession(true);
-
-		session.setAttribute("userName", "Tom@gmailcom");
-		session.setAttribute("password", "Tom");
+		
 		try {
 
 			service.signIn(user);
@@ -51,11 +48,7 @@ public class UserController {
 	@GetMapping("/getUser/{uid}")
 
 	public ResponseEntity<?> getUser(@PathVariable("uid") long id, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		String userName = (String) session.getAttribute("username");
-		System.out.println("*******************" + userName + "*************************");
-		System.out.println("*******************" + userId + "*************************");
+		
 
 		User user = service.getUserById(id);
 		if (user == null) {
@@ -66,9 +59,9 @@ public class UserController {
 
 	@GetMapping("signout")
 	public ResponseEntity<String> signOut(HttpServletRequest request) {
-		HttpSession session = request.getSession();
+		
 
-		session.invalidate();
+		
 		return new ResponseEntity<String>("Logout Successfull!", HttpStatus.OK);
 
 	}

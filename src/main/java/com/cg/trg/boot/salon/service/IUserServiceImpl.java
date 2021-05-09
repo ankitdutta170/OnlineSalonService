@@ -27,17 +27,7 @@ public class IUserServiceImpl implements IUserService {
 		
 	}
 
-	@Override
-	public User signOut(User user) {
-		// TODO Auto-generated method stub
-		
-		if(user.isLoggedIn()) {
-			user.setLoggedIn(false);
-			return user;
-		}
-		
-		return null;
-	}
+	
 
 	@Override
 	public User changePassword(long id, String changedPassword) {
@@ -74,6 +64,14 @@ public class IUserServiceImpl implements IUserService {
 		else {
 			return null;
 		}
+	}
+
+
+
+	@Override
+	public User signOut(User user) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

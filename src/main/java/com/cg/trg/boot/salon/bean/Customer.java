@@ -42,9 +42,26 @@ public class Customer extends User {
 
 	
 
-	public Customer(long userId, String userName, String password, String role,boolean isLoggedIn) {
-		super(userId, userName, password, role, isLoggedIn);
-		// TODO Auto-generated constructor stub
+	public Customer(String userName, String password, String role) {
+		super(userName, password, role);
+		
+	}
+
+
+	
+
+
+	public Customer(String userName, String password, String role, String name, String email,
+			String contactNo, LocalDate dob, List<Billing> bills, Set<Address> addresses,
+			List<Appointment> appointments) {
+		super(userName, password, role);
+		this.name = name;
+		this.email = email;
+		this.contactNo = contactNo;
+		this.dob = dob;
+		this.bills = bills;
+		this.addresses = addresses;
+		this.appointments = appointments;
 	}
 
 
@@ -63,6 +80,8 @@ public class Customer extends User {
 		this.appointments = appointments;
 
 	}
+	
+	
 
 	public String getName() {
 		return name;

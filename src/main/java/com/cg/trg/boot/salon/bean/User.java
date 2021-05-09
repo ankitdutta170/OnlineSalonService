@@ -19,19 +19,19 @@ public class User {
 	private String userName;
 	private String password;
 	private String role;
-	private boolean isLoggedIn;
+	
 	
 	public User() {
 		
 	}
 	
-	public User(long userId, String userName, String password, String role, boolean isLoggedIn) {
+	public User(String userName, String password, String role) {
 		super();
-		this.userId = userId;
 		
+		this.userName = userName;
 		this.password = password;
 		this.role = role;
-		this.isLoggedIn = isLoggedIn;
+		
 	}
 	
 	
@@ -65,19 +65,12 @@ public class User {
 		this.role = role;
 	}
 	
-	public boolean isLoggedIn() {
-		return isLoggedIn;
-	}
 	
-
-	public void setLoggedIn(boolean isLoggedIn) {
-		this.isLoggedIn = isLoggedIn;
-	}
 
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", userName=" + userName + ", password=" + password + ", role=" + role
-				+ ", isLoggedIn=" + isLoggedIn + "]";
+				+  "]";
 	}
 	
 	

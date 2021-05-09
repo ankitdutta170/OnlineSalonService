@@ -49,13 +49,13 @@ public class CustomerServiceTest {
 	public void addCustomerService() {
 		Appointment appointment = new Appointment();
 		SalonService salonService = new SalonService(100,"Spa",500,0,"20");
-		Customer customerService1 = new Customer(100,"12345","12345","Customer",false);
+		Customer customerService1 = new Customer("ankit","12345","customer");
 		Address address = new Address(100,"NW004","Lane1","Area1","Bangalore","Karnataka",101245,customerService1);
 		Card card = new Card(100,"Visa","123456",LocalDate.of(2026, 8, 25),356);
 		Payment payment = new Payment("Card","Paid",card);
 		Billing billing = new Billing(100,500,LocalDate.now(),customerService1,payment,appointment);
 		
-		customerService1.setUserId(100);
+		
 		customerService1.setName("Arun");
 		customerService1.setEmail("abc@gmail.com");
 		customerService1.setContactNo("500");
@@ -69,7 +69,7 @@ public class CustomerServiceTest {
 	@Test
 	public void deleteCustomerservice() {
 		SalonService salonService = new SalonService(100,"Spa",500,0,"20");
-		Customer customer = new Customer(100,"12345","12345","Customer",false);
+		Customer customer = new Customer("ankit","12345","customer");
 		Address address = new Address(100,"NW004","Lane1","Area1","Bangalore","Karnataka",101245,customer);
 		Card card = new Card(100,"Visa","123456",LocalDate.of(2026, 8, 25),356);
 		Payment payment = new Payment("Card","Paid",card);
@@ -82,18 +82,19 @@ public class CustomerServiceTest {
 
 	@Test
 	public void updateCustomerservice() {
-		Customer customer = new Customer(100,"12345","12345","Customer",false);
+		Customer customer = new Customer("ankit","12345","customer");
 		Card card = new Card(100,"Visa","123456",LocalDate.of(2026, 8, 25),356);
 		Payment payment = new Payment("Card","Paid",card);
 		Billing billing = new Billing(100,500,LocalDate.now(),customer,payment,null);
 		Mockito.when(customerserviceRepository.save(customer)).thenReturn(customer);
-	    customer = new Customer(100,"12345","12345","Customer",false);
+		 customer = new Customer("ankit","12345","customer");
+
 		assertNotEquals(customer, customerserviceRepository.save(customer));
 	}
 
 	@Test
 	public void getServiceById() {
-		Customer customer = new Customer(100,"12345","12345","Customer",false);
+		Customer customer = new Customer("ankit","12345","customer");
 		Card card = new Card(100,"Visa","123456",LocalDate.of(2026, 8, 25),356);
 		Payment payment = new Payment("Card","Paid",card);
 		Billing billing = new Billing(100,500,LocalDate.now(),customer,payment,null);
