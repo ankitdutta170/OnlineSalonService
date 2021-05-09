@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cg.trg.boot.salon.bean.Appointment;
 import com.cg.trg.boot.salon.bean.Billing;
+import com.cg.trg.boot.salon.exceptions.AppointmentNotFoundException;
 import com.cg.trg.boot.salon.exceptions.BillNotFoundException;
 import com.cg.trg.boot.salon.exceptions.EmptyDataException;
 import com.cg.trg.boot.salon.service.BillingServiceImpl;
@@ -41,8 +43,7 @@ public class BillingController {
 		
 		Billing saveBill= service1.addBill(bill);
 		if(saveBill != null) {
-			return new ResponseEntity<String>("Bill successfully made", HttpStatus.OK);
-			
+			return new ResponseEntity<String>("Bill successfully made", HttpStatus.OK);			
 		}
 		else
 			return new ResponseEntity<String>("Failed to give Bill", HttpStatus.NOT_FOUND);
@@ -58,8 +59,7 @@ public class BillingController {
 		
 		Billing deleteBill = service1.removeBill(id);
 		if(deleteBill != null) {
-			return new ResponseEntity<String>("Bill successfully deleted", HttpStatus.OK);
-		
+			return new ResponseEntity<String>("Bill successfully deleted", HttpStatus.OK);		
 		}
 		else
 			return new ResponseEntity<String>("Bill failed to delete", HttpStatus.BAD_REQUEST);
@@ -75,12 +75,19 @@ public class BillingController {
 		
 		Billing updatedBill = service1.updateBill(id, bill);
 		if(updatedBill != null) {
-			return new ResponseEntity<String>("Bill succesfully updated", HttpStatus.OK);
-			
+			return new ResponseEntity<String>("Bill succesfully updated", HttpStatus.OK);			
 		}
 		else
 			return new ResponseEntity<String>("Bill failed to update", HttpStatus.BAD_REQUEST);
 			
+	}
+	@PutMapping
+	public String updateBill( @RequestBody Billing bill,HttpServletRequest request) {
+		//validateToken(request);
+		if (service1.update(bill))
+			return "Bill data successfully updated";
+		else
+			throw new AppointmentNotFoundException("Update", "Appointment with Id " + bill.getBillId() + " to update not found");
 	}
 	@GetMapping("{aid}")
 	public ResponseEntity<?> getBill(@PathVariable("aid")long id,HttpServletRequest request){
@@ -96,6 +103,7 @@ public class BillingController {
 		}
 		return new ResponseEntity<Billing>(bill, HttpStatus.OK);
 	}
+	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping
 	public ResponseEntity<List<Billing>> getAllBills(HttpServletRequest request){
 		HttpSession session = request.getSession();

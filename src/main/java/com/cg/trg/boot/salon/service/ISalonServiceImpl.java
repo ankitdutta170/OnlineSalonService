@@ -73,6 +73,10 @@ public class ISalonServiceImpl implements ISalonService {
 		// TODO Auto-generated method stub
 		return appointmentRepository.getCountofAppointmentsOfService(id).size();
 	}
+
+
+
+
 	
 	@Override
 	public boolean update(SalonService salonservice) {
@@ -81,5 +85,8 @@ public class ISalonServiceImpl implements ISalonService {
 			return true;
 		}
 		return false;
+
 	}
+
+	
 }

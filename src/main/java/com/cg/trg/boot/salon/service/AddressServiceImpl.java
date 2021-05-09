@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.trg.boot.salon.bean.Address;
-
+import com.cg.trg.boot.salon.bean.Billing;
 import com.cg.trg.boot.salon.dao.IAddressRepository;
 
 @Service
@@ -60,6 +60,14 @@ public class AddressServiceImpl implements IAddressService {
 		List<Address> address = repository.findAll();
 		return address;
 		
+	}
+	@Override
+	public boolean update(Address address) {
+		if (repository.existsById(address.getAddressId())) {
+			repository.save(address);
+			return true;
+		}
+		return false;
 	}
 
 	

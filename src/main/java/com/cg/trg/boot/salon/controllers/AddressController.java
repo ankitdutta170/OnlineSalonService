@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.trg.boot.salon.bean.Address;
+import com.cg.trg.boot.salon.bean.Billing;
+import com.cg.trg.boot.salon.exceptions.AddressNotFoundException;
+import com.cg.trg.boot.salon.exceptions.AppointmentNotFoundException;
 import com.cg.trg.boot.salon.exceptions.BillNotFoundException;
 import com.cg.trg.boot.salon.exceptions.EmptyDataException;
 import com.cg.trg.boot.salon.service.AddressServiceImpl;
@@ -75,7 +78,15 @@ public class AddressController {
 		else
 			return new ResponseEntity<String>("Address failed to delete", HttpStatus.BAD_REQUEST);
 	}
-	@GetMapping("{aid}")
+	@PutMapping
+	public String updateAddress( @RequestBody Address address,HttpServletRequest request) {
+		//validateToken(request);
+		if (service.update(address))
+			return "Bill data successfully updated";
+		else
+			throw new AppointmentNotFoundException("Update", "Appointment with Id " + address.getAddressId() + " to update not found");
+	}
+	@GetMapping("/{aid}")
 	public ResponseEntity<?> getAddress(@PathVariable("aid")long id,HttpServletRequest request){
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");
@@ -85,17 +96,12 @@ public class AddressController {
 		
 		Address address = service.getAddressDetails(id);
 		if(address == null) {
-			throw new BillNotFoundException("Request", "Address with Adress id:"+id+"not found");
+			throw new AddressNotFoundException("Request", "Address with Adress id:"+id+"not found");
 		}
 		return new ResponseEntity<Address>(address, HttpStatus.OK);
 	}
 	@GetMapping
 	public ResponseEntity<List<Address>> getAllAddress(HttpServletRequest request){
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		String userName = (String) session.getAttribute("username");
-		System.out.println("*******************" + userName + "*************************");
-		System.out.println("*******************" + userId + "*************************");
 		
 		List<Address> address = service.getAllAddress();
 		if(address.size() == 0) {
