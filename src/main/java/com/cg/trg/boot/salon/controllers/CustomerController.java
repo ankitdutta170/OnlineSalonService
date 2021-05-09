@@ -42,7 +42,7 @@ public class CustomerController {
 	
 	@PostMapping
 	public ResponseEntity<String> saveCustomer(@RequestBody Customer customer, HttpServletRequest request) {
-		validateToken(request);
+		
 		Customer saveCustomer = service.addCustomer(customer);
 		if(saveCustomer != null) {
 			return new ResponseEntity<String>("Customer saved successfully", HttpStatus.OK);
