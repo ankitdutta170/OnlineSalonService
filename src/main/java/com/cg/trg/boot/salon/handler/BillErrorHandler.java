@@ -19,7 +19,7 @@ public class BillErrorHandler {
 		Map<String, Object> errorBody = new LinkedHashMap<>();
 		errorBody.put("error", "creation failed");
 		errorBody.put("timestamp", LocalDate.now());
-		errorBody.put("details", ex.getMessage());
+		errorBody.put("errorMessage", ex.getMessage());
 		
 		return new ResponseEntity<>(errorBody, HttpStatus.NOT_FOUND);
 	}
@@ -28,7 +28,7 @@ public class BillErrorHandler {
 		Map<String, Object> errorBody = new LinkedHashMap<>();
 		errorBody.put("error", "creation failed");
 		errorBody.put("timestamp", LocalDate.now());
-		errorBody.put("details", ex.getMessage());
+		errorBody.put("errorMessage", ex.getMessage());
 		
 		return new ResponseEntity<>(errorBody, HttpStatus.NOT_FOUND);
 	}

@@ -19,7 +19,7 @@ public class CardErrorHandler {
 
 		errorBody.put("error", "No Card found");
 		errorBody.put("timestamp", LocalDate.now());
-		errorBody.put("details", nu.getMessage());
+		errorBody.put("errorMessage", nu.getMessage());
 		
 		return new ResponseEntity<>(errorBody, HttpStatus.BAD_REQUEST);
 	}

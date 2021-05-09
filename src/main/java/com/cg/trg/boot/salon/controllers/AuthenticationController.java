@@ -19,12 +19,10 @@ import com.cg.trg.boot.salon.jwt.JwtRequest;
 import com.cg.trg.boot.salon.jwt.JwtResponse;
 import com.cg.trg.boot.salon.jwt.JwtTokenUtil;
 
-
-
-
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+
 @RequestMapping("/authenticate")
+@CrossOrigin(origins = "http://localhost:4200")
 public class AuthenticationController {
 
 	@Autowired
