@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.trg.boot.salon.bean.Appointment;
+import com.cg.trg.boot.salon.bean.User;
 import com.cg.trg.boot.salon.dao.IAppointmentRepository;
+import com.cg.trg.boot.salon.dao.IUserRepository;
 import com.cg.trg.boot.salon.exceptions.DuplicateAppointmentException;
 
 @Service
@@ -18,6 +20,8 @@ public class AppointmentServiceImpl implements IAppointmentService {
 	
 	@Autowired
 	IAppointmentRepository repository;
+	@Autowired
+	IUserRepository userRepository;
 	
 	@Override
 	public Appointment addAppointment(Appointment appointment) {
@@ -86,6 +90,13 @@ public class AppointmentServiceImpl implements IAppointmentService {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public List<Appointment> getAppointmentByUser(String userName) {
+		// TODO Auto-generated method stub
+		User user = userRepository.findByUserName(userName);
+		return repository.getAppointmentByCustomer(user.getUserId());
 	}
 	
 	

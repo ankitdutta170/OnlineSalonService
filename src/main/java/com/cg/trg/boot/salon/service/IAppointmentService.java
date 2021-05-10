@@ -13,6 +13,7 @@ public interface IAppointmentService {
 	public Appointment updateAppointment(long id,Appointment appointment);
 	public boolean update(Appointment appointment);
 	public Appointment getAppointment(long id);
+	public List<Appointment> getAppointmentByUser(String userName);
 	public List<Appointment> getAllAppointments(); 
 	public List<Appointment> getAppointmentByDate(LocalDate date);
 }

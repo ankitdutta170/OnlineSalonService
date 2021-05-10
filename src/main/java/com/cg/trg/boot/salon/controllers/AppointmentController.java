@@ -98,6 +98,16 @@ public class AppointmentController {
 		return appointments;
 		
 	}
+	@GetMapping("/date/{date}")
+	public List<Appointment> getAllAppointmentsForCustomer(@PathVariable("date") String date,HttpServletRequest request){
+		login.validateToken(request, "customer");
+		LocalDate dateToFind = LocalDate.parse(date);
+		List<Appointment> appointments = service.getAppointmentByDate(dateToFind);
+		if(appointments.size() == 0) {
+			throw new EmptyDataException("No Appointments saved in database for the date");
+		}
+		return appointments;
+	}
 	@GetMapping("{year}/{month}/{day}")
 	public ResponseEntity<List<Appointment>> getAppointmentByDate(@PathVariable("year")int year, @PathVariable("month")int month,@PathVariable("day")int day,HttpServletRequest request){
 		login.validateToken(request,"customer");
