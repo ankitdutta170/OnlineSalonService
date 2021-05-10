@@ -100,7 +100,7 @@ public class AppointmentController {
 	}
 	@GetMapping("/date/{date}")
 	public List<Appointment> getAllAppointmentsForCustomer(@PathVariable("date") String date,HttpServletRequest request){
-		login.validateToken(request, "customer");
+		login.validateToken(request, "admin");
 		LocalDate dateToFind = LocalDate.parse(date);
 		List<Appointment> appointments = service.getAppointmentByDate(dateToFind);
 		if(appointments.size() == 0) {
