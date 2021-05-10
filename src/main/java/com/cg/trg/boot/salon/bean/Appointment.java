@@ -43,7 +43,7 @@ public class Appointment {
 	private LocalDate preferredDate;
 	
 	private LocalTime preferredTime;
-	@JsonIgnore
+	@JsonProperty(access = Access.READ_WRITE)
 	@ManyToOne()
 	@JoinColumn(name="user_id_fk")
 	private Customer customer;

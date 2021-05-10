@@ -24,6 +24,7 @@ import com.cg.trg.boot.salon.exceptions.NoDataException;
 import com.cg.trg.boot.salon.exceptions.SalonServiceNotFoundException;
 import com.cg.trg.boot.salon.jwt.JwtTokenUtil;
 import com.cg.trg.boot.salon.service.ISalonServiceImpl;
+import com.cg.trg.boot.salon.service.ValidateToken;
 
 import io.jsonwebtoken.SignatureException;
 
@@ -36,11 +37,11 @@ public class SalonServiceController {
     ISalonServiceImpl service;
 	
 	@Autowired
-	private JwtTokenUtil jwtTokenUtil;
+	ValidateToken login;
 
 	@PostMapping
 	public ResponseEntity<String> saveSalonService(@RequestBody SalonService salonservice,HttpServletRequest request) {
-		validateToken(request);
+		login.validateToken(request,"admin");
 		SalonService saveSalonService = service.addService(salonservice);
 		if(saveSalonService != null) {
 			return new ResponseEntity<String>("SalonService saved successfully", HttpStatus.OK);
@@ -51,7 +52,7 @@ public class SalonServiceController {
 	
 	@DeleteMapping("{aid}")
     public ResponseEntity<String> removeSalonService(@PathVariable("aid") long id,HttpServletRequest request) {
-		validateToken(request);
+		login.validateToken(request,"admin");
 		SalonService deleteSalonService = service.removeService(id);
 		if(deleteSalonService != null) {
 			return new ResponseEntity<String>("SalonService successfully deleted", HttpStatus.OK);
@@ -62,7 +63,7 @@ public class SalonServiceController {
 	
 	@PutMapping("/update/{sid}")
     public ResponseEntity<String> updateSalonService(@PathVariable("sid")long id, @RequestBody SalonService salonservice,HttpServletRequest request) {
-		validateToken(request);
+		login.validateToken(request,"admin");
 		SalonService updatedSalonService = service.updateService(id, salonservice);
 		if(updatedSalonService != null) {
 			return new ResponseEntity<String>("SalonService successfully updated", HttpStatus.OK);
@@ -73,7 +74,7 @@ public class SalonServiceController {
 	
 	@PutMapping
 	public String updatemployee( @RequestBody SalonService salonservice,HttpServletRequest request) {
-		validateToken(request);
+		login.validateToken(request,"admin");
 		if (service.update(salonservice))
 			return "Salon Service data successfully updated";
 		else
@@ -84,7 +85,7 @@ public class SalonServiceController {
 	 
 	@GetMapping("{aid}")
 	public ResponseEntity<?> getSalonService(@PathVariable("aid")long id,HttpServletRequest request){
-		validateToken(request);
+		login.validateToken(request,"admin");
 		SalonService salonservice = service.getService(id);
 		if(salonservice == null) {
 			throw new SalonServiceNotFoundException("Request", "SalonService with service id:"+id+"not found");
@@ -94,7 +95,7 @@ public class SalonServiceController {
 	
 	@GetMapping
 		public ResponseEntity<List<SalonService>> getAllSalonServices(HttpServletRequest request){
-		validateToken(request);
+		
 		List<SalonService>services = service.getAllServices();
 		if(services.size() == 0) {
 			throw new NoDataException("No SalonServices saved in database");
@@ -106,31 +107,12 @@ public class SalonServiceController {
     
     @GetMapping("/count/{id}")
     public ResponseEntity<String> getCountOfAppointmentsOfService(@PathVariable("id")long id,HttpServletRequest request) {
-    	validateToken(request);
+    	login.validateToken(request,"admin");
     	SalonService salonService = service.getService(id);
     	return new ResponseEntity<String>("No of Appointments for "+salonService.getServiceName()+" is: "+service.getCountOfAppointmentsOfServices(id),HttpStatus.OK);
     }
     
-    public void validateToken(HttpServletRequest request) {
-		final String tokenHeader = request.getHeader("Authorization");
-
-		String jwtToken = null;
-
-		if (tokenHeader == null)
-			throw new InvalidUserException("User Not Logged In or token not included");
-		// JWT Token is in the form "Bearer token". Remove Bearer word
-		if (!tokenHeader.startsWith("Bearer "))
-			throw new InvalidUserException("Invalid Token");
-
-		jwtToken = tokenHeader.substring(7);
-		try {
-			if (!(jwtTokenUtil.validateToken(jwtToken)))
-				throw new InvalidUserException("Token Expired. Need Relogin");
-
-		} catch (SignatureException ex) {
-			throw new InvalidUserException("Invalid Token");
-		}
-	}
+   
     
 
 }

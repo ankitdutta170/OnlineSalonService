@@ -27,6 +27,7 @@ import com.cg.trg.boot.salon.exceptions.EmptyDataException;
 import com.cg.trg.boot.salon.exceptions.InvalidUserException;
 import com.cg.trg.boot.salon.jwt.JwtTokenUtil;
 import com.cg.trg.boot.salon.service.AddressServiceImpl;
+import com.cg.trg.boot.salon.service.ValidateToken;
 
 import io.jsonwebtoken.SignatureException;
 
@@ -38,12 +39,12 @@ public class AddressController {
 	 AddressServiceImpl service;
 	
 	@Autowired
-	private JwtTokenUtil jwtTokenUtil;
+	ValidateToken login;
 	
 	@PostMapping
 	public ResponseEntity<String>saveAddress(@RequestBody Address address, HttpServletRequest request) {
 		
-		validateToken(request);
+		login.validateToken(request,"customer");
 		Address addres = service.addAddress(address);
 		if(addres != null) {
 			return new ResponseEntity<String>("Address saved successfully", HttpStatus.OK);
@@ -53,7 +54,7 @@ public class AddressController {
 	}
 	@DeleteMapping("{aid}")
 	public ResponseEntity<String> removeAddress(@PathVariable("aid") long id,HttpServletRequest request) {
-		validateToken(request);
+		login.validateToken(request,"customer");
 		Address deleteAddress = service.removeAddress(id);
 		if(deleteAddress != null) {
 			return new ResponseEntity<String>("Address successfully deleted", HttpStatus.OK);
@@ -63,7 +64,7 @@ public class AddressController {
 	}
 	@PutMapping("{aid}")
 	public ResponseEntity<String> updateAddress(@PathVariable("aid") long id,@RequestBody Address address,HttpServletRequest request) {
-		validateToken(request);
+		login.validateToken(request,"customer");
 		
 		Address updatedAddress = service.updateAddress(id, address);
 		if(updatedAddress != null) {
@@ -74,7 +75,7 @@ public class AddressController {
 	}
 	@PutMapping
 	public String updateAddress( @RequestBody Address address,HttpServletRequest request) {
-		validateToken(request);
+		login.validateToken(request,"customer");
 		if (service.update(address))
 			return "Bill data successfully updated";
 		else
@@ -83,7 +84,7 @@ public class AddressController {
 	@GetMapping("/{aid}")
 	public ResponseEntity<?> getAddress(@PathVariable("aid")long id,HttpServletRequest request){
 		
-		validateToken(request);
+		login.validateToken(request,"customer");
 		Address address = service.getAddressDetails(id);
 		if(address == null) {
 			throw new AddressNotFoundException("Request", "Address with Adress id:"+id+"not found");
@@ -92,7 +93,7 @@ public class AddressController {
 	}
 	@GetMapping
 	public ResponseEntity<List<Address>> getAllAddress(HttpServletRequest request){
-		validateToken(request);
+		login.validateToken(request,"customer");
 		List<Address> address = service.getAllAddress();
 		if(address.size() == 0) {
 			throw new EmptyDataException("No Address saved in database");
@@ -102,25 +103,6 @@ public class AddressController {
 		
 	}
 	
-	public void validateToken(HttpServletRequest request) {
-		final String tokenHeader = request.getHeader("Authorization");
-
-		String jwtToken = null;
-
-		if (tokenHeader == null)
-			throw new InvalidUserException("User Not Logged In or token not included");
-		// JWT Token is in the form "Bearer token". Remove Bearer word
-		if (!tokenHeader.startsWith("Bearer "))
-			throw new InvalidUserException("Invalid Token");
-
-		jwtToken = tokenHeader.substring(7);
-		try {
-			if (!(jwtTokenUtil.validateToken(jwtToken)))
-				throw new InvalidUserException("Token Expired. Need Relogin");
-
-		} catch (SignatureException ex) {
-			throw new InvalidUserException("Invalid Token");
-		}
-	}
+	
 
 }

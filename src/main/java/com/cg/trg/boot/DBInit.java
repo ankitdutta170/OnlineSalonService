@@ -123,7 +123,7 @@ public class DBInit implements CommandLineRunner {
 
 		logger.info("Data  Entry process initiated for Customer table");
 
-		customerRepository.save(new Customer("ankitdutta170","ankitdutta","customer","Ankit", "abc@gmail.com", "7903083839", LocalDate.of(1999, 4, 8),
+		customerRepository.save(new Customer("ankitdutta170","ankitdutta","admin","Ankit", "abc@gmail.com", "7903083839", LocalDate.of(1999, 4, 8),
 				new ArrayList<Billing>(), new HashSet<Address>(), new ArrayList<Appointment>()));
 		customerRepository.save(new Customer("saipraveen","saipraveen","customer","Sai", "abcd@gmail.com", "7903083838", LocalDate.of(1999, 4, 7),
 				new ArrayList<Billing>(), new HashSet<Address>(), new ArrayList<Appointment>()));

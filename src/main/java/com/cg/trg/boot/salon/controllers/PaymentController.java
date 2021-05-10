@@ -26,6 +26,7 @@ import com.cg.trg.boot.salon.exceptions.InvalidUserException;
 import com.cg.trg.boot.salon.exceptions.PaymentNotFound;
 import com.cg.trg.boot.salon.jwt.JwtTokenUtil;
 import com.cg.trg.boot.salon.service.PaymentServiceImpl;
+import com.cg.trg.boot.salon.service.ValidateToken;
 
 import io.jsonwebtoken.SignatureException;
 
@@ -37,11 +38,11 @@ public class PaymentController {
 	private PaymentServiceImpl repo;
 	
 	@Autowired
-	private JwtTokenUtil jwtTokenUtil;
+	ValidateToken login;
 
 	@PostMapping
 	public ResponseEntity<String> addPayment(@RequestBody Payment payment, HttpServletRequest request) {
-		validateToken(request);
+		login.validateToken(request,"admin");
 		Payment pay = repo.addPayment(payment);
 		if (pay != null) {
 			return new ResponseEntity<String>("Payment successfull", HttpStatus.OK);
@@ -51,8 +52,8 @@ public class PaymentController {
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> removePayment(@PathVariable(value = "id") long paymentId, HttpServletRequest request) {
+		login.validateToken(request,"admin");
 		
-		validateToken(request);
 		Payment payemntDetails = repo.getPaymentDetails(paymentId);
 		if (payemntDetails == null) {
 			throw new PaymentNotFound("Request", "Payment with paymentId id:" + paymentId + "not found");
@@ -65,7 +66,7 @@ public class PaymentController {
 	@PutMapping("/{id}")
 	public ResponseEntity<String> updatePayment(@PathVariable(value = "id") long paymentId,
 			@RequestBody Payment payment, HttpServletRequest request) {
-		validateToken(request);
+		login.validateToken(request,"admin");
 		Payment check = repo.getPaymentDetails(paymentId);
 		if (check == null) {
 			throw new PaymentNotFound("Request", "Payment with paymentId id:" + paymentId + "not found");
@@ -78,7 +79,7 @@ public class PaymentController {
 	}
 	@PutMapping
 	public String update( @RequestBody Payment payment,HttpServletRequest request) {
-		validateToken(request);
+		login.validateToken(request,"admin");
 		if (repo.update(payment))
 			return "Payemnt data successfully updated";
 		else
@@ -87,7 +88,7 @@ public class PaymentController {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getPaymentDetails(@PathVariable(value = "id") long paymentId, HttpServletRequest request) {
-		validateToken(request);
+		login.validateToken(request,"admin");
 		Payment pay = repo.getPaymentDetails(paymentId);
 		if (pay == null) {
 			throw new PaymentNotFound("Request", "Payment with payment id:" + paymentId + "not found");
@@ -97,7 +98,7 @@ public class PaymentController {
 	
 	@GetMapping
 	public ResponseEntity<List<Payment>> getAllPayments(HttpServletRequest request) {
-		validateToken(request);
+		login.validateToken(request,"admin");
 		List<Payment> payment = repo.getAllPaymentDetails();
 		if (payment.size() == 0) {
 			throw new EmptyDataException("No Appointments saved in database");
@@ -105,26 +106,7 @@ public class PaymentController {
 		return new ResponseEntity<List<Payment>>(payment, HttpStatus.OK);
 	}
 	
-	public void validateToken(HttpServletRequest request) {
-		final String tokenHeader = request.getHeader("Authorization");
-
-		String jwtToken = null;
-
-		if (tokenHeader == null)
-			throw new InvalidUserException("User Not Logged In or token not included");
-		// JWT Token is in the form "Bearer token". Remove Bearer word
-		if (!tokenHeader.startsWith("Bearer "))
-			throw new InvalidUserException("Invalid Token");
-
-		jwtToken = tokenHeader.substring(7);
-		try {
-			if (!(jwtTokenUtil.validateToken(jwtToken)))
-				throw new InvalidUserException("Token Expired. Need Relogin");
-
-		} catch (SignatureException ex) {
-			throw new InvalidUserException("Invalid Token");
-		}
-	}
+	
 
 //	@GetMapping("/{type}")
 //	public ResponseEntity<List<Payment>> getPaymentByType(@PathVariable("type") String type,

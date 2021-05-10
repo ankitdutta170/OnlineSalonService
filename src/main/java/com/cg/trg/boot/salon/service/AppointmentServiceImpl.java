@@ -18,6 +18,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
 	
 	@Autowired
 	IAppointmentRepository repository;
+	
 	@Override
 	public Appointment addAppointment(Appointment appointment) {
 		try {

@@ -22,6 +22,7 @@ import com.cg.trg.boot.salon.exceptions.EmptyDataException;
 import com.cg.trg.boot.salon.exceptions.InvalidUserException;
 import com.cg.trg.boot.salon.jwt.JwtTokenUtil;
 import com.cg.trg.boot.salon.service.AppointmentServiceImpl;
+import com.cg.trg.boot.salon.service.ValidateToken;
 
 import io.jsonwebtoken.SignatureException;
 
@@ -34,11 +35,11 @@ public class AppointmentController {
 	AppointmentServiceImpl service;
 	
 	@Autowired
-	private JwtTokenUtil jwtTokenUtil;
+	ValidateToken login;
 	
 	@PostMapping
 	public ResponseEntity<String> saveAppointment(@RequestBody Appointment appointment,HttpServletRequest request) {
-		validateToken(request);
+		login.validateToken(request,"customer");
 		Appointment saveAppointment = service.addAppointment(appointment);
 		if(saveAppointment != null) {
 			return new ResponseEntity<String>("Appointment saved successfully", HttpStatus.OK);
@@ -48,7 +49,7 @@ public class AppointmentController {
 	}
 	@DeleteMapping("{aid}")
 	public ResponseEntity<String> removeAppointment(@PathVariable("aid") long id,HttpServletRequest request) {
-		validateToken(request);
+		login.validateToken(request,"customer");
 		Appointment deleteAppointment = service.removeAppointment(id);
 		if(deleteAppointment != null) {
 			return new ResponseEntity<String>("Appointment successfully deleted", HttpStatus.OK);
@@ -59,7 +60,7 @@ public class AppointmentController {
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<String> updateAppointment(@PathVariable("id")long id, @RequestBody Appointment appointment,HttpServletRequest request) {
-		validateToken(request);
+		login.validateToken(request,"customer");
 		Appointment updatedAppointment = service.updateAppointment(id, appointment);
 		if(updatedAppointment != null) {
 			return new ResponseEntity<String>("Appointment successfully updated", HttpStatus.OK);
@@ -70,7 +71,7 @@ public class AppointmentController {
 	
 	@PutMapping
 	public String update( @RequestBody Appointment appointment,HttpServletRequest request) {
-		validateToken(request);
+		login.validateToken(request,"customer");
 		if (service.update(appointment))
 			return "Appointment data successfully updated";
 		else
@@ -80,7 +81,7 @@ public class AppointmentController {
 	@GetMapping("{aid}")
 	public Appointment getAppointment(@PathVariable("aid")long id,HttpServletRequest request){
 		
-		validateToken(request);
+		login.validateToken(request,"customer");
 		Appointment appointment = service.getAppointment(id);
 		if(appointment == null) {
 			throw new AppointmentNotFoundException("Request", "Appointment with appointment id:"+id+"not found");
@@ -89,7 +90,7 @@ public class AppointmentController {
 	}
 	@GetMapping
 	public List<Appointment> getAllAppointments(HttpServletRequest request){
-		validateToken(request);
+		login.validateToken(request,"customer");
 		List<Appointment> appointments = service.getAllAppointments();
 		if(appointments.size() == 0) {
 			throw new EmptyDataException("No Appointments saved in database");
@@ -99,7 +100,7 @@ public class AppointmentController {
 	}
 	@GetMapping("{year}/{month}/{day}")
 	public ResponseEntity<List<Appointment>> getAppointmentByDate(@PathVariable("year")int year, @PathVariable("month")int month,@PathVariable("day")int day,HttpServletRequest request){
-		validateToken(request);
+		login.validateToken(request,"customer");
 		List<Appointment> appointments = service.getAppointmentByDate(LocalDate.of(year, month, day));
 		if(appointments.size() == 0) {
 			throw new EmptyDataException("No Appointments saved in database");
@@ -107,26 +108,7 @@ public class AppointmentController {
 		return new ResponseEntity<List<Appointment>>(appointments, HttpStatus.OK);
 	}
 	
-	public void validateToken(HttpServletRequest request) {
-		final String tokenHeader = request.getHeader("Authorization");
-
-		String jwtToken = null;
-
-		if (tokenHeader == null)
-			throw new InvalidUserException("User Not Logged In or token not included");
-		// JWT Token is in the form "Bearer token". Remove Bearer word
-		if (!tokenHeader.startsWith("Bearer "))
-			throw new InvalidUserException("Invalid Token");
-
-		jwtToken = tokenHeader.substring(7);
-		try {
-			if (!(jwtTokenUtil.validateToken(jwtToken)))
-				throw new InvalidUserException("Token Expired. Need Relogin");
-
-		} catch (SignatureException ex) {
-			throw new InvalidUserException("Invalid Token");
-		}
-	}
+	
 	
 	
 }

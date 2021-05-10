@@ -27,7 +27,7 @@ public class ApplicationErrorHandler {
 
 		errorBody.put("error", "Duplicate data");
 		errorBody.put("timestamp", LocalDate.now());
-		errorBody.put("details", ex.getMessage());
+		errorBody.put("errorMessage", ex.getMessage());
 		
 		return new ResponseEntity<>(errorBody, HttpStatus.BAD_REQUEST);
 	}
@@ -38,16 +38,15 @@ public class ApplicationErrorHandler {
 		Map<String, Object> errorBody = new LinkedHashMap<>();
 		errorBody.put("error", "No Data Found");
 		errorBody.put("timestamp", LocalDate.now());
-		errorBody.put("details", ex.getMessage());
+		errorBody.put("errorMessage", ex.getMessage());
 		
 		return new ResponseEntity<>(errorBody, HttpStatus.NOT_FOUND);
 	}
 	@ExceptionHandler(InvalidUserException.class)
-	public ResponseEntity<?> handleInvalidUser(EmptyDataException ex) {
+	public ResponseEntity<?> handleInvalidUser(InvalidUserException ex) {
 		Map<String, Object> errorBody = new LinkedHashMap<>();
-		errorBody.put("error", "Invalid User");
-		errorBody.put("timestamp", LocalDate.now());
-		errorBody.put("details", ex.getMessage());
+	
+		errorBody.put("errorMessage", ex.getMessage());
 		
 		return new ResponseEntity<>(errorBody, HttpStatus.BAD_REQUEST);
 	}
@@ -57,7 +56,7 @@ public class ApplicationErrorHandler {
 		Map<String, Object> errorBody = new LinkedHashMap<>();
 		errorBody.put("error", "Appointment Not Found");
 		errorBody.put("timestamp", LocalDate.now());
-		errorBody.put("details", ex.getMessage());
+		errorBody.put("errorMessage", ex.getMessage());
 		
 		return new ResponseEntity<>(errorBody, HttpStatus.NOT_FOUND);
 	}
